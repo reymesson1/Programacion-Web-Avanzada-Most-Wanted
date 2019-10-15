@@ -4276,6 +4276,15 @@ class Upload extends React.Component{
             file:file 
         });
     }
+
+    onProcess(){
+
+        
+
+        console.log('test')
+
+
+    } 
     
     render(){
 
@@ -4319,7 +4328,7 @@ class Upload extends React.Component{
                 </Row>                
                 <br/>
                 <Row>                    
-                <Button className="col-md-offset-9" onClick={this.onOpen.bind(this)} variant="outline-success">Process &nbsp; <i className="fa fa-star" aria-hidden="true"></i></Button>&nbsp;&nbsp;
+                <Button className="col-md-offset-9" onClick={this.onProcess} variant="outline-success">Process &nbsp; <i className="fa fa-star" aria-hidden="true"></i></Button>&nbsp;&nbsp;
                 <Button className="pull-right" onClick={this.onOpen.bind(this)} variant="outline-success">Upload &nbsp; <i className="fa fa-arrow-up" aria-hidden="true"></i></Button>
                 
 

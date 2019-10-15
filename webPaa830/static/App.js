@@ -6242,6 +6242,12 @@ var Upload = function (_React$Component53) {
             });
         }
     }, {
+        key: "onProcess",
+        value: function onProcess() {
+
+            console.log('test');
+        }
+    }, {
         key: "render",
         value: function render() {
 
@@ -6311,7 +6317,7 @@ var Upload = function (_React$Component53) {
                     null,
                     React.createElement(
                         Button,
-                        { className: "col-md-offset-9", onClick: this.onOpen.bind(this), variant: "outline-success" },
+                        { className: "col-md-offset-9", onClick: this.onProcess, variant: "outline-success" },
                         "Process \xA0 ",
                         React.createElement("i", { className: "fa fa-star", "aria-hidden": "true" })
                     ),
