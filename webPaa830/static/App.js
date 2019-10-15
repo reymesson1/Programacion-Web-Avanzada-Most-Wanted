@@ -6304,7 +6304,16 @@ var Upload = function (_React$Component53) {
                                         React.createElement(
                                             Col,
                                             { md: 8, sm: 6 },
-                                            React.createElement(FormControl, { type: "text", name: "description", placeholder: "Description", disabled: true })
+                                            React.createElement(FormControl, { type: "text", name: "description", placeholder: "Description", disabled: true }),
+                                            React.createElement(
+                                                FormControl,
+                                                { componentClass: "select", name: "development", placeholder: "Tipo de Servicio", required: true },
+                                                React.createElement(
+                                                    "option",
+                                                    { value: 'test' },
+                                                    'test'
+                                                )
+                                            )
                                         )
                                     )
                                 ),
@@ -6369,6 +6378,37 @@ var Upload = function (_React$Component53) {
                     Row,
                     null,
                     React.createElement(
+                        Col,
+                        { md: 9 },
+                        React.createElement(
+                            Panel,
+                            null,
+                            React.createElement(
+                                Form,
+                                { onSubmit: this.onsavedetail.bind(this) },
+                                React.createElement(
+                                    FormGroup,
+                                    null,
+                                    React.createElement(
+                                        Col,
+                                        { componentClass: ControlLabel, md: 4, sm: 2 },
+                                        "Description"
+                                    ),
+                                    React.createElement(
+                                        Col,
+                                        { md: 8, sm: 6 },
+                                        React.createElement(FormControl, { type: "text", name: "description", placeholder: "Description", disabled: true })
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    React.createElement(Col, { md: 3 })
+                ),
+                React.createElement(
+                    Row,
+                    null,
+                    React.createElement(
                         Table,
                         { striped: true, bordered: true, condensed: true, hover: true },
                         React.createElement(
@@ -6380,12 +6420,7 @@ var Upload = function (_React$Component53) {
                                 React.createElement(
                                     "td",
                                     null,
-                                    "Username"
-                                ),
-                                React.createElement(
-                                    "td",
-                                    null,
-                                    "Status"
+                                    "Image #1 ( New Photo )"
                                 ),
                                 React.createElement(
                                     "td",

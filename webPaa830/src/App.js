@@ -4313,6 +4313,9 @@ class Upload extends React.Component{
                                         </Col>                              
                                         <Col md={8} sm={6}>
                                             <FormControl type="text" name="description" placeholder="Description" disabled />
+                                            <FormControl componentClass="select" name="development" placeholder="Tipo de Servicio" required >                                                
+                                                 <option value={'test'}>{'test'}</option>                                                                                    
+                                            </FormControl>
                                         </Col>
                                     </FormGroup>
                                 </Row>
@@ -4348,17 +4351,30 @@ class Upload extends React.Component{
                             </Form>
                     </Modal.Body>
                 </Modal>
-
-
-                </Row>
-                
+                </Row>                
                 <br/>
+                <Row>                                    
+                    <Col md={9}>                    
+                        <Panel>
+                            <Form onSubmit={this.onsavedetail.bind(this)}>                                                            
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} md={4} sm={2}>
+                                        Description
+                                    </Col>                              
+                                    <Col md={8} sm={6}>
+                                        <FormControl type="text" name="description" placeholder="Description" disabled />
+                                    </Col>
+                                </FormGroup>
+                            </Form>
+                        </Panel>                        
+                    </Col>
+                    <Col md={3}></Col>
+                </Row>                
                 <Row>                
                     <Table striped bordered condensed hover>
                     <thead>
                         <tr>
-                            <td>Username</td>
-                            <td>Status</td>
+                            <td>Image #1 ( New Photo )</td>                                                        
                             <td>Quantity</td>
                             <td>Address</td>
                         </tr>
