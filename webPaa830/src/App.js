@@ -1002,6 +1002,9 @@ class Master extends React.Component{
             // parameter: this.props.params.actionid
         });
 
+        
+
+
     }
 
     close() {
@@ -4140,7 +4143,8 @@ class Upload extends React.Component{
             orderAPI: [],
             showModal: false,
             files: [],
-            file: ''            
+            file: '',
+            compare: []           
         }
     }
 
@@ -4181,9 +4185,24 @@ class Upload extends React.Component{
   
                 orderAPI: responseData
             })
-        })
+        })        
         .catch((error)=>{
             console.log('Error fetching and parsing data', error);
+        })
+
+        var params = {
+            Bucket: albumBucketName,
+            MaxKeys: 100
+        };
+        
+        s3.listObjects(params, (err, data) =>{
+            if (err){
+                console.log(err, err.stack);
+            }else{                
+                this.setState({
+                    compare:data
+                })
+            }
         })
     }
 
@@ -4208,6 +4227,7 @@ class Upload extends React.Component{
         
         event.preventDefault();
 
+        
         this.onClose();
 
     }
@@ -4257,6 +4277,16 @@ class Upload extends React.Component{
     }
     
     render(){
+
+        var item = []
+        
+        if(this.state.compare.Contents){
+            
+            item = this.state.compare.Contents
+
+        }
+
+
 
         return(
 
@@ -4334,17 +4364,16 @@ class Upload extends React.Component{
                         </tr>
                     </thead>
                     <tbody>                                            
-                    {this.state.orderAPI.map(
-                    (order) =>
-                            
-                                    <tr>
-                                        {/* <td>{order.description}</td> */}
-                                        <td><div dangerouslySetInnerHTML={{ __html: order.description }} /></td>
-                                        <td>{'Pending'}</td>
-                                        <td>{order.quantity}</td>
-                                        <td>{order.address}</td>
-                                    </tr>
-                    )}
+                     {
+                         item.map(
+                             (order) =>
+                                        <tr>
+                                            <td>
+                                             {order.Key}
+                                            </td>
+                                        </tr>
+                         )
+                     }
                     </tbody>                                            
                     </Table>
                 </Row>

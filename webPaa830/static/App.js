@@ -6110,7 +6110,8 @@ var Upload = function (_React$Component53) {
             orderAPI: [],
             showModal: false,
             files: [],
-            file: ''
+            file: '',
+            compare: []
         };
         return _this77;
     }
@@ -6156,6 +6157,21 @@ var Upload = function (_React$Component53) {
                 });
             }).catch(function (error) {
                 console.log('Error fetching and parsing data', error);
+            });
+
+            var params = {
+                Bucket: albumBucketName,
+                MaxKeys: 100
+            };
+
+            s3.listObjects(params, function (err, data) {
+                if (err) {
+                    console.log(err, err.stack);
+                } else {
+                    _this78.setState({
+                        compare: data
+                    });
+                }
             });
         }
     }, {
@@ -6227,6 +6243,13 @@ var Upload = function (_React$Component53) {
     }, {
         key: "render",
         value: function render() {
+
+            var item = [];
+
+            if (this.state.compare.Contents) {
+
+                item = this.state.compare.Contents;
+            }
 
             return React.createElement(
                 Grid,
@@ -6379,29 +6402,14 @@ var Upload = function (_React$Component53) {
                         React.createElement(
                             "tbody",
                             null,
-                            this.state.orderAPI.map(function (order) {
+                            item.map(function (order) {
                                 return React.createElement(
                                     "tr",
                                     null,
                                     React.createElement(
                                         "td",
                                         null,
-                                        React.createElement("div", { dangerouslySetInnerHTML: { __html: order.description } })
-                                    ),
-                                    React.createElement(
-                                        "td",
-                                        null,
-                                        'Pending'
-                                    ),
-                                    React.createElement(
-                                        "td",
-                                        null,
-                                        order.quantity
-                                    ),
-                                    React.createElement(
-                                        "td",
-                                        null,
-                                        order.address
+                                        order.Key
                                     )
                                 );
                             })
