@@ -6181,25 +6181,7 @@ var Upload = function (_React$Component53) {
 
             event.preventDefault();
 
-            var newFile = {
-
-                "url": "c:/fakepath/",
-                "nameImage": "finding-an-amazon-reference-id-1024x449.png"
-
-            };
-
-            fetch(API_URL + '/masterpicture', {
-
-                method: 'post',
-                headers: API_HEADERS,
-                body: JSON.stringify(newFile)
-            }).then(function (response) {
-                return response.json();
-            }).then(function (response) {
-                console.log(response);
-            });
-
-            console.log(event.target.fileToUpload.value);
+            this.onClose();
         }
     }, {
         key: "fileSelectedHandler",
@@ -6234,42 +6216,6 @@ var Upload = function (_React$Component53) {
                 // return alert("There was an error uploading your photo: ", err.message);
                 console.log("There was an error uploading your photo: ", err.message);
             });
-
-            // for(let x=0,num=1000;x<files.length;x++,num+=3000){      
-            //   setTimeout(() => {         
-            //     if (files && files[x]) {
-            //         console.log(files[x])
-            //         // this.nameImage.push(this.files[x].name);          
-            //         var reader = new FileReader();
-            //         reader.readAsDataURL(files[x]);
-            //         reader.onload = function(e) {
-            //           // The file's text will be printed here
-            //           let target = event.target;
-            //           let content = target.result;          
-            //           console.log(content)
-
-            //           fetch(API_URL+'/masterpicture', {
-
-            //             method: 'post',
-            //             headers: API_HEADERS,
-            //             body: JSON.stringify(target)
-            //           }).then(response => response.json()).then(response => {
-            //             console.log(response);
-            //           });
-
-
-            //         };
-
-            //         //reader.readAsText(files[x]);
-            //         // this.reader.readAsDataURL(this.files[x]);
-            //         // this.reader.onload = (event) => {           
-            //         //     let target = event.target;
-            //         //     let content = target.result;          
-            //         //     this.url.push(content); 
-            //         //   }
-            //     }                
-            //   }, num);
-            // }    
         }
     }, {
         key: "handleFile",
