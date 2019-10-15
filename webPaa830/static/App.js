@@ -6111,7 +6111,8 @@ var Upload = function (_React$Component53) {
             showModal: false,
             files: [],
             file: '',
-            compare: []
+            compare: [],
+            compare2: []
         };
         return _this77;
     }
@@ -6251,6 +6252,8 @@ var Upload = function (_React$Component53) {
                 item = this.state.compare.Contents;
             }
 
+            console.log(this.state.compare2);
+
             return React.createElement(
                 Grid,
                 null,
@@ -6266,6 +6269,53 @@ var Upload = function (_React$Component53) {
                 React.createElement(
                     Row,
                     null,
+                    React.createElement(
+                        Col,
+                        { md: 9 },
+                        React.createElement(
+                            Panel,
+                            null,
+                            React.createElement(
+                                Form,
+                                { onSubmit: this.onsavedetail.bind(this) },
+                                React.createElement(
+                                    FormGroup,
+                                    null,
+                                    React.createElement(
+                                        Col,
+                                        { componentClass: ControlLabel, md: 4, sm: 2 },
+                                        "Description - (Most Wanted) - Image#2 - rekognition-video-console-demo-iad-352250014224-1vio7fvwvq5qve"
+                                    ),
+                                    React.createElement(
+                                        Col,
+                                        { md: 8, sm: 6 },
+                                        React.createElement(
+                                            FormControl,
+                                            { componentClass: "select", name: "development", placeholder: "Tipo de Servicio", required: true },
+                                            React.createElement(
+                                                "option",
+                                                { value: 'test' },
+                                                'test'
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    React.createElement(Col, { md: 3 })
+                ),
+                React.createElement("br", null),
+                React.createElement(
+                    Row,
+                    null,
+                    React.createElement(
+                        Button,
+                        { className: "col-md-offset-9", onClick: this.onOpen.bind(this), variant: "outline-success" },
+                        "Process \xA0 ",
+                        React.createElement("i", { className: "fa fa-star", "aria-hidden": "true" })
+                    ),
+                    "\xA0\xA0",
                     React.createElement(
                         Button,
                         { className: "pull-right", onClick: this.onOpen.bind(this), variant: "outline-success" },
@@ -6304,16 +6354,7 @@ var Upload = function (_React$Component53) {
                                         React.createElement(
                                             Col,
                                             { md: 8, sm: 6 },
-                                            React.createElement(FormControl, { type: "text", name: "description", placeholder: "Description", disabled: true }),
-                                            React.createElement(
-                                                FormControl,
-                                                { componentClass: "select", name: "development", placeholder: "Tipo de Servicio", required: true },
-                                                React.createElement(
-                                                    "option",
-                                                    { value: 'test' },
-                                                    'test'
-                                                )
-                                            )
+                                            React.createElement(FormControl, { type: "text", name: "description", placeholder: "Description" })
                                         )
                                     )
                                 ),
@@ -6378,37 +6419,6 @@ var Upload = function (_React$Component53) {
                     Row,
                     null,
                     React.createElement(
-                        Col,
-                        { md: 9 },
-                        React.createElement(
-                            Panel,
-                            null,
-                            React.createElement(
-                                Form,
-                                { onSubmit: this.onsavedetail.bind(this) },
-                                React.createElement(
-                                    FormGroup,
-                                    null,
-                                    React.createElement(
-                                        Col,
-                                        { componentClass: ControlLabel, md: 4, sm: 2 },
-                                        "Description"
-                                    ),
-                                    React.createElement(
-                                        Col,
-                                        { md: 8, sm: 6 },
-                                        React.createElement(FormControl, { type: "text", name: "description", placeholder: "Description", disabled: true })
-                                    )
-                                )
-                            )
-                        )
-                    ),
-                    React.createElement(Col, { md: 3 })
-                ),
-                React.createElement(
-                    Row,
-                    null,
-                    React.createElement(
                         Table,
                         { striped: true, bordered: true, condensed: true, hover: true },
                         React.createElement(
@@ -6420,7 +6430,8 @@ var Upload = function (_React$Component53) {
                                 React.createElement(
                                     "td",
                                     null,
-                                    "Image #1 ( New Photo )"
+                                    "Image #1 ( New Photo ) - ",
+                                    'webpaa-deployments-mobilehub-209995345'
                                 ),
                                 React.createElement(
                                     "td",
@@ -6445,6 +6456,16 @@ var Upload = function (_React$Component53) {
                                         "td",
                                         null,
                                         order.Key
+                                    ),
+                                    React.createElement(
+                                        "td",
+                                        null,
+                                        '1'
+                                    ),
+                                    React.createElement(
+                                        "td",
+                                        null,
+                                        'DN'
                                     )
                                 );
                             })

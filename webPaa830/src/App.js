@@ -4144,7 +4144,8 @@ class Upload extends React.Component{
             showModal: false,
             files: [],
             file: '',
-            compare: []           
+            compare: [],
+            compare2: []           
         }
     }
 
@@ -4193,7 +4194,7 @@ class Upload extends React.Component{
         var params = {
             Bucket: albumBucketName,
             MaxKeys: 100
-        };
+        };        
         
         s3.listObjects(params, (err, data) =>{
             if (err){
@@ -4203,7 +4204,7 @@ class Upload extends React.Component{
                     compare:data
                 })
             }
-        })
+        })        
     }
 
     onClose(){
@@ -4286,6 +4287,8 @@ class Upload extends React.Component{
 
         }
 
+        console.log(this.state.compare2)
+
 
 
         return(
@@ -4295,9 +4298,30 @@ class Upload extends React.Component{
                     
                     <h1 style={{'color':'#cd6607'}}>Send/replenish Inventory</h1>
                 </Row>
-                <Row>
+                <Row>                                    
+                    <Col md={9}>                    
+                        <Panel>
+                            <Form onSubmit={this.onsavedetail.bind(this)}>                                                            
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} md={4} sm={2}>
+                                        Description - (Most Wanted) - Image#2 - rekognition-video-console-demo-iad-352250014224-1vio7fvwvq5qve
+                                    </Col>                              
+                                    <Col md={8} sm={6}>
+                                        <FormControl componentClass="select" name="development" placeholder="Tipo de Servicio" required >                                                
+                                            <option value={'test'}>{'test'}</option>                                                                                    
+                                        </FormControl>
+                                    </Col>
+                                </FormGroup>
+                            </Form>
+                        </Panel>                        
+                    </Col>
+                    <Col md={3}></Col>
+                </Row>                
+                <br/>
+                <Row>                    
+                <Button className="col-md-offset-9" onClick={this.onOpen.bind(this)} variant="outline-success">Process &nbsp; <i className="fa fa-star" aria-hidden="true"></i></Button>&nbsp;&nbsp;
                 <Button className="pull-right" onClick={this.onOpen.bind(this)} variant="outline-success">Upload &nbsp; <i className="fa fa-arrow-up" aria-hidden="true"></i></Button>
-                {/* <input type="file" className="pull-right" variant="outline-success"/>Upload &nbsp; <i className="fa fa-arrow-up" aria-hidden="true"></i>                 */}
+                
 
                 <Modal show={this.state.showModal} onHide={this.onClose.bind(this)}>
                     <Modal.Header closeButton>
@@ -4312,10 +4336,7 @@ class Upload extends React.Component{
                                             Description
                                         </Col>                              
                                         <Col md={8} sm={6}>
-                                            <FormControl type="text" name="description" placeholder="Description" disabled />
-                                            <FormControl componentClass="select" name="development" placeholder="Tipo de Servicio" required >                                                
-                                                 <option value={'test'}>{'test'}</option>                                                                                    
-                                            </FormControl>
+                                            <FormControl type="text" name="description" placeholder="Description" />                                            
                                         </Col>
                                     </FormGroup>
                                 </Row>
@@ -4353,28 +4374,11 @@ class Upload extends React.Component{
                 </Modal>
                 </Row>                
                 <br/>
-                <Row>                                    
-                    <Col md={9}>                    
-                        <Panel>
-                            <Form onSubmit={this.onsavedetail.bind(this)}>                                                            
-                                <FormGroup>
-                                    <Col componentClass={ControlLabel} md={4} sm={2}>
-                                        Description
-                                    </Col>                              
-                                    <Col md={8} sm={6}>
-                                        <FormControl type="text" name="description" placeholder="Description" disabled />
-                                    </Col>
-                                </FormGroup>
-                            </Form>
-                        </Panel>                        
-                    </Col>
-                    <Col md={3}></Col>
-                </Row>                
                 <Row>                
                     <Table striped bordered condensed hover>
                     <thead>
                         <tr>
-                            <td>Image #1 ( New Photo )</td>                                                        
+                            <td>Image #1 ( New Photo ) - {'webpaa-deployments-mobilehub-209995345'}</td>                                                        
                             <td>Quantity</td>
                             <td>Address</td>
                         </tr>
@@ -4384,9 +4388,9 @@ class Upload extends React.Component{
                          item.map(
                              (order) =>
                                         <tr>
-                                            <td>
-                                             {order.Key}
-                                            </td>
+                                            <td>{order.Key}</td>
+                                            <td>{'1'}</td>
+                                            <td>{'DN'}</td>
                                         </tr>
                          )
                      }
