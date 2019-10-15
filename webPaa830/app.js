@@ -5,6 +5,7 @@ var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jwt-simple');
 var app = express();
 var cors = require('cors')
+var AWS = require('aws-sdk');
 app.use(cors())
 app.options('*', cors())
 app.use(cors({
@@ -22,6 +23,10 @@ var User = require('./models/user.js');
 var Order = require('./models/order.js');
 var masterController = require('./controller/masterController');
 var orderController = require('./controller/orderController');
+
+var albumBucketName = "rekognition-video-console-demo-iad-352250014224-1vio7fvwvq5qve";
+var bucketRegion = "us-east-1";
+var IdentityPoolId = "us-east-1:3dd5b3b8-326c-4be6-9f32-67943932637a";
 
 app.get('/cookies', function(req,res){
 
@@ -243,6 +248,32 @@ app.post('/masterpicture', async (req, res)=>{
 
     res.send("ready");
   
+})
+
+app.get('/bucket', async(req,res)=>{
+
+    AWS.config.update({
+        region: bucketRegion,
+        credentials: new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: IdentityPoolId
+        })
+    });
+
+    var s3 = new AWS.S3({
+        apiVersion: "2006-03-01",
+        params: { Bucket: albumBucketName }
+    });
+
+    s3.listObjects({ Delimiter: "/" }, function(err, data) {
+
+        if (err) {
+            return alert("There was an error listing your albums: " + err.message);
+          } else {
+              console.log(data)
+          }
+
+    })
+
 })
 
 
