@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -30,7 +30,6 @@ var Row = ReactBootstrap.Row;
 var Panel = ReactBootstrap.Panel;
 
 var Pagination = ReactBootstrap.Pagination;
-
 var Form = ReactBootstrap.Form;
 var Radio = ReactBootstrap.Radio;
 var FormGroup = ReactBootstrap.FormGroup;
@@ -40,6 +39,21 @@ var Col = ReactBootstrap.Col;
 var ListGroup = ReactBootstrap.ListGroup;
 var Table = ReactBootstrap.Table;
 
+var albumBucketName = "webpaa-deployments-mobilehub-2128298286";
+var bucketRegion = "us-east-1";
+var IdentityPoolId = "us-east-1:3dd5b3b8-326c-4be6-9f32-67943932637a";
+
+AWS.config.update({
+    region: bucketRegion,
+    credentials: new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: IdentityPoolId
+    })
+});
+
+var s3 = new AWS.S3({
+    apiVersion: "2006-03-01",
+    params: { Bucket: albumBucketName }
+});
 var Autosuggest = Autosuggest;
 
 var moment = moment;
@@ -83,7 +97,7 @@ var App = function (_React$Component) {
     }
 
     _createClass(App, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this2 = this;
 
@@ -99,7 +113,7 @@ var App = function (_React$Component) {
             });
         }
     }, {
-        key: 'setCookie',
+        key: "setCookie",
         value: function setCookie(event) {
 
             event.preventDefault();
@@ -127,13 +141,13 @@ var App = function (_React$Component) {
             localStorage.setItem(TOKEN_KEY, "1234");
         }
     }, {
-        key: 'isAuthenticated',
+        key: "isAuthenticated",
         value: function isAuthenticated() {
 
             return !!localStorage.getItem(TOKEN_KEY);
         }
     }, {
-        key: 'setRegistration',
+        key: "setRegistration",
         value: function setRegistration(event) {
 
             event.preventDefault();
@@ -155,7 +169,7 @@ var App = function (_React$Component) {
             window.location.reload();
         }
     }, {
-        key: 'onVisibility',
+        key: "onVisibility",
         value: function onVisibility(event) {
 
             if (!this.state.visibility) {
@@ -176,14 +190,14 @@ var App = function (_React$Component) {
             }
         }
     }, {
-        key: 'onSearch',
+        key: "onSearch",
         value: function onSearch(event) {
             this.setState({
                 searchText: event.target.value
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
 
             var activeTab = void 0;
@@ -200,14 +214,14 @@ var App = function (_React$Component) {
             });
 
             var dashboard = React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(Toolbar, {
                     searchCallback: this.onSearch.bind(this)
                 }),
                 React.createElement(
-                    'div',
-                    { className: 'container' },
+                    "div",
+                    { className: "container" },
                     this.props.children
                 )
             );
@@ -221,7 +235,7 @@ var App = function (_React$Component) {
             if (this.isAuthenticated()) {
 
                 return React.createElement(
-                    'div',
+                    "div",
                     null,
                     dashboard
                 );
@@ -229,11 +243,11 @@ var App = function (_React$Component) {
             return React.createElement(
                 Grid,
                 null,
-                React.createElement('br', null),
-                React.createElement('br', null),
-                React.createElement('br', null),
-                React.createElement('br', null),
-                React.createElement('br', null),
+                React.createElement("br", null),
+                React.createElement("br", null),
+                React.createElement("br", null),
+                React.createElement("br", null),
+                React.createElement("br", null),
                 React.createElement(
                     Panel,
                     null,
@@ -241,29 +255,29 @@ var App = function (_React$Component) {
                         Row,
                         null,
                         React.createElement(
-                            'ul',
-                            { className: 'nav nav-tabs' },
+                            "ul",
+                            { className: "nav nav-tabs" },
                             React.createElement(
-                                'li',
+                                "li",
                                 { className: this.state.cssActiveLogin },
                                 React.createElement(
-                                    'a',
+                                    "a",
                                     { onClick: this.onVisibility.bind(this) },
                                     React.createElement(
-                                        'p',
+                                        "p",
                                         null,
                                         'Login'
                                     )
                                 )
                             ),
                             React.createElement(
-                                'li',
+                                "li",
                                 { className: this.state.cssActiveRegistraction },
                                 React.createElement(
-                                    'a',
+                                    "a",
                                     { onClick: this.onVisibility.bind(this) },
                                     React.createElement(
-                                        'p',
+                                        "p",
                                         null,
                                         'Registration'
                                     )
@@ -271,8 +285,8 @@ var App = function (_React$Component) {
                             )
                         ),
                         React.createElement(
-                            'div',
-                            { 'class': 'tab-content' },
+                            "div",
+                            { "class": "tab-content" },
                             activeTab
                         )
                     )
@@ -303,7 +317,7 @@ var Actions = function (_React$Component2) {
     }
 
     _createClass(Actions, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this4 = this;
 
@@ -327,7 +341,7 @@ var Actions = function (_React$Component2) {
             });
         }
     }, {
-        key: 'onPrinted',
+        key: "onPrinted",
         value: function onPrinted() {
 
             window.print();
@@ -335,7 +349,7 @@ var Actions = function (_React$Component2) {
             window.location.href = '/';
         }
     }, {
-        key: 'setPayment',
+        key: "setPayment",
         value: function setPayment(event) {
 
             event.preventDefault();
@@ -364,7 +378,7 @@ var Actions = function (_React$Component2) {
             // console.log(newMaster)
         }
     }, {
-        key: 'onClicked',
+        key: "onClicked",
         value: function onClicked() {
 
             this.setState({
@@ -373,7 +387,7 @@ var Actions = function (_React$Component2) {
             });
         }
     }, {
-        key: 'onClose',
+        key: "onClose",
         value: function onClose() {
 
             this.setState({
@@ -381,7 +395,7 @@ var Actions = function (_React$Component2) {
             });
         }
     }, {
-        key: 'onsavedetail',
+        key: "onsavedetail",
         value: function onsavedetail(event) {
 
             event.preventDefault();
@@ -412,7 +426,7 @@ var Actions = function (_React$Component2) {
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this5 = this;
 
@@ -434,17 +448,17 @@ var Actions = function (_React$Component2) {
             }
 
             var loading = React.createElement(
-                'div',
+                "div",
                 { style: { 'text-align': 'center' } },
-                React.createElement('img', { src: 'http://localhost:8084/cargando.gif', alt: 'Avatar' })
+                React.createElement("img", { src: "http://localhost:8084/cargando.gif", alt: "Avatar" })
             );
 
             var bodyToLoad = React.createElement(
-                'div',
-                { className: 'list-group' },
+                "div",
+                { className: "list-group" },
                 React.createElement(
-                    'div',
-                    { className: 'list-group-item' },
+                    "div",
+                    { className: "list-group-item" },
                     React.createElement(
                         Row,
                         null,
@@ -452,53 +466,53 @@ var Actions = function (_React$Component2) {
                             Col,
                             { md: 3 },
                             React.createElement(
-                                'p',
+                                "p",
                                 null,
-                                'Name'
+                                "Name"
                             )
                         ),
                         React.createElement(
                             Col,
                             { md: 3 },
                             React.createElement(
-                                'p',
+                                "p",
                                 null,
-                                'Time'
+                                "Time"
                             )
                         ),
                         React.createElement(
                             Col,
                             { md: 3 },
                             React.createElement(
-                                'p',
+                                "p",
                                 null,
-                                'Developer'
+                                "Developer"
                             )
                         ),
                         React.createElement(
                             Col,
                             { md: 2 },
                             React.createElement(
-                                'p',
+                                "p",
                                 null,
-                                'Sign'
+                                "Sign"
                             )
                         ),
                         React.createElement(
                             Col,
                             { md: 1 },
                             React.createElement(
-                                'p',
+                                "p",
                                 null,
-                                'Acceptance'
+                                "Acceptance"
                             )
                         )
                     )
                 ),
                 items.map(function (master) {
                     return React.createElement(
-                        'div',
-                        { className: 'list-group-item' },
+                        "div",
+                        { className: "list-group-item" },
                         React.createElement(
                             Row,
                             null,
@@ -509,7 +523,7 @@ var Actions = function (_React$Component2) {
                                     Link,
                                     { to: '/profile/' + master.user },
                                     React.createElement(
-                                        'p',
+                                        "p",
                                         null,
                                         master.user
                                     )
@@ -519,7 +533,7 @@ var Actions = function (_React$Component2) {
                                 Col,
                                 { md: 3 },
                                 React.createElement(
-                                    'p',
+                                    "p",
                                     null,
                                     master.quantity
                                 )
@@ -528,7 +542,7 @@ var Actions = function (_React$Component2) {
                                 Col,
                                 { md: 3 },
                                 React.createElement(
-                                    'p',
+                                    "p",
                                     null,
                                     master.project
                                 )
@@ -537,9 +551,9 @@ var Actions = function (_React$Component2) {
                                 Col,
                                 { md: 2 },
                                 React.createElement(
-                                    'p',
+                                    "p",
                                     null,
-                                    'Cras justo odio'
+                                    "Cras justo odio"
                                 )
                             ),
                             React.createElement(
@@ -547,8 +561,8 @@ var Actions = function (_React$Component2) {
                                 { md: 1 },
                                 React.createElement(
                                     Button,
-                                    { onClick: _this5.onClicked.bind(_this5), className: 'btn btn-success btn-lg' },
-                                    React.createElement('i', { className: 'fa fa-check', 'aria-hidden': 'true' })
+                                    { onClick: _this5.onClicked.bind(_this5), className: "btn btn-success btn-lg" },
+                                    React.createElement("i", { className: "fa fa-check", "aria-hidden": "true" })
                                 ),
                                 React.createElement(
                                     Modal,
@@ -559,7 +573,7 @@ var Actions = function (_React$Component2) {
                                         React.createElement(
                                             Modal.Title,
                                             null,
-                                            'Modal heading'
+                                            "Modal heading"
                                         )
                                     ),
                                     React.createElement(
@@ -577,16 +591,16 @@ var Actions = function (_React$Component2) {
                                                     React.createElement(
                                                         Col,
                                                         { componentClass: ControlLabel, md: 4, sm: 2 },
-                                                        'Quantity'
+                                                        "Quantity"
                                                     ),
                                                     React.createElement(
                                                         Col,
                                                         { md: 8, sm: 6 },
-                                                        React.createElement(FormControl, { type: 'text', name: 'quantity', value: master.quantity, placeholder: 'Quantity', required: true })
+                                                        React.createElement(FormControl, { type: "text", name: "quantity", value: master.quantity, placeholder: "Quantity", required: true })
                                                     )
                                                 )
                                             ),
-                                            React.createElement('br', null),
+                                            React.createElement("br", null),
                                             React.createElement(
                                                 Row,
                                                 null,
@@ -596,16 +610,16 @@ var Actions = function (_React$Component2) {
                                                     React.createElement(
                                                         Col,
                                                         { componentClass: ControlLabel, md: 4, sm: 2 },
-                                                        'Name'
+                                                        "Name"
                                                     ),
                                                     React.createElement(
                                                         Col,
                                                         { md: 8, sm: 6 },
-                                                        React.createElement(FormControl, { type: 'text', name: 'firstname', value: master.user, placeholder: 'Name', required: true })
+                                                        React.createElement(FormControl, { type: "text", name: "firstname", value: master.user, placeholder: "Name", required: true })
                                                     )
                                                 )
                                             ),
-                                            React.createElement('br', null),
+                                            React.createElement("br", null),
                                             React.createElement(
                                                 Row,
                                                 null,
@@ -615,26 +629,26 @@ var Actions = function (_React$Component2) {
                                                     React.createElement(
                                                         Col,
                                                         { componentClass: ControlLabel, md: 4, sm: 2 },
-                                                        'Address'
+                                                        "Address"
                                                     ),
                                                     React.createElement(
                                                         Col,
                                                         { md: 8, sm: 6 },
-                                                        React.createElement(FormControl, { type: 'text', name: 'address', value: master.quantity, placeholder: 'Address', required: true })
+                                                        React.createElement(FormControl, { type: "text", name: "address", value: master.quantity, placeholder: "Address", required: true })
                                                     )
                                                 )
                                             ),
-                                            React.createElement('br', null),
+                                            React.createElement("br", null),
                                             React.createElement(
                                                 Row,
                                                 null,
                                                 React.createElement(
                                                     Col,
-                                                    { className: 'col-md-offset-10' },
+                                                    { className: "col-md-offset-10" },
                                                     React.createElement(
                                                         Button,
-                                                        { type: 'submit' },
-                                                        'Save'
+                                                        { type: "submit" },
+                                                        "Save"
                                                     )
                                                 )
                                             )
@@ -651,25 +665,25 @@ var Actions = function (_React$Component2) {
                 Panel,
                 { header: date },
                 React.createElement(
-                    'div',
-                    { className: 'card' },
-                    React.createElement('img', { src: "http://localhost:8084/executed/" + image, alt: 'Avatar', style: { "width": "100%" } }),
+                    "div",
+                    { className: "card" },
+                    React.createElement("img", { src: "http://localhost:8084/executed/" + image, alt: "Avatar", style: { "width": "100%" } }),
                     React.createElement(
-                        'div',
-                        { className: 'container' },
+                        "div",
+                        { className: "container" },
                         React.createElement(
-                            'h4',
+                            "h4",
                             null,
                             React.createElement(
-                                'b',
+                                "b",
                                 null,
                                 name
                             )
                         ),
                         React.createElement(
-                            'p',
+                            "p",
                             null,
-                            'Architect  Engineer'
+                            "Architect  Engineer"
                         )
                     )
                 )
@@ -709,14 +723,14 @@ var ActionsTable = function (_React$Component3) {
     }
 
     _createClass(ActionsTable, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             var today = moment(new Date()).format('DD-MM-YYYY');
 
             return React.createElement(
-                'div',
-                { id: 'printcss ', style: { 'margin-left': '10px' } },
+                "div",
+                { id: "printcss ", style: { 'margin-left': '10px' } },
                 React.createElement(
                     Grid,
                     null,
@@ -727,52 +741,52 @@ var ActionsTable = function (_React$Component3) {
                             Col,
                             { xs: 12 },
                             React.createElement(
-                                'h3',
+                                "h3",
                                 null,
-                                'Orden de Servicio '
+                                "Orden de Servicio "
                             ),
                             React.createElement(
-                                'h4',
+                                "h4",
                                 null,
-                                'Supreme - Lavanderia '
+                                "Supreme - Lavanderia "
                             ),
                             React.createElement(
-                                'h5',
+                                "h5",
                                 null,
-                                'Av. Romulo Betancourt No. 1516 esq. 12 de Julio'
+                                "Av. Romulo Betancourt No. 1516 esq. 12 de Julio"
                             ),
                             React.createElement(
-                                'h5',
+                                "h5",
                                 null,
-                                'Plaza Thalys, Bella Vista, Sto. Dgo.'
+                                "Plaza Thalys, Bella Vista, Sto. Dgo."
                             ),
                             React.createElement(
-                                'h4',
+                                "h4",
                                 null,
-                                'Tel.: 829-594-8430'
+                                "Tel.: 829-594-8430"
                             ),
                             React.createElement(
-                                'h5',
+                                "h5",
                                 null,
-                                'Horario Lunes a Viernes 07:30am a 7:00pm'
+                                "Horario Lunes a Viernes 07:30am a 7:00pm"
                             ),
                             React.createElement(
-                                'h5',
+                                "h5",
                                 null,
-                                'Sabado 08:30am a 5:00pm'
+                                "Sabado 08:30am a 5:00pm"
                             ),
                             React.createElement(
-                                'h5',
+                                "h5",
                                 null,
-                                'RNC: 131576958'
+                                "RNC: 131576958"
                             ),
                             React.createElement(
-                                'h5',
-                                { className: 'col-xs-offset-7' },
-                                'Fecha: ',
+                                "h5",
+                                { className: "col-xs-offset-7" },
+                                "Fecha: ",
                                 today
                             ),
-                            React.createElement('br', null)
+                            React.createElement("br", null)
                         )
                     ),
                     React.createElement(
@@ -786,34 +800,34 @@ var ActionsTable = function (_React$Component3) {
                                 { striped: true, bordered: true, condensed: true, hover: true,
                                     style: { 'position': 'relative', 'width': '55%', 'margin': '0' } },
                                 React.createElement(
-                                    'thead',
+                                    "thead",
                                     null,
                                     React.createElement(
-                                        'tr',
+                                        "tr",
                                         null,
                                         React.createElement(
-                                            'th',
+                                            "th",
                                             { style: { 'width': '15px',
                                                     'font-size': '25px', 'border-spacing': '0 30px' } },
-                                            '#'
+                                            "#"
                                         ),
                                         React.createElement(
-                                            'th',
+                                            "th",
                                             { style: { 'width': '15px',
                                                     'font-size': '25px' } },
-                                            'Articulo'
+                                            "Articulo"
                                         ),
                                         React.createElement(
-                                            'th',
+                                            "th",
                                             { style: { 'width': '15px',
                                                     'font-size': '25px' } },
-                                            'Precio'
+                                            "Precio"
                                         ),
                                         React.createElement(
-                                            'th',
+                                            "th",
                                             { style: { 'width': '15px',
                                                     'font-size': '25px' } },
-                                            'Servicio'
+                                            "Servicio"
                                         )
                                     )
                                 ),
@@ -827,7 +841,7 @@ var ActionsTable = function (_React$Component3) {
                                     });
                                 }),
                                 React.createElement(
-                                    'tfoot',
+                                    "tfoot",
                                     null,
                                     React.createElement(ActionsTableBodyFooter, {
                                         parameter: this.props.parameter,
@@ -855,7 +869,7 @@ var ActionsTableBodyFooter = function (_React$Component4) {
     }
 
     _createClass(ActionsTableBodyFooter, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             var nextState = this.props.masterAPI;
@@ -868,37 +882,37 @@ var ActionsTableBodyFooter = function (_React$Component4) {
             }
 
             return React.createElement(
-                'tr',
+                "tr",
                 null,
                 React.createElement(
-                    'td',
+                    "td",
                     null,
-                    '\xA0'
+                    "\xA0"
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
-                    '\xA0'
+                    "\xA0"
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     { style: { 'width': '15px', 'font-size': '20px' } },
-                    'Total'
+                    "Total"
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     { style: { 'width': '15px',
                             'font-size': '20px' } },
-                    'RD$',
+                    "RD$",
                     zoom,
-                    '.00'
+                    ".00"
                 ),
-                React.createElement('br', null),
-                React.createElement('br', null),
-                React.createElement('br', null),
-                React.createElement('br', null),
-                React.createElement('br', null),
-                React.createElement('br', null)
+                React.createElement("br", null),
+                React.createElement("br", null),
+                React.createElement("br", null),
+                React.createElement("br", null),
+                React.createElement("br", null),
+                React.createElement("br", null)
             );
         }
     }]);
@@ -916,11 +930,11 @@ var ActionsTableBody = function (_React$Component5) {
     }
 
     _createClass(ActionsTableBody, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
-                'tbody',
+                "tbody",
                 null,
                 this.props.item.map(function (master, index) {
                     return React.createElement(ActionsTableBodyDetail, {
@@ -950,31 +964,31 @@ var ActionsTableBodyDetail = function (_React$Component6) {
     }
 
     _createClass(ActionsTableBodyDetail, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
-                'tr',
+                "tr",
                 null,
                 React.createElement(
-                    'td',
+                    "td",
                     { style: { 'font-size': '20px' } },
-                    '\xA0'
+                    "\xA0"
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     { style: { 'font-size': '20px' } },
                     this.props.item
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     {
                         style: { 'font-size': '20px' } },
                     this.props.project,
-                    '.00'
+                    ".00"
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     {
                         style: { 'font-size': '20px' } },
                     this.props.development
@@ -996,7 +1010,7 @@ var Login = function (_React$Component7) {
     }
 
     _createClass(Login, [{
-        key: 'onSubmit',
+        key: "onSubmit",
         value: function onSubmit(event) {
 
             event.preventDefault();
@@ -1029,14 +1043,14 @@ var Login = function (_React$Component7) {
             }, 2000);
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
-                'form',
+                "form",
                 { onSubmit: this.onSubmit.bind(this) },
-                React.createElement('br', null),
-                React.createElement('br', null),
+                React.createElement("br", null),
+                React.createElement("br", null),
                 React.createElement(
                     Row,
                     null,
@@ -1045,23 +1059,23 @@ var Login = function (_React$Component7) {
                         Col,
                         { md: 6, sm: 6, xs: 6 },
                         React.createElement(
-                            'div',
-                            { className: 'form-group' },
+                            "div",
+                            { className: "form-group" },
                             React.createElement(
-                                'div',
-                                { className: 'col-md-2 col-sm-2' },
+                                "div",
+                                { className: "col-md-2 col-sm-2" },
                                 React.createElement(
-                                    'label',
+                                    "label",
                                     null,
-                                    'Nickname:'
+                                    "Nickname:"
                                 )
                             ),
                             React.createElement(
-                                'div',
-                                { className: 'col-md-10 col-sm-10' },
-                                React.createElement('input', {
-                                    type: 'text',
-                                    className: 'form-control', id: 'username', name: 'username', placeholder: 'Type your nickname' })
+                                "div",
+                                { className: "col-md-10 col-sm-10" },
+                                React.createElement("input", {
+                                    type: "text",
+                                    className: "form-control", id: "username", name: "username", placeholder: "Type your nickname" })
                             )
                         )
                     ),
@@ -1077,8 +1091,8 @@ var Login = function (_React$Component7) {
                         { md: 3, sm: 3, xs: 3 },
                         React.createElement(
                             Button,
-                            { type: 'submit' },
-                            'Login'
+                            { type: "submit" },
+                            "Login"
                         )
                     )
                 )
@@ -1099,7 +1113,7 @@ var Registration = function (_React$Component8) {
     }
 
     _createClass(Registration, [{
-        key: 'onSubmit',
+        key: "onSubmit",
         value: function onSubmit(event) {
 
             event.preventDefault();
@@ -1122,14 +1136,14 @@ var Registration = function (_React$Component8) {
             window.location.reload();
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
-                'form',
+                "form",
                 { onSubmit: this.onSubmit.bind(this) },
-                React.createElement('br', null),
-                React.createElement('br', null),
+                React.createElement("br", null),
+                React.createElement("br", null),
                 React.createElement(
                     Row,
                     null,
@@ -1138,29 +1152,29 @@ var Registration = function (_React$Component8) {
                         Col,
                         { md: 6, sm: 6, xs: 6 },
                         React.createElement(
-                            'div',
-                            { className: 'form-group' },
+                            "div",
+                            { className: "form-group" },
                             React.createElement(
-                                'div',
-                                { className: 'col-md-2 col-sm-2' },
+                                "div",
+                                { className: "col-md-2 col-sm-2" },
                                 React.createElement(
-                                    'label',
+                                    "label",
                                     null,
-                                    'Nickname:'
+                                    "Nickname:"
                                 )
                             ),
                             React.createElement(
-                                'div',
-                                { className: 'col-md-10 col-sm-10' },
-                                React.createElement('input', {
-                                    type: 'text',
-                                    className: 'form-control', id: 'first_name', name: 'first_name', placeholder: 'Type your nickname' })
+                                "div",
+                                { className: "col-md-10 col-sm-10" },
+                                React.createElement("input", {
+                                    type: "text",
+                                    className: "form-control", id: "first_name", name: "first_name", placeholder: "Type your nickname" })
                             )
                         )
                     ),
                     React.createElement(Col, { md: 3, sm: 3, xs: 3 })
                 ),
-                React.createElement('br', null),
+                React.createElement("br", null),
                 React.createElement(
                     Row,
                     null,
@@ -1169,23 +1183,23 @@ var Registration = function (_React$Component8) {
                         Col,
                         { md: 6, sm: 6, xs: 6 },
                         React.createElement(
-                            'div',
-                            { className: 'form-group' },
+                            "div",
+                            { className: "form-group" },
                             React.createElement(
-                                'div',
-                                { className: 'col-md-2 col-sm-2' },
+                                "div",
+                                { className: "col-md-2 col-sm-2" },
                                 React.createElement(
-                                    'label',
+                                    "label",
                                     null,
-                                    'Email:'
+                                    "Email:"
                                 )
                             ),
                             React.createElement(
-                                'div',
-                                { className: 'col-md-10 col-sm-10' },
-                                React.createElement('input', {
-                                    type: 'Email',
-                                    className: 'form-control', id: 'email', name: 'email', placeholder: 'Type your email address' })
+                                "div",
+                                { className: "col-md-10 col-sm-10" },
+                                React.createElement("input", {
+                                    type: "Email",
+                                    className: "form-control", id: "email", name: "email", placeholder: "Type your email address" })
                             )
                         )
                     ),
@@ -1201,8 +1215,8 @@ var Registration = function (_React$Component8) {
                         { md: 3, sm: 3, xs: 3 },
                         React.createElement(
                             Button,
-                            { type: 'submit' },
-                            'Save'
+                            { type: "submit" },
+                            "Save"
                         )
                     )
                 )
@@ -1228,47 +1242,47 @@ var Toolbar = function (_React$Component9) {
     }
 
     _createClass(Toolbar, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
 
             document.body.style.backgroundImage = "none";
         }
     }, {
-        key: 'onClicked',
+        key: "onClicked",
         value: function onClicked() {
 
             localStorage.removeItem(TOKEN_KEY);
             window.location.reload();
         }
     }, {
-        key: 'onRefreshed',
+        key: "onRefreshed",
         value: function onRefreshed() {
             this.props.history.push("/detail");
             window.location.reload();
         }
     }, {
-        key: 'onChanged',
+        key: "onChanged",
         value: function onChanged(event) {
 
             this.props.searchCallback(event);
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
 
             var toolbarES = React.createElement(
                 Navbar,
                 null,
                 React.createElement(
-                    'div',
-                    { className: 'navbar-header' },
+                    "div",
+                    { className: "navbar-header" },
                     React.createElement(
-                        'div',
-                        { className: 'navbar-brand' },
+                        "div",
+                        { className: "navbar-brand" },
                         React.createElement(
                             Link,
                             { to: '/', onClick: this.onRefreshed.bind(this) },
-                            'Info-Solutions SYS'
+                            "Info-Solutions SYS"
                         )
                     )
                 ),
@@ -1276,46 +1290,46 @@ var Toolbar = function (_React$Component9) {
                     Nav,
                     null,
                     React.createElement(
-                        'li',
+                        "li",
                         null,
                         React.createElement(
                             Link,
                             { to: '/master' },
-                            'Master'
+                            "Master"
                         )
                     ),
                     React.createElement(
-                        'li',
+                        "li",
                         null,
                         React.createElement(
                             Link,
                             { to: '/detail' },
-                            'Detail'
+                            "Detail"
                         )
                     ),
                     React.createElement(
                         NavDropdown,
-                        { eventKey: 3, title: 'Report', id: 'basic-nav-dropdown' },
+                        { eventKey: 3, title: "Report", id: "basic-nav-dropdown" },
                         React.createElement(
                             MenuItem,
                             { eventKey: 3.1 },
                             React.createElement(
                                 Link,
-                                { to: '/partials' },
-                                'Partials'
+                                { to: "/partials" },
+                                "Partials"
                             )
                         )
                     ),
                     React.createElement(
                         NavDropdown,
-                        { style: { 'float': 'right', 'position': 'absolute', 'left': '80%' }, eventKey: 3, title: 'Perfil Usuario', id: 'basic-nav-dropdown' },
+                        { style: { 'float': 'right', 'position': 'absolute', 'left': '80%' }, eventKey: 3, title: "Perfil Usuario", id: "basic-nav-dropdown" },
                         React.createElement(
                             MenuItem,
                             { eventKey: 3.1 },
                             React.createElement(
                                 Link,
-                                { to: '/account' },
-                                'Cuenta de Usuario'
+                                { to: "/account" },
+                                "Cuenta de Usuario"
                             )
                         ),
                         React.createElement(
@@ -1323,8 +1337,8 @@ var Toolbar = function (_React$Component9) {
                             { eventKey: 3.2 },
                             React.createElement(
                                 Link,
-                                { onClick: this.onClicked, to: '/logout' },
-                                'Log Out'
+                                { onClick: this.onClicked, to: "/logout" },
+                                "Log Out"
                             )
                         )
                     )
@@ -1335,15 +1349,15 @@ var Toolbar = function (_React$Component9) {
                 Navbar,
                 null,
                 React.createElement(
-                    'div',
-                    { className: 'navbar-header' },
+                    "div",
+                    { className: "navbar-header" },
                     React.createElement(
-                        'div',
-                        { className: 'navbar-brand', style: { "height": "10%" } },
+                        "div",
+                        { className: "navbar-brand", style: { "height": "10%" } },
                         React.createElement(
                             Link,
                             { to: '/', onClick: this.onRefreshed.bind(this) },
-                            React.createElement('img', { src: 'http://localhost:8084/testiiiing.jpg', width: '100px', height: '100px' })
+                            React.createElement("img", { src: "http://localhost:8084/testiiiing.jpg", width: "100px", height: "100px" })
                         )
                     )
                 ),
@@ -1351,23 +1365,23 @@ var Toolbar = function (_React$Component9) {
                     Nav,
                     null,
                     React.createElement(
-                        'li',
+                        "li",
                         { style: { "top": "40px" } },
                         React.createElement(
                             Form,
                             { inline: true, style: { "height": "10%" } },
-                            React.createElement(FormControl, { onChange: this.onChanged.bind(this), name: 'search', style: { 'width': '700px', 'margin-top': '10px' }, type: 'text', placeholder: 'Search', className: 'mr-sm-2' }),
+                            React.createElement(FormControl, { onChange: this.onChanged.bind(this), name: "search", style: { 'width': '700px', 'margin-top': '10px' }, type: "text", placeholder: "Search", className: "mr-sm-2" }),
                             React.createElement(
                                 Button,
-                                { style: { 'margin-top': '10px' }, variant: 'outline-success' },
-                                React.createElement('i', { className: 'fa fa-search', 'aria-hidden': 'true' })
+                                { style: { 'margin-top': '10px' }, variant: "outline-success" },
+                                React.createElement("i", { className: "fa fa-search", "aria-hidden": "true" })
                             )
                         )
                     ),
-                    React.createElement('i', { style: { 'position': 'absolute', 'left': '74%', 'top': '42%', 'font-size': '20px' }, className: 'fa fa-shopping-cart', 'aria-hidden': 'true' }),
+                    React.createElement("i", { style: { 'position': 'absolute', 'left': '74%', 'top': '42%', 'font-size': '20px' }, className: "fa fa-shopping-cart", "aria-hidden": "true" }),
                     React.createElement(
                         NavDropdown,
-                        { style: { 'float': 'right', 'position': 'absolute', 'left': '75%', 'top': '29%', 'font-size': '20px' }, eventKey: 3, title: 'Cart', id: 'basic-nav-dropdown' },
+                        { style: { 'float': 'right', 'position': 'absolute', 'left': '75%', 'top': '29%', 'font-size': '20px' }, eventKey: 3, title: "Cart", id: "basic-nav-dropdown" },
                         React.createElement(CardNarv, null)
                     )
                 )
@@ -1376,14 +1390,14 @@ var Toolbar = function (_React$Component9) {
             if (languageActive) {
 
                 return React.createElement(
-                    'div',
+                    "div",
                     null,
-                    React.createElement('br', null),
+                    React.createElement("br", null),
                     toolbarEN
                 );
             } else {
                 return React.createElement(
-                    'div',
+                    "div",
                     null,
                     toolbarES
                 );
@@ -1404,13 +1418,13 @@ var About = function (_React$Component10) {
     }
 
     _createClass(About, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
-                'h1',
+                "h1",
                 null,
-                'About'
+                "About"
             );
         }
     }]);
@@ -1428,13 +1442,13 @@ var Repos = function (_React$Component11) {
     }
 
     _createClass(Repos, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
-                'h1',
+                "h1",
                 null,
-                'Repos ',
+                "Repos ",
                 this.props.params.repo_name
             );
         }
@@ -1466,7 +1480,7 @@ var Master = function (_React$Component12) {
     }
 
     _createClass(Master, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this16 = this;
 
@@ -1495,14 +1509,14 @@ var Master = function (_React$Component12) {
             });
         }
     }, {
-        key: 'close',
+        key: "close",
         value: function close() {
             this.setState({
                 showModal: false
             });
         }
     }, {
-        key: 'open',
+        key: "open",
         value: function open(id) {
 
             this.setState({
@@ -1511,7 +1525,7 @@ var Master = function (_React$Component12) {
             });
         }
     }, {
-        key: 'onSaveMaster',
+        key: "onSaveMaster",
         value: function onSaveMaster(event) {
 
             event.preventDefault();
@@ -1571,7 +1585,7 @@ var Master = function (_React$Component12) {
             //    })
         }
     }, {
-        key: 'onSaveDetail',
+        key: "onSaveDetail",
         value: function onSaveDetail(event) {
 
             event.preventDefault();
@@ -1628,7 +1642,7 @@ var Master = function (_React$Component12) {
             });
         }
     }, {
-        key: 'onDeleteMaster',
+        key: "onDeleteMaster",
         value: function onDeleteMaster(value) {
 
             var nextState = this.state.masterAPI;
@@ -1652,7 +1666,7 @@ var Master = function (_React$Component12) {
             });
         }
     }, {
-        key: 'onHandleUserInput',
+        key: "onHandleUserInput",
         value: function onHandleUserInput(event) {
 
             this.setState({
@@ -1661,7 +1675,7 @@ var Master = function (_React$Component12) {
             });
         }
     }, {
-        key: 'handleSelect',
+        key: "handleSelect",
         value: function handleSelect(eventKey) {
 
             this.setState({
@@ -1670,7 +1684,7 @@ var Master = function (_React$Component12) {
             });
         }
     }, {
-        key: 'onLike',
+        key: "onLike",
         value: function onLike(event) {
 
             event.preventDefault();
@@ -1745,7 +1759,7 @@ var Master = function (_React$Component12) {
             // }
         }
     }, {
-        key: 'onComment',
+        key: "onComment",
         value: function onComment(event) {
 
             event.preventDefault();
@@ -1777,19 +1791,19 @@ var Master = function (_React$Component12) {
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
 
             var ModalButtonEN = React.createElement(
                 Button,
                 { onClick: this.open.bind(this) },
-                'Add Master'
+                "Add Master"
             );
 
             var ModalButtonES = React.createElement(
                 Button,
                 { onClick: this.open.bind(this) },
-                'Agregar Factura'
+                "Agregar Factura"
             );
 
             var MasterTableEN = "Master List";
@@ -1811,14 +1825,14 @@ var Master = function (_React$Component12) {
             }
 
             return React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(
                     Row,
                     null,
                     React.createElement(
-                        'div',
-                        { className: 'pull-right' },
+                        "div",
+                        { className: "pull-right" },
                         React.createElement(MasterModal, {
                             idSelected: this.state.idSelected,
 
@@ -1835,7 +1849,7 @@ var Master = function (_React$Component12) {
                         })
                     )
                 ),
-                React.createElement('br', null),
+                React.createElement("br", null),
                 React.createElement(
                     Row,
                     null,
@@ -1859,8 +1873,8 @@ var Master = function (_React$Component12) {
                         }
                     }),
                     React.createElement(
-                        'div',
-                        { className: 'pull-right' },
+                        "div",
+                        { className: "pull-right" },
                         React.createElement(MasterPagination, {
                             masterCallback: {
                                 handleSelect: this.handleSelect.bind(this)
@@ -1887,11 +1901,11 @@ var MasterPagination = function (_React$Component13) {
     }
 
     _createClass(MasterPagination, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(Pagination, {
                     prev: true,
@@ -1900,12 +1914,12 @@ var MasterPagination = function (_React$Component13) {
                     last: true,
                     ellipsis: true,
                     boundaryLinks: true,
-                    bsSize: 'small',
+                    bsSize: "small",
                     items: 5,
                     activePage: this.props.activePage,
                     onSelect: this.props.masterCallback.handleSelect
                 }),
-                React.createElement('br', null)
+                React.createElement("br", null)
             );
         }
     }]);
@@ -1923,38 +1937,38 @@ var MasterSearch = function (_React$Component14) {
     }
 
     _createClass(MasterSearch, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             var MasterSearchEN = React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(
                     Panel,
-                    { header: 'Search Master' },
+                    { header: "Search Master" },
                     React.createElement(
-                        'form',
+                        "form",
                         null,
                         React.createElement(
-                            'div',
-                            { className: 'form-group' },
+                            "div",
+                            { className: "form-group" },
                             React.createElement(
-                                'div',
-                                { className: 'col-md-2 col-sm-2' },
+                                "div",
+                                { className: "col-md-2 col-sm-2" },
                                 React.createElement(
-                                    'label',
+                                    "label",
                                     null,
-                                    'Search:'
+                                    "Search:"
                                 )
                             ),
                             React.createElement(
-                                'div',
-                                { className: 'col-md-10 col-sm-10' },
-                                React.createElement('input', {
+                                "div",
+                                { className: "col-md-10 col-sm-10" },
+                                React.createElement("input", {
                                     onChange: this.props.masterCallback.onhandleuserinput.bind(this),
-                                    type: 'text',
-                                    className: 'form-control',
-                                    id: 'first_name', name: 'first_name' })
+                                    type: "text",
+                                    className: "form-control",
+                                    id: "first_name", name: "first_name" })
                             )
                         )
                     )
@@ -1962,34 +1976,34 @@ var MasterSearch = function (_React$Component14) {
             );
 
             var MasterSearchES = React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(
                     Panel,
-                    { header: 'Busqueda de Factura' },
+                    { header: "Busqueda de Factura" },
                     React.createElement(
-                        'form',
+                        "form",
                         null,
                         React.createElement(
-                            'div',
-                            { className: 'form-group' },
+                            "div",
+                            { className: "form-group" },
                             React.createElement(
-                                'div',
-                                { className: 'col-md-2 col-sm-2' },
+                                "div",
+                                { className: "col-md-2 col-sm-2" },
                                 React.createElement(
-                                    'label',
+                                    "label",
                                     null,
-                                    'Buscar:'
+                                    "Buscar:"
                                 )
                             ),
                             React.createElement(
-                                'div',
-                                { className: 'col-md-10 col-sm-10' },
-                                React.createElement('input', {
+                                "div",
+                                { className: "col-md-10 col-sm-10" },
+                                React.createElement("input", {
                                     onChange: this.props.masterCallback.onhandleuserinput.bind(this),
-                                    type: 'text',
-                                    className: 'form-control',
-                                    id: 'first_name', name: 'first_name' })
+                                    type: "text",
+                                    className: "form-control",
+                                    id: "first_name", name: "first_name" })
                             )
                         )
                     )
@@ -1998,13 +2012,13 @@ var MasterSearch = function (_React$Component14) {
 
             if (languageActive) {
                 return React.createElement(
-                    'div',
+                    "div",
                     null,
                     MasterSearchEN
                 );
             } else {
                 return React.createElement(
-                    'div',
+                    "div",
                     null,
                     MasterSearchES
                 );
@@ -2033,7 +2047,7 @@ var MasterTable = function (_React$Component15) {
     }
 
     _createClass(MasterTable, [{
-        key: 'onComment',
+        key: "onComment",
         value: function onComment(event) {
 
             event.preventDefault();
@@ -2051,7 +2065,7 @@ var MasterTable = function (_React$Component15) {
             }
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this20 = this;
 
@@ -2067,10 +2081,10 @@ var MasterTable = function (_React$Component15) {
                 rows.push(React.createElement(
                     Col,
                     { item: true, md: 4 },
-                    React.createElement('br', null),
+                    React.createElement("br", null),
                     React.createElement(
-                        'div',
-                        { className: 'card' },
+                        "div",
+                        { className: "card" },
                         React.createElement(
                             Row,
                             null,
@@ -2080,7 +2094,7 @@ var MasterTable = function (_React$Component15) {
                                 React.createElement(
                                     Link,
                                     { to: '/actions/' + items[i].id },
-                                    React.createElement('img', { src: "http://localhost:8084/executed/" + items[i].image, alt: 'Avatar', style: { "width": "100%", "height": "100%", "padding-left": "10px", "padding-right": "10px" } })
+                                    React.createElement("img", { src: "http://localhost:8084/executed/" + items[i].image, alt: "Avatar", style: { "width": "100%", "height": "100%", "padding-left": "10px", "padding-right": "10px" } })
                                 )
                             ),
                             React.createElement(
@@ -2090,20 +2104,20 @@ var MasterTable = function (_React$Component15) {
                                     Row,
                                     null,
                                     React.createElement(
-                                        'h5',
+                                        "h5",
                                         null,
-                                        React.createElement('i', { style: { 'color': 'gold' }, className: 'fa fa-star', 'aria-hidden': 'true' }),
-                                        React.createElement('i', { style: { 'color': 'gold' }, className: 'fa fa-star', 'aria-hidden': 'true' }),
-                                        React.createElement('i', { style: { 'color': 'gold' }, className: 'fa fa-star', 'aria-hidden': 'true' }),
-                                        React.createElement('i', { className: 'fa fa-star', 'aria-hidden': 'true' }),
-                                        React.createElement('i', { className: 'fa fa-star', 'aria-hidden': 'true' })
+                                        React.createElement("i", { style: { 'color': 'gold' }, className: "fa fa-star", "aria-hidden": "true" }),
+                                        React.createElement("i", { style: { 'color': 'gold' }, className: "fa fa-star", "aria-hidden": "true" }),
+                                        React.createElement("i", { style: { 'color': 'gold' }, className: "fa fa-star", "aria-hidden": "true" }),
+                                        React.createElement("i", { className: "fa fa-star", "aria-hidden": "true" }),
+                                        React.createElement("i", { className: "fa fa-star", "aria-hidden": "true" })
                                     )
                                 ),
                                 React.createElement(
                                     Row,
                                     null,
                                     React.createElement(
-                                        'h5',
+                                        "h5",
                                         null,
                                         items[i].name
                                     )
@@ -2112,9 +2126,9 @@ var MasterTable = function (_React$Component15) {
                                     Row,
                                     null,
                                     React.createElement(
-                                        'h5',
+                                        "h5",
                                         null,
-                                        '$   ',
+                                        "$   ",
                                         items[i].project.toFixed(2)
                                     )
                                 ),
@@ -2169,13 +2183,13 @@ var MasterTableLike = function (_React$Component16) {
     }
 
     _createClass(MasterTableLike, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'button',
-                { className: 'btn btn-warning', name: 'like', onClick: this.props.onLike, value: '{"id":' + this.props.id + ',"press":"' + this.props.isLiked + '"}' },
-                React.createElement('i', { className: 'fa fa-shopping-cart', 'aria-hidden': 'true' }),
-                ' ',
+                "button",
+                { className: "btn btn-warning", name: "like", onClick: this.props.onLike, value: '{"id":' + this.props.id + ',"press":"' + this.props.isLiked + '"}' },
+                React.createElement("i", { className: "fa fa-shopping-cart", "aria-hidden": "true" }),
+                " ",
                 'Add To Cart'
             );
         }
@@ -2194,13 +2208,13 @@ var MasterTableComment = function (_React$Component17) {
     }
 
     _createClass(MasterTableComment, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'button',
-                { className: 'btn btn-link', onClick: this.props.onShow, name: 'comment', value: '{"id":' + this.props.id + ',"press":"comments"}' },
-                React.createElement('i', { className: 'fa fa-comments', 'aria-hidden': 'true' }),
-                ' Comments'
+                "button",
+                { className: "btn btn-link", onClick: this.props.onShow, name: "comment", value: '{"id":' + this.props.id + ',"press":"comments"}' },
+                React.createElement("i", { className: "fa fa-comments", "aria-hidden": "true" }),
+                " Comments"
             );
         }
     }]);
@@ -2218,11 +2232,11 @@ var MasterTableCommentDisplay = function (_React$Component18) {
     }
 
     _createClass(MasterTableCommentDisplay, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'div',
-                { style: { 'display': this.props.onShowComment }, className: 'card' },
+                "div",
+                { style: { 'display': this.props.onShowComment }, className: "card" },
                 React.createElement(
                     Row,
                     null,
@@ -2230,15 +2244,15 @@ var MasterTableCommentDisplay = function (_React$Component18) {
                     React.createElement(
                         Col,
                         { md: 1, sm: 6, xs: 6 },
-                        React.createElement('br', null),
-                        React.createElement('img', { src: "http://localhost:8084/" + "img_avatar.png", alt: 'Avatar', style: { "width": "100%", "padding-left": "10px", "padding-right": "10px" } })
+                        React.createElement("br", null),
+                        React.createElement("img", { src: "http://localhost:8084/" + "img_avatar.png", alt: "Avatar", style: { "width": "100%", "padding-left": "10px", "padding-right": "10px" } })
                     ),
                     React.createElement(
                         Col,
                         { md: 8, sm: 6, xs: 6 },
-                        React.createElement('br', null),
+                        React.createElement("br", null),
                         React.createElement(
-                            'p',
+                            "p",
                             null,
                             this.props.text
                         )
@@ -2262,49 +2276,49 @@ var MasterTableCommentField = function (_React$Component19) {
     }
 
     _createClass(MasterTableCommentField, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'form',
+                "form",
                 { onSubmit: this.props.onComment },
                 React.createElement(
-                    'div',
-                    { style: { 'display': this.props.onShowComment }, className: 'card' },
+                    "div",
+                    { style: { 'display': this.props.onShowComment }, className: "card" },
                     React.createElement(
                         Row,
                         null,
                         React.createElement(
                             Col,
                             { md: 1, sm: 6, xs: 6 },
-                            React.createElement('img', { src: "http://localhost:8084/" + "img_avatar.png", alt: 'Avatar', style: { "width": "100%", "padding-left": "10px", "padding-right": "10px" } })
+                            React.createElement("img", { src: "http://localhost:8084/" + "img_avatar.png", alt: "Avatar", style: { "width": "100%", "padding-left": "10px", "padding-right": "10px" } })
                         ),
                         React.createElement(
                             FormGroup,
-                            { controlId: 'formHorizontalName' },
+                            { controlId: "formHorizontalName" },
                             React.createElement(
                                 Col,
                                 { md: 2, sm: 6 },
-                                React.createElement(FormControl, { value: this.props.id, type: 'text', name: 'id', style: { 'display': 'none' }, required: true })
+                                React.createElement(FormControl, { value: this.props.id, type: "text", name: "id", style: { 'display': 'none' }, required: true })
                             ),
                             React.createElement(
                                 Col,
                                 { md: 8, sm: 6 },
-                                React.createElement(FormControl, { type: 'text', name: 'firstname', placeholder: 'Type a Comment', required: true })
+                                React.createElement(FormControl, { type: "text", name: "firstname", placeholder: "Type a Comment", required: true })
                             ),
                             React.createElement(Col, { md: 2, sm: 6 })
                         )
                     ),
                     React.createElement(
-                        'div',
-                        { className: 'row' },
+                        "div",
+                        { className: "row" },
                         React.createElement(Col, { md: 10, sm: 10, xs: 10 }),
                         React.createElement(
                             Col,
                             { md: 1, sm: 10, xs: 10 },
                             React.createElement(
-                                'button',
-                                { type: 'submit', className: 'btn btn-primary' },
-                                'Comment'
+                                "button",
+                                { type: "submit", className: "btn btn-primary" },
+                                "Comment"
                             )
                         ),
                         React.createElement(Col, { md: 1, sm: 10, xs: 10 })
@@ -2327,7 +2341,7 @@ var MasterTableBody = function (_React$Component20) {
     }
 
     _createClass(MasterTableBody, [{
-        key: 'onClick',
+        key: "onClick",
         value: function onClick() {
             var _this26 = this;
 
@@ -2345,56 +2359,56 @@ var MasterTableBody = function (_React$Component20) {
             console.log('clicked!');
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
-                'tr',
+                "tr",
                 null,
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.id
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.date
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.name
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.items
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.status
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     React.createElement(
-                        'a',
-                        { target: '_blank', onClick: this.onClick, className: 'btn btn-default', href: "http://localhost:3000/" + this.props.id },
-                        React.createElement('i', { className: 'fa fa-eye', 'aria-hidden': 'true' })
+                        "a",
+                        { target: "_blank", onClick: this.onClick, className: "btn btn-default", href: "http://localhost:3000/" + this.props.id },
+                        React.createElement("i", { className: "fa fa-eye", "aria-hidden": "true" })
                     ),
                     ' ',
                     React.createElement(
                         Link,
-                        { className: 'btn btn-default', to: '/actions/' + this.props.id },
-                        React.createElement('i', { className: 'fa fa-dollar', 'aria-hidden': 'true' })
+                        { className: "btn btn-default", to: '/actions/' + this.props.id },
+                        React.createElement("i", { className: "fa fa-dollar", "aria-hidden": "true" })
                     ),
                     ' ',
                     React.createElement(
                         Button,
                         { onClick: this.props.masterCallback.ondeletemaster.bind(this, this.props.id) },
-                        React.createElement('i', { className: 'fa fa-trash', 'aria-hidden': 'true' })
+                        React.createElement("i", { className: "fa fa-trash", "aria-hidden": "true" })
                     )
                 )
             );
@@ -2414,7 +2428,7 @@ var MasterModalButton = function (_React$Component21) {
     }
 
     _createClass(MasterModalButton, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             var MasterModalButtonEN = React.createElement(
@@ -2425,7 +2439,7 @@ var MasterModalButton = function (_React$Component21) {
                     { style: { 'margin-left': '70%' },
                         bsStyle: 'default',
                         onClick: this.props.masterCallback.onsavemaster.bind(this) },
-                    'Save'
+                    "Save"
                 )
             );
 
@@ -2437,7 +2451,7 @@ var MasterModalButton = function (_React$Component21) {
                     { style: { 'margin-left': '70%' },
                         bsStyle: 'default',
                         onClick: this.props.masterCallback.onsavemaster.bind(this) },
-                    'Guardar'
+                    "Guardar"
                 )
             );
 
@@ -2472,7 +2486,7 @@ var MasterModal = function (_React$Component22) {
     }
 
     _createClass(MasterModal, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             var MasterModalEN = React.createElement(
@@ -2484,7 +2498,7 @@ var MasterModal = function (_React$Component22) {
             var MasterModalES = React.createElement(
                 Modal.Title,
                 null,
-                'Agregar Factura'
+                "Agregar Factura"
             );
 
             var MasterModalActive = void 0;
@@ -2498,7 +2512,7 @@ var MasterModal = function (_React$Component22) {
             }
 
             return React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(
                     Modal,
@@ -2511,7 +2525,7 @@ var MasterModal = function (_React$Component22) {
                     React.createElement(
                         Modal.Body,
                         null,
-                        React.createElement('br', null)
+                        React.createElement("br", null)
                     )
                 )
             );
@@ -2592,7 +2606,7 @@ function getSuggestions(value) {
 
 function renderSuggestion(suggestion) {
     return React.createElement(
-        'span',
+        "span",
         null,
         suggestion.name
     );
@@ -2621,7 +2635,7 @@ var MasterModalField = function (_React$Component23) {
     }
 
     _createClass(MasterModalField, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this30 = this;
 
@@ -2645,7 +2659,7 @@ var MasterModalField = function (_React$Component23) {
             });
         }
     }, {
-        key: 'onChange',
+        key: "onChange",
         value: function onChange(event, _ref) {
             var newValue = _ref.newValue,
                 method = _ref.method;
@@ -2656,7 +2670,7 @@ var MasterModalField = function (_React$Component23) {
             });
         }
     }, {
-        key: 'onSuggestionsFetchRequested',
+        key: "onSuggestionsFetchRequested",
         value: function onSuggestionsFetchRequested(_ref2) {
             var value = _ref2.value;
 
@@ -2666,7 +2680,7 @@ var MasterModalField = function (_React$Component23) {
             });
         }
     }, {
-        key: 'onSuggestionsClearRequested',
+        key: "onSuggestionsClearRequested",
         value: function onSuggestionsClearRequested() {
 
             this.setState({
@@ -2674,7 +2688,7 @@ var MasterModalField = function (_React$Component23) {
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this31 = this;
 
@@ -2709,68 +2723,68 @@ var MasterModalField = function (_React$Component23) {
                         null,
                         React.createElement(
                             FormGroup,
-                            { controlId: 'formHorizontalName' },
+                            { controlId: "formHorizontalName" },
                             React.createElement(
                                 Col,
                                 { md: 4, sm: 6 },
-                                React.createElement('input', { type: 'text', style: { 'display': 'none' }, name: 'id', value: this.props.idSelected })
+                                React.createElement("input", { type: "text", style: { 'display': 'none' }, name: "id", value: this.props.idSelected })
                             )
                         ),
                         React.createElement(
                             FormGroup,
-                            { controlId: 'formHorizontalName' },
+                            { controlId: "formHorizontalName" },
                             React.createElement(
                                 Col,
                                 { componentClass: ControlLabel, md: 1, sm: 2 },
-                                'Name'
+                                "Name"
                             ),
                             React.createElement(
                                 Col,
                                 { md: 4, sm: 6 },
-                                React.createElement(FormControl, { type: 'text', name: 'firstname', value: name, placeholder: 'Name', required: true })
+                                React.createElement(FormControl, { type: "text", name: "firstname", value: name, placeholder: "Name", required: true })
                             )
                         )
                     ),
-                    React.createElement('br', null),
+                    React.createElement("br", null),
                     React.createElement(Row, null),
                     React.createElement(
                         Row,
                         null,
                         React.createElement(
                             FormGroup,
-                            { controlId: 'formHorizontalName' },
+                            { controlId: "formHorizontalName" },
                             React.createElement(
                                 Col,
                                 { componentClass: ControlLabel, md: 1, sm: 2 },
-                                'Project'
+                                "Project"
                             ),
                             React.createElement(
                                 Col,
                                 { md: 4, sm: 6 },
-                                React.createElement(FormControl, { type: 'text', name: 'project', placeholder: 'Project', required: true })
+                                React.createElement(FormControl, { type: "text", name: "project", placeholder: "Project", required: true })
                             )
                         )
                     ),
-                    React.createElement('br', null),
+                    React.createElement("br", null),
                     React.createElement(
                         Row,
                         null,
                         React.createElement(
                             FormGroup,
-                            { controlId: 'formHorizontalName' },
+                            { controlId: "formHorizontalName" },
                             React.createElement(
                                 Col,
                                 { componentClass: ControlLabel, md: 1, sm: 2 },
-                                'Cantidad'
+                                "Cantidad"
                             ),
                             React.createElement(
                                 Col,
                                 { md: 4, sm: 6 },
-                                React.createElement(FormControl, { type: 'text', name: 'quantity', placeholder: 'Cantidad', required: true })
+                                React.createElement(FormControl, { type: "text", name: "quantity", placeholder: "Cantidad", required: true })
                             )
                         )
                     ),
-                    React.createElement('br', null),
+                    React.createElement("br", null),
                     React.createElement(
                         Row,
                         null,
@@ -2779,8 +2793,8 @@ var MasterModalField = function (_React$Component23) {
                             { mdOffset: 4, sm: 6 },
                             React.createElement(
                                 Button,
-                                { type: 'submit' },
-                                'Save'
+                                { type: "submit" },
+                                "Save"
                             )
                         )
                     )
@@ -2799,32 +2813,32 @@ var MasterModalField = function (_React$Component23) {
                         null,
                         React.createElement(
                             FormGroup,
-                            { controlId: 'formHorizontalName' },
+                            { controlId: "formHorizontalName" },
                             React.createElement(
                                 Col,
                                 { componentClass: ControlLabel, md: 1, sm: 2 },
-                                'Cliente'
+                                "Cliente"
                             ),
                             React.createElement(
                                 Col,
                                 { md: 4, sm: 6 },
-                                React.createElement(FormControl, { type: 'text',
-                                    name: 'firstname', placeholder: 'Cliente', required: true })
+                                React.createElement(FormControl, { type: "text",
+                                    name: "firstname", placeholder: "Cliente", required: true })
                             )
                         )
                     ),
-                    React.createElement('br', null),
+                    React.createElement("br", null),
                     React.createElement(
                         Row,
                         null,
                         React.createElement(
                             FormGroup,
-                            { controlId: 'formHorizontalItem' },
+                            { controlId: "formHorizontalItem" },
                             React.createElement(
                                 Col,
                                 { componentClass: ControlLabel,
                                     md: 1, sm: 2 },
-                                'Articulo'
+                                "Articulo"
                             ),
                             React.createElement(
                                 Col,
@@ -2844,20 +2858,20 @@ var MasterModalField = function (_React$Component23) {
                             )
                         )
                     ),
-                    React.createElement('br', null),
+                    React.createElement("br", null),
                     React.createElement(
                         Row,
                         null,
                         React.createElement(
                             FormGroup,
-                            { controlId: 'formControlsSelect' },
+                            { controlId: "formControlsSelect" },
                             React.createElement(
                                 Col,
                                 { md: 1, sm: 2 },
                                 React.createElement(
                                     ControlLabel,
                                     null,
-                                    'Tipo de Servicio'
+                                    "Tipo de Servicio"
                                 )
                             ),
                             React.createElement(
@@ -2865,12 +2879,12 @@ var MasterModalField = function (_React$Component23) {
                                 { md: 4, sm: 6 },
                                 React.createElement(
                                     FormControl,
-                                    { componentClass: 'select', name: 'development', placeholder: 'Tipo de Servicio', required: true },
+                                    { componentClass: "select", name: "development", placeholder: "Tipo de Servicio", required: true },
                                     this.state.peluqueraData.sort(function (a, b) {
                                         return a.name > b.name;
                                     }).map(function (item) {
                                         return React.createElement(
-                                            'option',
+                                            "option",
                                             { value: item.name },
                                             item.name
                                         );
@@ -2879,60 +2893,60 @@ var MasterModalField = function (_React$Component23) {
                             )
                         )
                     ),
-                    React.createElement('br', null),
+                    React.createElement("br", null),
                     React.createElement(
                         Row,
                         null,
                         React.createElement(
                             FormGroup,
-                            { controlId: 'formHorizontalName' },
+                            { controlId: "formHorizontalName" },
                             React.createElement(
                                 Col,
                                 { componentClass: ControlLabel, md: 1, sm: 2 },
-                                'Precio'
+                                "Precio"
                             ),
                             React.createElement(
                                 Col,
                                 { md: 4, sm: 6 },
-                                React.createElement(FormControl, { type: 'text', name: 'project', placeholder: 'Precio', required: true })
+                                React.createElement(FormControl, { type: "text", name: "project", placeholder: "Precio", required: true })
                             )
                         )
                     ),
-                    React.createElement('br', null),
+                    React.createElement("br", null),
                     React.createElement(
                         Row,
                         null,
                         React.createElement(
                             FormGroup,
-                            { controlId: 'formHorizontalName' },
+                            { controlId: "formHorizontalName" },
                             React.createElement(
                                 Col,
                                 { componentClass: ControlLabel, md: 1, sm: 2 },
-                                'Cantidad'
+                                "Cantidad"
                             ),
                             React.createElement(
                                 Col,
                                 { md: 4, sm: 6 },
-                                React.createElement(FormControl, { type: 'text', name: 'quantity', placeholder: 'Cantidad', required: true })
+                                React.createElement(FormControl, { type: "text", name: "quantity", placeholder: "Cantidad", required: true })
                             ),
                             React.createElement(
                                 Col,
                                 { md: 2, sm: 2 },
                                 React.createElement(
                                     Button,
-                                    { type: 'submit' },
-                                    React.createElement('i', { className: 'fa fa-plus', 'aria-hidden': 'true' })
+                                    { type: "submit" },
+                                    React.createElement("i", { className: "fa fa-plus", "aria-hidden": "true" })
                                 )
                             )
                         )
                     ),
-                    React.createElement('br', null),
+                    React.createElement("br", null),
                     React.createElement(
                         Row,
                         null,
-                        React.createElement('input', {
-                            style: { 'width': '70px', 'display': 'none' }, type: 'text', name: 'suggest',
-                            placeholder: 'Name', value: this.state.value })
+                        React.createElement("input", {
+                            style: { 'width': '70px', 'display': 'none' }, type: "text", name: "suggest",
+                            placeholder: "Name", value: this.state.value })
                     )
                 )
             );
@@ -2967,66 +2981,66 @@ var MasterModalTable = function (_React$Component24) {
     }
 
     _createClass(MasterModalTable, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             var MasterModalTableEN = React.createElement(
-                'tr',
+                "tr",
                 null,
                 React.createElement(
-                    'th',
+                    "th",
                     null,
-                    '#'
+                    "#"
                 ),
                 React.createElement(
-                    'th',
+                    "th",
                     null,
-                    'Name'
+                    "Name"
                 ),
                 React.createElement(
-                    'th',
+                    "th",
                     null,
-                    'Item'
+                    "Item"
                 ),
                 React.createElement(
-                    'th',
+                    "th",
                     null,
-                    'Development'
+                    "Development"
                 ),
                 React.createElement(
-                    'th',
+                    "th",
                     null,
-                    'Project'
+                    "Project"
                 )
             );
 
             var MasterModalTableES = React.createElement(
-                'tr',
+                "tr",
                 null,
                 React.createElement(
-                    'th',
+                    "th",
                     null,
-                    '#'
+                    "#"
                 ),
                 React.createElement(
-                    'th',
+                    "th",
                     null,
-                    'Nombre'
+                    "Nombre"
                 ),
                 React.createElement(
-                    'th',
+                    "th",
                     null,
-                    'Articulo'
+                    "Articulo"
                 ),
                 React.createElement(
-                    'th',
+                    "th",
                     null,
-                    'Tipo de Servicio'
+                    "Tipo de Servicio"
                 ),
                 React.createElement(
-                    'th',
+                    "th",
                     null,
-                    'Precio'
+                    "Precio"
                 )
             );
 
@@ -3041,18 +3055,18 @@ var MasterModalTable = function (_React$Component24) {
             }
 
             return React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(
                     Table,
                     { striped: true, bordered: true, condensed: true, hover: true },
                     React.createElement(
-                        'thead',
+                        "thead",
                         null,
                         MasterModalActive
                     ),
                     React.createElement(
-                        'tbody',
+                        "tbody",
                         null,
                         this.props.masterDetail.map(function (masterdetail, index) {
                             return React.createElement(MasterModalTableBody, {
@@ -3088,34 +3102,34 @@ var MasterModalTableBody = function (_React$Component25) {
     }
 
     _createClass(MasterModalTableBody, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
-                'tr',
+                "tr",
                 null,
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.index
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.firstname
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.item
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.development
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.project
                 )
@@ -3143,7 +3157,7 @@ var Detail = function (_React$Component26) {
     }
 
     _createClass(Detail, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this35 = this;
 
@@ -3159,21 +3173,21 @@ var Detail = function (_React$Component26) {
             });
         }
     }, {
-        key: 'close',
+        key: "close",
         value: function close() {
             this.setState({
                 showModal: false
             });
         }
     }, {
-        key: 'open',
+        key: "open",
         value: function open() {
             this.setState({
                 showModal: true
             });
         }
     }, {
-        key: 'onSaveDetail',
+        key: "onSaveDetail",
         value: function onSaveDetail(event) {
             var _newDetail;
 
@@ -3185,7 +3199,7 @@ var Detail = function (_React$Component26) {
 
                 "id": Date.now(),
                 "date": today
-            }, _defineProperty(_newDetail, 'id', event.target.id.value), _defineProperty(_newDetail, "name", event.target.name.value), _defineProperty(_newDetail, "item", event.target.item.value), _defineProperty(_newDetail, "environment", event.target.environment.value), _newDetail);
+            }, _defineProperty(_newDetail, "id", event.target.id.value), _defineProperty(_newDetail, "name", event.target.name.value), _defineProperty(_newDetail, "item", event.target.item.value), _defineProperty(_newDetail, "environment", event.target.environment.value), _newDetail);
 
             var nextState = this.state.detailData;
 
@@ -3205,7 +3219,7 @@ var Detail = function (_React$Component26) {
             });
         }
     }, {
-        key: 'onHandleChange',
+        key: "onHandleChange",
         value: function onHandleChange(event) {
 
             this.setState({
@@ -3214,13 +3228,13 @@ var Detail = function (_React$Component26) {
             });
         }
     }, {
-        key: 'onUpdated',
+        key: "onUpdated",
         value: function onUpdated(value) {
 
             console.log(value);
         }
     }, {
-        key: 'onDeleted',
+        key: "onDeleted",
         value: function onDeleted(value) {
 
             var nextState = this.state.detailData;
@@ -3244,19 +3258,19 @@ var Detail = function (_React$Component26) {
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
 
             var DetailEN = React.createElement(
                 Button,
                 { onClick: this.open.bind(this) },
-                'Add Detail'
+                "Add Detail"
             );
 
             var DetailES = React.createElement(
                 Button,
                 { onClick: this.open.bind(this) },
-                'Agregar Articulo'
+                "Agregar Articulo"
             );
 
             var DetailActive = void 0;
@@ -3284,8 +3298,8 @@ var Detail = function (_React$Component26) {
                     Row,
                     null,
                     React.createElement(
-                        'div',
-                        { className: 'pull-right' },
+                        "div",
+                        { className: "pull-right" },
                         DetailActive,
                         React.createElement(DetailModal, { showModal: this.state.showModal,
                             detailCallback: {
@@ -3297,7 +3311,7 @@ var Detail = function (_React$Component26) {
                         })
                     )
                 ),
-                React.createElement('br', null),
+                React.createElement("br", null),
                 React.createElement(
                     Row,
                     null,
@@ -3332,14 +3346,14 @@ var DetailPagination = function (_React$Component27) {
     }
 
     _createClass(DetailPagination, [{
-        key: 'handleSelect',
+        key: "handleSelect",
         value: function handleSelect(eventKey) {
             this.setState({
                 activePage: eventKey
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(Pagination, {
@@ -3370,34 +3384,34 @@ var DetailSearch = function (_React$Component28) {
     }
 
     _createClass(DetailSearch, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             var DetailSearchEN = React.createElement(
                 Panel,
-                { header: 'Search Detail' },
+                { header: "Search Detail" },
                 React.createElement(
-                    'form',
+                    "form",
                     null,
                     React.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         React.createElement(
-                            'div',
-                            { className: 'col-md-2 col-sm-2' },
+                            "div",
+                            { className: "col-md-2 col-sm-2" },
                             React.createElement(
-                                'label',
+                                "label",
                                 null,
-                                'Search:'
+                                "Search:"
                             )
                         ),
                         React.createElement(
-                            'div',
-                            { className: 'col-md-10 col-sm-10' },
-                            React.createElement('input', {
+                            "div",
+                            { className: "col-md-10 col-sm-10" },
+                            React.createElement("input", {
                                 onChange: this.props.detailCallback.onHandleChange.bind(this),
-                                type: 'text', className: 'form-control', id: 'first_name',
-                                name: 'first_name' })
+                                type: "text", className: "form-control", id: "first_name",
+                                name: "first_name" })
                         )
                     )
                 )
@@ -3405,29 +3419,29 @@ var DetailSearch = function (_React$Component28) {
 
             var DetailSearchES = React.createElement(
                 Panel,
-                { header: 'Busqueda ' },
+                { header: "Busqueda " },
                 React.createElement(
-                    'form',
+                    "form",
                     null,
                     React.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         React.createElement(
-                            'div',
-                            { className: 'col-md-2 col-sm-2' },
+                            "div",
+                            { className: "col-md-2 col-sm-2" },
                             React.createElement(
-                                'label',
+                                "label",
                                 null,
-                                'Buscar:'
+                                "Buscar:"
                             )
                         ),
                         React.createElement(
-                            'div',
-                            { className: 'col-md-10 col-sm-10' },
-                            React.createElement('input', {
+                            "div",
+                            { className: "col-md-10 col-sm-10" },
+                            React.createElement("input", {
                                 onChange: this.props.detailCallback.onHandleChange.bind(this),
-                                type: 'text', className: 'form-control', id: 'first_name',
-                                name: 'first_name' })
+                                type: "text", className: "form-control", id: "first_name",
+                                name: "first_name" })
                         )
                     )
                 )
@@ -3443,7 +3457,7 @@ var DetailSearch = function (_React$Component28) {
             }
 
             return React.createElement(
-                'div',
+                "div",
                 null,
                 DetailSearchActive
             );
@@ -3463,7 +3477,7 @@ var DetailTable = function (_React$Component29) {
     }
 
     _createClass(DetailTable, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this39 = this;
 
@@ -3473,45 +3487,45 @@ var DetailTable = function (_React$Component29) {
 
             var DetailTableEN = React.createElement(
                 Panel,
-                { header: 'Search List' },
+                { header: "Search List" },
                 React.createElement(
                     Table,
                     { striped: true, bordered: true, condensed: true, hover: true },
                     React.createElement(
-                        'thead',
+                        "thead",
                         null,
                         React.createElement(
-                            'tr',
+                            "tr",
                             null,
                             React.createElement(
-                                'th',
+                                "th",
                                 null,
-                                'ID'
+                                "ID"
                             ),
                             React.createElement(
-                                'th',
+                                "th",
                                 null,
-                                'Name'
+                                "Name"
                             ),
                             React.createElement(
-                                'th',
+                                "th",
                                 null,
-                                'Item'
+                                "Item"
                             ),
                             React.createElement(
-                                'th',
+                                "th",
                                 null,
-                                'Environment'
+                                "Environment"
                             ),
                             React.createElement(
-                                'th',
+                                "th",
                                 null,
-                                'Acciones'
+                                "Acciones"
                             )
                         )
                     ),
                     React.createElement(
-                        'tbody',
+                        "tbody",
                         null,
                         filteredMaster.map(function (detail, index) {
                             return React.createElement(DetailTableBody, {
@@ -3528,53 +3542,53 @@ var DetailTable = function (_React$Component29) {
                     )
                 ),
                 React.createElement(
-                    'div',
-                    { className: 'pull-right' },
+                    "div",
+                    { className: "pull-right" },
                     React.createElement(DetailPagination, null)
                 )
             );
 
             var DetailTableES = React.createElement(
                 Panel,
-                { header: 'Listado ' },
+                { header: "Listado " },
                 React.createElement(
                     Table,
                     { striped: true, bordered: true, condensed: true, hover: true },
                     React.createElement(
-                        'thead',
+                        "thead",
                         null,
                         React.createElement(
-                            'tr',
+                            "tr",
                             null,
                             React.createElement(
-                                'th',
+                                "th",
                                 null,
-                                'ID'
+                                "ID"
                             ),
                             React.createElement(
-                                'th',
+                                "th",
                                 null,
-                                'Descripcion'
+                                "Descripcion"
                             ),
                             React.createElement(
-                                'th',
+                                "th",
                                 null,
-                                'Cantidad'
+                                "Cantidad"
                             ),
                             React.createElement(
-                                'th',
+                                "th",
                                 null,
-                                'Precio'
+                                "Precio"
                             ),
                             React.createElement(
-                                'th',
+                                "th",
                                 null,
-                                'Actions'
+                                "Actions"
                             )
                         )
                     ),
                     React.createElement(
-                        'tbody',
+                        "tbody",
                         null,
                         filteredMaster.map(function (detail, index) {
                             return React.createElement(DetailTableBody, {
@@ -3591,8 +3605,8 @@ var DetailTable = function (_React$Component29) {
                     )
                 ),
                 React.createElement(
-                    'div',
-                    { className: 'pull-right' },
+                    "div",
+                    { className: "pull-right" },
                     React.createElement(DetailPagination, null)
                 )
             );
@@ -3618,34 +3632,34 @@ var DetailTable = function (_React$Component29) {
                             Panel,
                             { header: master.date },
                             React.createElement(
-                                'div',
-                                { className: 'card' },
+                                "div",
+                                { className: "card" },
                                 React.createElement(
                                     Link,
                                     { to: '/actions/' + master.id },
-                                    React.createElement('img', { src: 'http://localhost:8084/img_avatar2.png', alt: 'Avatar', style: { "width": "100%" } })
+                                    React.createElement("img", { src: "http://localhost:8084/img_avatar2.png", alt: "Avatar", style: { "width": "100%" } })
                                 ),
                                 React.createElement(
-                                    'div',
-                                    { className: 'container' },
+                                    "div",
+                                    { className: "container" },
                                     React.createElement(
-                                        'h4',
+                                        "h4",
                                         null,
                                         React.createElement(
-                                            'b',
+                                            "b",
                                             null,
                                             master.name
                                         )
                                     ),
                                     React.createElement(
-                                        'p',
+                                        "p",
                                         null,
-                                        'Architect  Engineer'
+                                        "Architect  Engineer"
                                     ),
                                     React.createElement(
                                         Button,
                                         { style: { 'margin-left': '23%' } },
-                                        'Add'
+                                        "Add"
                                     )
                                 )
                             )
@@ -3679,7 +3693,7 @@ var DetailModalUpdate = function (_React$Component30) {
     }
 
     _createClass(DetailModalUpdate, [{
-        key: 'close',
+        key: "close",
         value: function close() {
 
             this.setState({
@@ -3690,7 +3704,7 @@ var DetailModalUpdate = function (_React$Component30) {
             //window.location.href = '/'
         }
     }, {
-        key: 'open',
+        key: "open",
         value: function open() {
 
             this.setState({
@@ -3699,7 +3713,7 @@ var DetailModalUpdate = function (_React$Component30) {
             });
         }
     }, {
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this41 = this;
 
@@ -3720,7 +3734,7 @@ var DetailModalUpdate = function (_React$Component30) {
             });
         }
     }, {
-        key: 'onSubmitted',
+        key: "onSubmitted",
         value: function onSubmitted(event) {
             var _this42 = this;
 
@@ -3756,7 +3770,7 @@ var DetailModalUpdate = function (_React$Component30) {
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
@@ -3769,9 +3783,9 @@ var DetailModalUpdate = function (_React$Component30) {
                         Modal.Title,
                         null,
                         React.createElement(
-                            'h1',
+                            "h1",
                             null,
-                            'Editing to ',
+                            "Editing to ",
                             this.state.parameter
                         )
                     )
@@ -3784,58 +3798,58 @@ var DetailModalUpdate = function (_React$Component30) {
                         null,
                         React.createElement(
                             FormGroup,
-                            { controlId: 'formHorizontalId' },
+                            { controlId: "formHorizontalId" },
                             React.createElement(
                                 Col,
                                 { componentClass: ControlLabel, sm: 2 },
-                                'ID'
+                                "ID"
                             ),
                             React.createElement(
                                 Col,
                                 { sm: 10 },
-                                React.createElement(FormControl, { value: this.state.parameter, type: 'id', placeholder: 'id', disabled: true })
+                                React.createElement(FormControl, { value: this.state.parameter, type: "id", placeholder: "id", disabled: true })
                             )
                         ),
                         React.createElement(
                             FormGroup,
-                            { controlId: 'formHorizontalName' },
+                            { controlId: "formHorizontalName" },
                             React.createElement(
                                 Col,
                                 { componentClass: ControlLabel, sm: 2 },
-                                'Nombre'
+                                "Nombre"
                             ),
                             React.createElement(
                                 Col,
                                 { sm: 10 },
-                                React.createElement(FormControl, { name: 'name', type: 'text', placeholder: 'Nombre' })
+                                React.createElement(FormControl, { name: "name", type: "text", placeholder: "Nombre" })
                             )
                         ),
                         React.createElement(
                             FormGroup,
-                            { controlId: 'formHorizontalEnvironment' },
+                            { controlId: "formHorizontalEnvironment" },
                             React.createElement(
                                 Col,
                                 { componentClass: ControlLabel, sm: 2 },
-                                'Cantidad'
+                                "Cantidad"
                             ),
                             React.createElement(
                                 Col,
                                 { sm: 10 },
-                                React.createElement(FormControl, { name: 'environment', type: 'text', placeholder: 'Cantidad' })
+                                React.createElement(FormControl, { name: "environment", type: "text", placeholder: "Cantidad" })
                             )
                         ),
                         React.createElement(
                             FormGroup,
-                            { controlId: 'formHorizontalEnvironment' },
+                            { controlId: "formHorizontalEnvironment" },
                             React.createElement(
                                 Col,
                                 { componentClass: ControlLabel, sm: 2 },
-                                'Precio'
+                                "Precio"
                             ),
                             React.createElement(
                                 Col,
                                 { sm: 10 },
-                                React.createElement(FormControl, { name: 'project', type: 'text', placeholder: 'Precio' })
+                                React.createElement(FormControl, { name: "project", type: "text", placeholder: "Precio" })
                             )
                         )
                     ),
@@ -3845,7 +3859,7 @@ var DetailModalUpdate = function (_React$Component30) {
                         React.createElement(
                             Button,
                             null,
-                            'Save'
+                            "Save"
                         )
                     )
                 )
@@ -3866,48 +3880,48 @@ var DetailTableBody = function (_React$Component31) {
     }
 
     _createClass(DetailTableBody, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
-                'tr',
+                "tr",
                 null,
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.id
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.name
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.item
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.environment
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     React.createElement(
                         Link,
-                        { className: 'btn btn-default',
+                        { className: "btn btn-default",
                             to: '/updatedetail/' + this.props.id },
-                        React.createElement('i', { className: 'fa fa-edit',
-                            'aria-hidden': 'true' })
+                        React.createElement("i", { className: "fa fa-edit",
+                            "aria-hidden": "true" })
                     ),
                     React.createElement(
                         Button,
                         {
                             onClick: this.props.detailCallback.onDeleted.bind(this, this.props.id) },
-                        React.createElement('i', {
-                            className: 'fa fa-trash', 'aria-hidden': 'true' })
+                        React.createElement("i", {
+                            className: "fa fa-trash", "aria-hidden": "true" })
                     )
                 )
             );
@@ -3927,7 +3941,7 @@ var DetailModal = function (_React$Component32) {
     }
 
     _createClass(DetailModal, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             var DetailModalEN = React.createElement(
@@ -3940,7 +3954,7 @@ var DetailModal = function (_React$Component32) {
                     React.createElement(
                         Modal.Title,
                         null,
-                        'Modal heading'
+                        "Modal heading"
                     )
                 ),
                 React.createElement(
@@ -3953,69 +3967,69 @@ var DetailModal = function (_React$Component32) {
                         React.createElement(
                             FormGroup,
                             {
-                                controlId: 'formHorizontalid' },
+                                controlId: "formHorizontalid" },
                             React.createElement(
                                 Col,
                                 {
                                     componentClass: ControlLabel, sm: 2 },
-                                'ID'
+                                "ID"
                             ),
                             React.createElement(
                                 Col,
                                 { sm: 10 },
                                 React.createElement(FormControl, {
-                                    type: 'text', name: 'id', placeholder: 'ID' })
+                                    type: "text", name: "id", placeholder: "ID" })
                             )
                         ),
                         React.createElement(
                             FormGroup,
                             {
-                                controlId: 'formHorizontalname' },
+                                controlId: "formHorizontalname" },
                             React.createElement(
                                 Col,
                                 {
                                     componentClass: ControlLabel, sm: 2 },
-                                'Name'
+                                "Name"
                             ),
                             React.createElement(
                                 Col,
                                 { sm: 10 },
                                 React.createElement(FormControl, {
-                                    type: 'text', name: 'name', placeholder: 'Name' })
+                                    type: "text", name: "name", placeholder: "Name" })
                             )
                         ),
                         React.createElement(
                             FormGroup,
                             {
-                                controlId: 'formHorizontalEnvironment' },
+                                controlId: "formHorizontalEnvironment" },
                             React.createElement(
                                 Col,
                                 {
                                     componentClass: ControlLabel, sm: 2 },
-                                'Environment'
+                                "Environment"
                             ),
                             React.createElement(
                                 Col,
                                 { sm: 10 },
                                 React.createElement(FormControl, {
-                                    type: 'text', name: 'environment', placeholder: 'Item' })
+                                    type: "text", name: "environment", placeholder: "Item" })
                             )
                         ),
                         React.createElement(
                             FormGroup,
                             {
-                                controlId: 'formHorizontalItem' },
+                                controlId: "formHorizontalItem" },
                             React.createElement(
                                 Col,
                                 {
                                     componentClass: ControlLabel, sm: 2 },
-                                'Item'
+                                "Item"
                             ),
                             React.createElement(
                                 Col,
                                 { sm: 10 },
                                 React.createElement(FormControl, {
-                                    type: 'text', name: 'item', placeholder: 'Item' })
+                                    type: "text", name: "item", placeholder: "Item" })
                             )
                         )
                     ),
@@ -4024,9 +4038,9 @@ var DetailModal = function (_React$Component32) {
                         null,
                         React.createElement(
                             Button,
-                            { type: 'submit',
+                            { type: "submit",
                                 pullRight: true },
-                            'Save'
+                            "Save"
                         )
                     )
                 )
@@ -4041,7 +4055,7 @@ var DetailModal = function (_React$Component32) {
                     React.createElement(
                         Modal.Title,
                         null,
-                        'Agregar Articulo'
+                        "Agregar Articulo"
                     )
                 ),
                 React.createElement(
@@ -4054,69 +4068,69 @@ var DetailModal = function (_React$Component32) {
                         React.createElement(
                             FormGroup,
                             {
-                                controlId: 'formHorizontalid' },
+                                controlId: "formHorizontalid" },
                             React.createElement(
                                 Col,
                                 {
                                     componentClass: ControlLabel, sm: 2 },
-                                'Codigo'
+                                "Codigo"
                             ),
                             React.createElement(
                                 Col,
                                 { sm: 10 },
                                 React.createElement(FormControl, {
-                                    type: 'text', name: 'id', placeholder: 'Codigo' })
+                                    type: "text", name: "id", placeholder: "Codigo" })
                             )
                         ),
                         React.createElement(
                             FormGroup,
                             {
-                                controlId: 'formHorizontalname' },
+                                controlId: "formHorizontalname" },
                             React.createElement(
                                 Col,
                                 {
                                     componentClass: ControlLabel, sm: 2 },
-                                'Descripcion'
+                                "Descripcion"
                             ),
                             React.createElement(
                                 Col,
                                 { sm: 10 },
                                 React.createElement(FormControl, {
-                                    type: 'text', name: 'name', placeholder: 'Descripcion' })
+                                    type: "text", name: "name", placeholder: "Descripcion" })
                             )
                         ),
                         React.createElement(
                             FormGroup,
                             {
-                                controlId: 'formHorizontalEnvironment' },
+                                controlId: "formHorizontalEnvironment" },
                             React.createElement(
                                 Col,
                                 {
                                     componentClass: ControlLabel, sm: 2 },
-                                'Precio'
+                                "Precio"
                             ),
                             React.createElement(
                                 Col,
                                 { sm: 10 },
                                 React.createElement(FormControl, {
-                                    type: 'text', name: 'environment', placeholder: 'Precio' })
+                                    type: "text", name: "environment", placeholder: "Precio" })
                             )
                         ),
                         React.createElement(
                             FormGroup,
                             {
-                                controlId: 'formHorizontalItem' },
+                                controlId: "formHorizontalItem" },
                             React.createElement(
                                 Col,
                                 {
                                     componentClass: ControlLabel, sm: 2 },
-                                'Cantidad'
+                                "Cantidad"
                             ),
                             React.createElement(
                                 Col,
                                 { sm: 10 },
                                 React.createElement(FormControl, {
-                                    type: 'text', name: 'item', placeholder: 'Cantidad' })
+                                    type: "text", name: "item", placeholder: "Cantidad" })
                             )
                         )
                     ),
@@ -4125,9 +4139,9 @@ var DetailModal = function (_React$Component32) {
                         null,
                         React.createElement(
                             Button,
-                            { type: 'submit',
+                            { type: "submit",
                                 pullRight: true },
-                            'Save'
+                            "Save"
                         )
                     )
                 )
@@ -4142,7 +4156,7 @@ var DetailModal = function (_React$Component32) {
             }
 
             return React.createElement(
-                'div',
+                "div",
                 null,
                 DetailModalActive
             );
@@ -4171,7 +4185,7 @@ var Partials = function (_React$Component33) {
     }
 
     _createClass(Partials, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this46 = this;
 
@@ -4194,7 +4208,7 @@ var Partials = function (_React$Component33) {
             });
         }
     }, {
-        key: 'onChanged',
+        key: "onChanged",
         value: function onChanged(event) {
 
             this.setState({
@@ -4203,7 +4217,7 @@ var Partials = function (_React$Component33) {
             });
         }
     }, {
-        key: 'onRun',
+        key: "onRun",
         value: function onRun() {
             var _this47 = this;
 
@@ -4225,20 +4239,20 @@ var Partials = function (_React$Component33) {
             window.print();
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this48 = this;
 
             var PartialsEN = React.createElement(
-                'h1',
+                "h1",
                 null,
-                'Draw List'
+                "Draw List"
             );
 
             var PartialsES = React.createElement(
-                'h1',
+                "h1",
                 null,
-                'Reporte Cuadre'
+                "Reporte Cuadre"
             );
 
             var PartialsActive = void 0;
@@ -4284,7 +4298,7 @@ var Partials = function (_React$Component33) {
                     React.createElement(
                         Button,
                         { onClick: this.onRun.bind(this) },
-                        'i'
+                        "i"
                     )
                 )
             );
@@ -4304,7 +4318,7 @@ var PartialsSearch = function (_React$Component34) {
     }
 
     _createClass(PartialsSearch, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
@@ -4316,12 +4330,12 @@ var PartialsSearch = function (_React$Component34) {
                         onChange: this.props.onChanged.bind(this) },
                     React.createElement(
                         FormGroup,
-                        { controlId: 'formHorizontalEmail' },
+                        { controlId: "formHorizontalEmail" },
                         React.createElement(Col, { componentClass: ControlLabel, xs: 2 }),
                         React.createElement(
                             Col,
                             { xs: 6 },
-                            React.createElement(FormControl, { type: 'date', placeholder: 'Email' })
+                            React.createElement(FormControl, { type: "date", placeholder: "Email" })
                         )
                     )
                 )
@@ -4342,62 +4356,62 @@ var PartialsTable = function (_React$Component35) {
     }
 
     _createClass(PartialsTable, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this51 = this;
 
             var partialsTableEN = React.createElement(
-                'tr',
+                "tr",
                 null,
                 React.createElement(
-                    'th',
+                    "th",
                     { style: { 'width': '15px', 'font-size': '25px', 'border-spacing': '0 30px' } },
-                    '#'
+                    "#"
                 ),
                 React.createElement(
-                    'th',
+                    "th",
                     { style: { 'width': '15px', 'font-size': '25px' } },
-                    'Date'
+                    "Date"
                 ),
                 React.createElement(
-                    'th',
+                    "th",
                     { style: { 'width': '15px', 'font-size': '25px' } },
-                    'Name'
+                    "Name"
                 ),
                 React.createElement(
-                    'th',
+                    "th",
                     { style: { 'width': '15px', 'font-size': '25px' } },
-                    'Project'
+                    "Project"
                 )
             );
 
             var partialsTableES = React.createElement(
-                'tr',
+                "tr",
                 null,
                 React.createElement(
-                    'th',
+                    "th",
                     { style: { 'width': '15px', 'font-size': '35px', 'border-spacing': '0 30px' } },
-                    '#'
+                    "#"
                 ),
                 React.createElement(
-                    'th',
+                    "th",
                     { style: { 'width': '15px', 'font-size': '35px' } },
-                    'Fecha'
+                    "Fecha"
                 ),
                 React.createElement(
-                    'th',
+                    "th",
                     { style: { 'width': '15px', 'font-size': '35px' } },
-                    'Cliente'
+                    "Cliente"
                 ),
                 React.createElement(
-                    'th',
+                    "th",
                     { style: { 'width': '15px', 'font-size': '35px' } },
-                    'Precio'
+                    "Precio"
                 ),
                 React.createElement(
-                    'th',
+                    "th",
                     { style: { 'width': '15px', 'font-size': '35px' } },
-                    'Tipo Pago'
+                    "Tipo Pago"
                 )
             );
 
@@ -4421,12 +4435,12 @@ var PartialsTable = function (_React$Component35) {
                         Table,
                         { striped: true, bordered: true, condensed: true, hover: true, style: { 'width': '100%' } },
                         React.createElement(
-                            'thead',
+                            "thead",
                             null,
                             partialsTableActive
                         ),
                         React.createElement(
-                            'tbody',
+                            "tbody",
                             null,
                             this.props.masterAPI.map(function (master, index) {
                                 return React.createElement(PartialsTableBody, {
@@ -4442,35 +4456,35 @@ var PartialsTable = function (_React$Component35) {
                             })
                         ),
                         React.createElement(
-                            'tfoot',
+                            "tfoot",
                             null,
                             React.createElement(
-                                'tr',
+                                "tr",
                                 null,
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0'
+                                    "\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0'
+                                    "\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     { style: { 'width': '10px', 'font-size': '35px' } },
-                                    'Total'
+                                    "Total"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     { style: { 'width': '10px', 'font-size': '35px' } },
-                                    'RD$',
+                                    "RD$",
                                     this.props.total,
-                                    '.00'
+                                    ".00"
                                 ),
-                                React.createElement('br', null),
-                                React.createElement('br', null)
+                                React.createElement("br", null),
+                                React.createElement("br", null)
                             )
                         )
                     )
@@ -4492,21 +4506,21 @@ var PartialsTableBody = function (_React$Component36) {
     }
 
     _createClass(PartialsTableBody, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             var nextState = void 0;
 
             var tipoPagoEF = React.createElement(
-                'td',
+                "td",
                 { style: { 'font-size': '35px' } },
-                'EFECTIVO'
+                "EFECTIVO"
             );
 
             var tipoPagoTA = React.createElement(
-                'td',
+                "td",
                 { style: { 'font-size': '35px' } },
-                'TARJETA'
+                "TARJETA"
             );
 
             if (this.props.payment == "card") {
@@ -4518,27 +4532,27 @@ var PartialsTableBody = function (_React$Component36) {
             }
 
             return React.createElement(
-                'tr',
+                "tr",
                 null,
-                React.createElement('td', null),
+                React.createElement("td", null),
                 React.createElement(
-                    'td',
+                    "td",
                     { style: { 'font-size': '35px' } },
                     this.props.date
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     { style: { 'font-size': '35px' } },
                     this.props.name
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     { style: { 'font-size': '35px' } },
                     this.props.project,
-                    '.00'
+                    ".00"
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     { style: { 'font-size': '35px' } },
                     nextState
                 )
@@ -4565,7 +4579,7 @@ var TriPartials = function (_React$Component37) {
     }
 
     _createClass(TriPartials, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this54 = this;
 
@@ -4581,7 +4595,7 @@ var TriPartials = function (_React$Component37) {
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(TriPartialsTable, {
@@ -4603,47 +4617,47 @@ var TriPartialsTable = function (_React$Component38) {
     }
 
     _createClass(TriPartialsTable, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
                 Table,
                 { striped: true, bordered: true, condensed: true, hover: true },
                 React.createElement(
-                    'thead',
+                    "thead",
                     null,
                     React.createElement(
-                        'tr',
+                        "tr",
                         null,
                         React.createElement(
-                            'th',
+                            "th",
                             null,
-                            '#'
+                            "#"
                         ),
                         React.createElement(
-                            'th',
+                            "th",
                             null,
-                            'Nombre'
+                            "Nombre"
                         ),
                         React.createElement(
-                            'th',
+                            "th",
                             null,
-                            'Total'
+                            "Total"
                         ),
                         React.createElement(
-                            'th',
+                            "th",
                             null,
-                            'Porcentaje'
+                            "Porcentaje"
                         ),
                         React.createElement(
-                            'th',
+                            "th",
                             null,
-                            'Total + Porcentaje'
+                            "Total + Porcentaje"
                         )
                     )
                 ),
                 React.createElement(
-                    'tbody',
+                    "tbody",
                     null,
                     this.props.masterAPI.map(function (master, index) {
                         return React.createElement(TriPartialsTableBody, {
@@ -4674,46 +4688,46 @@ var TriPartialsTableBody = function (_React$Component39) {
     }
 
     _createClass(TriPartialsTableBody, [{
-        key: 'onChanged',
+        key: "onChanged",
         value: function onChanged(data) {
             this.setState({
                 percentage: data.target.value
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
 
             var percentageTotal = this.props.total * this.state.percentage / 100;
 
             return React.createElement(
-                'tr',
+                "tr",
                 null,
                 React.createElement(
-                    'td',
+                    "td",
                     null,
-                    '\xA0'
+                    "\xA0"
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.master
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.total.toFixed(2)
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
-                    React.createElement('input', { type: 'number', name: 'percentage', placeholder: '%', onChange: this.onChanged.bind(this) })
+                    React.createElement("input", { type: "number", name: "percentage", placeholder: "%", onChange: this.onChanged.bind(this) })
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     React.createElement(
-                        'h6',
+                        "h6",
                         null,
                         percentageTotal.toFixed(2)
                     )
@@ -4742,7 +4756,7 @@ var BiPartials = function (_React$Component40) {
     }
 
     _createClass(BiPartials, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this58 = this;
 
@@ -4758,37 +4772,37 @@ var BiPartials = function (_React$Component40) {
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
                 Table,
                 { striped: true, bordered: true, condensed: true, hover: true },
                 React.createElement(
-                    'thead',
+                    "thead",
                     null,
                     React.createElement(
-                        'tr',
+                        "tr",
                         null,
                         React.createElement(
-                            'th',
+                            "th",
                             null,
-                            '#'
+                            "#"
                         ),
                         React.createElement(
-                            'th',
+                            "th",
                             null,
-                            'Fecha'
+                            "Fecha"
                         ),
                         React.createElement(
-                            'th',
+                            "th",
                             null,
-                            'Tipo de Servicio'
+                            "Tipo de Servicio"
                         )
                     )
                 ),
                 React.createElement(
-                    'tbody',
+                    "tbody",
                     null,
                     this.state.masterAPI.map(function (master, index) {
                         return React.createElement(BiPartialsTable, {
@@ -4815,24 +4829,24 @@ var BiPartialsTable = function (_React$Component41) {
     }
 
     _createClass(BiPartialsTable, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
-                'tr',
+                "tr",
                 null,
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.index
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.fecha
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     React.createElement(
                         Table,
@@ -4862,19 +4876,19 @@ var BiPartialsTableBody = function (_React$Component42) {
     }
 
     _createClass(BiPartialsTableBody, [{
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
-                'tr',
+                "tr",
                 null,
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.item[0]
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.totales
                 )
@@ -4902,7 +4916,7 @@ var AgregarPeluquera = function (_React$Component43) {
     }
 
     _createClass(AgregarPeluquera, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this62 = this;
 
@@ -4918,21 +4932,21 @@ var AgregarPeluquera = function (_React$Component43) {
             });
         }
     }, {
-        key: 'close',
+        key: "close",
         value: function close() {
             this.setState({
                 showModal: false
             });
         }
     }, {
-        key: 'open',
+        key: "open",
         value: function open() {
             this.setState({
                 showModal: true
             });
         }
     }, {
-        key: 'onDeleted',
+        key: "onDeleted",
         value: function onDeleted(value) {
 
             var nextState = this.state.peluqueraData;
@@ -4957,7 +4971,7 @@ var AgregarPeluquera = function (_React$Component43) {
             });
         }
     }, {
-        key: 'onSavePeluquera',
+        key: "onSavePeluquera",
         value: function onSavePeluquera(event) {
 
             event.preventDefault();
@@ -4989,7 +5003,7 @@ var AgregarPeluquera = function (_React$Component43) {
             });
         }
     }, {
-        key: 'onHandleChange',
+        key: "onHandleChange",
         value: function onHandleChange(event) {
 
             this.setState({
@@ -4998,7 +5012,7 @@ var AgregarPeluquera = function (_React$Component43) {
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
                 Grid,
@@ -5012,12 +5026,12 @@ var AgregarPeluquera = function (_React$Component43) {
                     Row,
                     null,
                     React.createElement(
-                        'div',
-                        { className: 'pull-right' },
+                        "div",
+                        { className: "pull-right" },
                         React.createElement(
                             Button,
                             { onClick: this.open.bind(this) },
-                            'Agregar Tipo de Servicio'
+                            "Agregar Tipo de Servicio"
                         ),
                         React.createElement(PeluqueraModal, { showModal: this.state.showModal,
                             peluqueraCallback: {
@@ -5029,7 +5043,7 @@ var AgregarPeluquera = function (_React$Component43) {
                         })
                     )
                 ),
-                React.createElement('br', null),
+                React.createElement("br", null),
                 React.createElement(
                     Row,
                     null,
@@ -5058,30 +5072,30 @@ var PeluqueraSearch = function (_React$Component44) {
     }
 
     _createClass(PeluqueraSearch, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
                 Panel,
-                { header: 'Busqueda ' },
+                { header: "Busqueda " },
                 React.createElement(
-                    'form',
+                    "form",
                     null,
                     React.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         React.createElement(
-                            'div',
-                            { className: 'col-md-2 col-sm-2' },
+                            "div",
+                            { className: "col-md-2 col-sm-2" },
                             React.createElement(
-                                'label',
+                                "label",
                                 null,
-                                'Buscar:'
+                                "Buscar:"
                             )
                         ),
                         React.createElement(
-                            'div',
-                            { className: 'col-md-10 col-sm-10' },
-                            React.createElement('input', { type: 'text', className: 'form-control', id: 'first_name', name: 'first_name' })
+                            "div",
+                            { className: "col-md-10 col-sm-10" },
+                            React.createElement("input", { type: "text", className: "form-control", id: "first_name", name: "first_name" })
                         )
                     )
                 )
@@ -5102,7 +5116,7 @@ var PeluqueraTable = function (_React$Component45) {
     }
 
     _createClass(PeluqueraTable, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this65 = this;
 
@@ -5112,47 +5126,47 @@ var PeluqueraTable = function (_React$Component45) {
 
             return React.createElement(
                 Panel,
-                { header: 'Listado de Tipo de Servicio' },
+                { header: "Listado de Tipo de Servicio" },
                 React.createElement(
                     Table,
                     { striped: true, bordered: true, condensed: true, hover: true },
                     React.createElement(
-                        'thead',
+                        "thead",
                         null,
                         React.createElement(
-                            'tr',
+                            "tr",
                             null,
                             React.createElement(
-                                'th',
+                                "th",
                                 null,
-                                'ID'
+                                "ID"
                             ),
                             React.createElement(
-                                'th',
+                                "th",
                                 null,
-                                'Fecha'
+                                "Fecha"
                             ),
                             React.createElement(
-                                'th',
+                                "th",
                                 null,
-                                'Nombre'
+                                "Nombre"
                             ),
                             React.createElement(
-                                'th',
+                                "th",
                                 null,
-                                'Acciones'
+                                "Acciones"
                             )
                         )
                     ),
                     React.createElement(
-                        'tbody',
+                        "tbody",
                         null,
                         filteredMaster.map(function (master, index) {
                             var _React$createElement;
 
                             return React.createElement(PeluqueraTableBody, (_React$createElement = {
                                 id: master.id, date: master.date
-                            }, _defineProperty(_React$createElement, 'date', master.date), _defineProperty(_React$createElement, 'name', master.name), _defineProperty(_React$createElement, 'peluqueraCallback', _this65.props.peluqueraCallback), _React$createElement));
+                            }, _defineProperty(_React$createElement, "date", master.date), _defineProperty(_React$createElement, "name", master.name), _defineProperty(_React$createElement, "peluqueraCallback", _this65.props.peluqueraCallback), _React$createElement));
                         })
                     )
                 )
@@ -5173,38 +5187,38 @@ var PeluqueraTableBody = function (_React$Component46) {
     }
 
     _createClass(PeluqueraTableBody, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'tr',
+                "tr",
                 null,
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.id
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.date
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     this.props.name
                 ),
                 React.createElement(
-                    'td',
+                    "td",
                     null,
                     React.createElement(
                         Button,
-                        { className: 'btn btn-default' },
-                        React.createElement('i', { className: 'fa fa-edit', 'aria-hidden': 'true' })
+                        { className: "btn btn-default" },
+                        React.createElement("i", { className: "fa fa-edit", "aria-hidden": "true" })
                     ),
                     React.createElement(
                         Button,
                         { onClick: this.props.peluqueraCallback.onDeleted.bind(this, this.props.id) },
-                        React.createElement('i', { className: 'fa fa-trash', 'aria-hidden': 'true' })
+                        React.createElement("i", { className: "fa fa-trash", "aria-hidden": "true" })
                     )
                 )
             );
@@ -5224,7 +5238,7 @@ var PeluqueraModal = function (_React$Component47) {
     }
 
     _createClass(PeluqueraModal, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
                 Modal,
@@ -5235,7 +5249,7 @@ var PeluqueraModal = function (_React$Component47) {
                     React.createElement(
                         Modal.Title,
                         null,
-                        'Agregar Tipo de Servicio'
+                        "Agregar Tipo de Servicio"
                     )
                 ),
                 React.createElement(
@@ -5246,16 +5260,16 @@ var PeluqueraModal = function (_React$Component47) {
                         null,
                         React.createElement(
                             FormGroup,
-                            { controlId: 'formHorizontalname' },
+                            { controlId: "formHorizontalname" },
                             React.createElement(
                                 Col,
                                 { componentClass: ControlLabel, sm: 2 },
-                                'Nombre'
+                                "Nombre"
                             ),
                             React.createElement(
                                 Col,
                                 { sm: 10 },
-                                React.createElement(FormControl, { type: 'text', name: 'name', placeholder: 'Nombre' })
+                                React.createElement(FormControl, { type: "text", name: "name", placeholder: "Nombre" })
                             )
                         )
                     ),
@@ -5264,8 +5278,8 @@ var PeluqueraModal = function (_React$Component47) {
                         null,
                         React.createElement(
                             Button,
-                            { type: 'submit', pullRight: true },
-                            'Save'
+                            { type: "submit", pullRight: true },
+                            "Save"
                         )
                     )
                 )
@@ -5286,52 +5300,52 @@ var Registration2 = function (_React$Component48) {
     }
 
     _createClass(Registration2, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'div',
-                { className: 'container' },
+                "div",
+                { className: "container" },
                 React.createElement(
-                    'div',
-                    { className: 'row vertical-offset-100' },
+                    "div",
+                    { className: "row vertical-offset-100" },
                     React.createElement(
-                        'div',
-                        { className: 'col-md-4 col-md-offset-4' },
+                        "div",
+                        { className: "col-md-4 col-md-offset-4" },
                         React.createElement(
-                            'div',
-                            { className: 'panel panel-default' },
+                            "div",
+                            { className: "panel panel-default" },
                             React.createElement(
-                                'div',
-                                { className: 'panel-heading' },
+                                "div",
+                                { className: "panel-heading" },
                                 React.createElement(
-                                    'h3',
-                                    { className: 'panel-title' },
-                                    'Please sign up'
+                                    "h3",
+                                    { className: "panel-title" },
+                                    "Please sign up"
                                 )
                             ),
                             React.createElement(
-                                'div',
-                                { className: 'panel-body' },
+                                "div",
+                                { className: "panel-body" },
                                 React.createElement(
-                                    'form',
+                                    "form",
                                     { onSubmit: this.props.setregistration.bind(this) },
                                     React.createElement(
-                                        'fieldset',
+                                        "fieldset",
                                         null,
                                         React.createElement(
-                                            'div',
-                                            { className: 'form-group' },
-                                            React.createElement('input', { className: 'form-control', placeholder: 'E-mail', name: 'email', type: 'text' })
+                                            "div",
+                                            { className: "form-group" },
+                                            React.createElement("input", { className: "form-control", placeholder: "E-mail", name: "email", type: "text" })
                                         ),
                                         React.createElement(
-                                            'div',
-                                            { className: 'form-group' },
-                                            React.createElement('input', { className: 'form-control', placeholder: 'Password', name: 'password', type: 'password' })
+                                            "div",
+                                            { className: "form-group" },
+                                            React.createElement("input", { className: "form-control", placeholder: "Password", name: "password", type: "password" })
                                         ),
                                         React.createElement(
-                                            'button',
-                                            { className: 'btn btn-lg btn-success btn-block' },
-                                            'Save'
+                                            "button",
+                                            { className: "btn btn-lg btn-success btn-block" },
+                                            "Save"
                                         )
                                     )
                                 )
@@ -5362,7 +5376,7 @@ var Account = function (_React$Component49) {
     }
 
     _createClass(Account, [{
-        key: 'onSubmit',
+        key: "onSubmit",
         value: function onSubmit(event) {
 
             event.preventDefault();
@@ -5383,42 +5397,42 @@ var Account = function (_React$Component49) {
             //window.location.reload();
         }
     }, {
-        key: 'onhandleuserinput',
+        key: "onhandleuserinput",
         value: function onhandleuserinput(event) {
             this.setState({
                 password: event.target.value
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
                 Panel,
-                { header: 'Reset Password' },
+                { header: "Reset Password" },
                 React.createElement(
-                    'form',
+                    "form",
                     { onSubmit: this.onSubmit.bind(this) },
                     React.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         React.createElement(
-                            'div',
-                            { className: 'col-md-2 col-sm-2' },
+                            "div",
+                            { className: "col-md-2 col-sm-2" },
                             React.createElement(
-                                'label',
+                                "label",
                                 null,
-                                'Password:'
+                                "Password:"
                             )
                         ),
                         React.createElement(
-                            'div',
-                            { className: 'col-md-10 col-sm-10' },
-                            React.createElement('input', { onChange: this.onhandleuserinput.bind(this), type: 'password', className: 'form-control', id: 'first_name', name: 'first_name' }),
-                            React.createElement('br', null),
+                            "div",
+                            { className: "col-md-10 col-sm-10" },
+                            React.createElement("input", { onChange: this.onhandleuserinput.bind(this), type: "password", className: "form-control", id: "first_name", name: "first_name" }),
+                            React.createElement("br", null),
                             React.createElement(
-                                'button',
-                                { className: 'btn btn-lg btn-success btn-block' },
-                                'Reset'
+                                "button",
+                                { className: "btn btn-lg btn-success btn-block" },
+                                "Reset"
                             )
                         )
                     )
@@ -5448,7 +5462,7 @@ var Profile = function (_React$Component50) {
     }
 
     _createClass(Profile, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
 
             this.setState({
@@ -5457,7 +5471,7 @@ var Profile = function (_React$Component50) {
             });
         }
     }, {
-        key: 'onClicked',
+        key: "onClicked",
         value: function onClicked(event) {
 
             this.setState({
@@ -5466,68 +5480,68 @@ var Profile = function (_React$Component50) {
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
 
             var activeRenderPanel = void 0;
 
             var overview = React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(
-                    'h1',
+                    "h1",
                     null,
-                    'Overview'
+                    "Overview"
                 ),
                 React.createElement(
-                    'p',
+                    "p",
                     null,
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                 )
             );
 
             var account = React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(
-                    'h1',
+                    "h1",
                     null,
-                    'Account Setting'
+                    "Account Setting"
                 ),
                 React.createElement(
-                    'p',
+                    "p",
                     null,
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                 )
             );
 
             var tasks = React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(
-                    'h1',
+                    "h1",
                     null,
-                    'Tasks'
+                    "Tasks"
                 ),
                 React.createElement(
-                    'p',
+                    "p",
                     null,
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                 )
             );
 
             var help = React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(
-                    'h1',
+                    "h1",
                     null,
-                    'Help'
+                    "Help"
                 ),
                 React.createElement(
-                    'p',
+                    "p",
                     null,
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                 )
             );
 
@@ -5551,7 +5565,7 @@ var Profile = function (_React$Component50) {
                         Col,
                         { md: 4 },
                         React.createElement(
-                            'h1',
+                            "h1",
                             null,
                             this.state.parameter
                         ),
@@ -5559,38 +5573,38 @@ var Profile = function (_React$Component50) {
                             Panel,
                             null,
                             React.createElement(
-                                'div',
-                                { className: 'card' },
-                                React.createElement('img', { src: 'http://localhost:8084/img_avatar.png', alt: 'Avatar', style: { "width": "100%" } }),
+                                "div",
+                                { className: "card" },
+                                React.createElement("img", { src: "http://localhost:8084/img_avatar.png", alt: "Avatar", style: { "width": "100%" } }),
                                 React.createElement(
-                                    'div',
-                                    { className: 'container' },
+                                    "div",
+                                    { className: "container" },
                                     React.createElement(
-                                        'p',
+                                        "p",
                                         null,
-                                        'Architect  Engineer'
+                                        "Architect  Engineer"
                                     )
                                 ),
                                 React.createElement(
-                                    'div',
-                                    { className: 'row' },
+                                    "div",
+                                    { className: "row" },
                                     React.createElement(
-                                        'h5',
+                                        "h5",
                                         { style: { 'text-align': 'center' } },
-                                        'Testing'
+                                        "Testing"
                                     )
                                 ),
-                                React.createElement('br', null),
+                                React.createElement("br", null),
                                 React.createElement(
-                                    'div',
-                                    { className: 'row' },
+                                    "div",
+                                    { className: "row" },
                                     React.createElement(
                                         Col,
                                         { md: 6 },
                                         React.createElement(
                                             Button,
-                                            { className: 'btn btn-success btn-lg' },
-                                            'Follow'
+                                            { className: "btn btn-success btn-lg" },
+                                            "Follow"
                                         )
                                     ),
                                     React.createElement(
@@ -5598,41 +5612,41 @@ var Profile = function (_React$Component50) {
                                         { md: 6 },
                                         React.createElement(
                                             Button,
-                                            { className: ' btn btn-danger btn-lg' },
-                                            'Message'
+                                            { className: " btn btn-danger btn-lg" },
+                                            "Message"
                                         )
                                     )
                                 ),
-                                React.createElement('br', null),
+                                React.createElement("br", null),
                                 React.createElement(
-                                    'div',
-                                    { className: 'row' },
+                                    "div",
+                                    { className: "row" },
                                     React.createElement(
-                                        'div',
-                                        { className: 'list-group' },
+                                        "div",
+                                        { className: "list-group" },
                                         React.createElement(
                                             Button,
-                                            { onClick: this.onClicked.bind(this), value: 'overview', className: 'list-group-item' },
-                                            React.createElement('i', { className: 'fa fa-home', 'aria-hidden': 'true' }),
-                                            '\xA0\xA0Overview'
+                                            { onClick: this.onClicked.bind(this), value: "overview", className: "list-group-item" },
+                                            React.createElement("i", { className: "fa fa-home", "aria-hidden": "true" }),
+                                            "\xA0\xA0Overview"
                                         ),
                                         React.createElement(
                                             Button,
-                                            { onClick: this.onClicked.bind(this), value: 'accountsetting', className: 'list-group-item' },
-                                            React.createElement('i', { className: 'fa fa-user', 'aria-hidden': 'true' }),
-                                            '\xA0\xA0Account Setting'
+                                            { onClick: this.onClicked.bind(this), value: "accountsetting", className: "list-group-item" },
+                                            React.createElement("i", { className: "fa fa-user", "aria-hidden": "true" }),
+                                            "\xA0\xA0Account Setting"
                                         ),
                                         React.createElement(
                                             Button,
-                                            { onClick: this.onClicked.bind(this), value: 'tasks', className: 'list-group-item' },
-                                            React.createElement('i', { className: 'fa fa-check', 'aria-hidden': 'true' }),
-                                            '\xA0\xA0Tasks'
+                                            { onClick: this.onClicked.bind(this), value: "tasks", className: "list-group-item" },
+                                            React.createElement("i", { className: "fa fa-check", "aria-hidden": "true" }),
+                                            "\xA0\xA0Tasks"
                                         ),
                                         React.createElement(
                                             Button,
-                                            { onClick: this.onClicked.bind(this), value: 'help', className: 'list-group-item' },
-                                            React.createElement('i', { className: 'fa fa-flag', 'aria-hidden': 'true' }),
-                                            '\xA0\xA0Help'
+                                            { onClick: this.onClicked.bind(this), value: "help", className: "list-group-item" },
+                                            React.createElement("i", { className: "fa fa-flag", "aria-hidden": "true" }),
+                                            "\xA0\xA0Help"
                                         )
                                     )
                                 )
@@ -5668,7 +5682,7 @@ var CardNarv = function (_React$Component51) {
     }
 
     _createClass(CardNarv, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this72 = this;
 
@@ -5697,7 +5711,7 @@ var CardNarv = function (_React$Component51) {
             });
         }
     }, {
-        key: 'onDelete',
+        key: "onDelete",
         value: function onDelete(value) {
 
             var newItem = {
@@ -5717,7 +5731,7 @@ var CardNarv = function (_React$Component51) {
             });
         }
     }, {
-        key: 'checkout',
+        key: "checkout",
         value: function checkout(value) {
             var _this73 = this;
 
@@ -5738,7 +5752,7 @@ var CardNarv = function (_React$Component51) {
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this74 = this;
 
@@ -5758,12 +5772,12 @@ var CardNarv = function (_React$Component51) {
                     Col,
                     { md: 10 },
                     React.createElement(
-                        'h4',
+                        "h4",
                         null,
-                        'Cart'
+                        "Cart"
                     )
                 ),
-                React.createElement('br', null),
+                React.createElement("br", null),
                 React.createElement(
                     Col,
                     { md: 12 },
@@ -5771,184 +5785,184 @@ var CardNarv = function (_React$Component51) {
                         Table,
                         null,
                         React.createElement(
-                            'tbody',
+                            "tbody",
                             null,
                             this.state.orderAPI.map(function (order) {
                                 return React.createElement(
-                                    'tr',
+                                    "tr",
                                     null,
                                     React.createElement(
-                                        'td',
-                                        { colSpan: '3', style: { 'text-decoration': 'none !important', 'text-align': 'center', 'width': '100%' } },
+                                        "td",
+                                        { colSpan: "3", style: { 'text-decoration': 'none !important', 'text-align': 'center', 'width': '100%' } },
                                         order.description
                                     ),
                                     React.createElement(
-                                        'td',
-                                        { colSpan: '2' },
-                                        'qty: ',
+                                        "td",
+                                        { colSpan: "2" },
+                                        "qty: ",
                                         parseInt(order.quantity)
                                     ),
                                     React.createElement(
-                                        'td',
+                                        "td",
                                         null,
-                                        'US$',
+                                        "US$",
                                         parseInt(order.project).toFixed(2)
                                     ),
                                     React.createElement(
-                                        'td',
+                                        "td",
                                         { style: { 'text-align': 'center', 'font-size': '18px' } },
-                                        React.createElement('i', { onClick: _this74.onDelete.bind(_this74, order.id), className: 'fa fa-trash', 'aria-hidden': 'true' })
+                                        React.createElement("i", { onClick: _this74.onDelete.bind(_this74, order.id), className: "fa fa-trash", "aria-hidden": "true" })
                                     )
                                 );
                             }),
                             React.createElement(
-                                'tr',
+                                "tr",
                                 null,
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0\xA0\xA0\xA0\xA0\xA0'
+                                    "\xA0\xA0\xA0\xA0\xA0\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0\xA0\xA0\xA0\xA0\xA0'
+                                    "\xA0\xA0\xA0\xA0\xA0\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0\xA0\xA0\xA0\xA0\xA0'
+                                    "\xA0\xA0\xA0\xA0\xA0\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0\xA0\xA0\xA0\xA0\xA0'
+                                    "\xA0\xA0\xA0\xA0\xA0\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0\xA0\xA0\xA0\xA0\xA0'
+                                    "\xA0\xA0\xA0\xA0\xA0\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    'Discount:'
+                                    "Discount:"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '$',
+                                    "$",
                                     (sum * 5 / 100).toFixed(2)
                                 )
                             ),
                             React.createElement(
-                                'tr',
+                                "tr",
                                 null,
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0\xA0\xA0\xA0\xA0\xA0'
+                                    "\xA0\xA0\xA0\xA0\xA0\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0\xA0\xA0\xA0\xA0\xA0'
+                                    "\xA0\xA0\xA0\xA0\xA0\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0\xA0\xA0\xA0\xA0\xA0'
+                                    "\xA0\xA0\xA0\xA0\xA0\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0\xA0\xA0\xA0\xA0\xA0'
+                                    "\xA0\xA0\xA0\xA0\xA0\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0\xA0\xA0\xA0\xA0\xA0'
+                                    "\xA0\xA0\xA0\xA0\xA0\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    'Subtotal:'
+                                    "Subtotal:"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '$',
+                                    "$",
                                     (sum - sum * 5 / 100).toFixed(2)
                                 )
                             ),
                             React.createElement(
-                                'tr',
+                                "tr",
                                 null,
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0\xA0\xA0\xA0\xA0\xA0'
+                                    "\xA0\xA0\xA0\xA0\xA0\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0\xA0\xA0\xA0\xA0\xA0'
+                                    "\xA0\xA0\xA0\xA0\xA0\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0\xA0\xA0\xA0\xA0\xA0'
+                                    "\xA0\xA0\xA0\xA0\xA0\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0\xA0\xA0\xA0\xA0\xA0'
+                                    "\xA0\xA0\xA0\xA0\xA0\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    '\xA0\xA0\xA0\xA0\xA0\xA0'
+                                    "\xA0\xA0\xA0\xA0\xA0\xA0"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     { style: { 'font-weight': 'bold', 'font-size': '20px' } },
-                                    'Total:'
+                                    "Total:"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     { style: { 'font-weight': 'bold', 'font-size': '20px' } },
-                                    '$',
+                                    "$",
                                     sum.toFixed(2)
                                 )
                             ),
                             React.createElement(
-                                'tr',
+                                "tr",
                                 null,
                                 React.createElement(
-                                    'td',
-                                    { colSpan: '7', style: { 'text-align': 'center', 'width': '100%' } },
+                                    "td",
+                                    { colSpan: "7", style: { 'text-align': 'center', 'width': '100%' } },
                                     React.createElement(
                                         Button,
-                                        { onClick: this.checkout.bind(this, "hello"), style: { 'width': '100%' }, variant: 'outline-success' },
-                                        'Proceed to Checkout \xA0 ',
-                                        React.createElement('i', { className: 'fa fa-arrow-right', 'aria-hidden': 'true' })
+                                        { onClick: this.checkout.bind(this, "hello"), style: { 'width': '100%' }, variant: "outline-success" },
+                                        "Proceed to Checkout \xA0 ",
+                                        React.createElement("i", { className: "fa fa-arrow-right", "aria-hidden": "true" })
                                     )
                                 )
                             ),
                             React.createElement(
-                                'tr',
+                                "tr",
                                 null,
                                 React.createElement(
-                                    'td',
-                                    { colSpan: '7', style: { 'text-align': 'center', 'width': '100%' } },
+                                    "td",
+                                    { colSpan: "7", style: { 'text-align': 'center', 'width': '100%' } },
                                     React.createElement(
                                         Link,
                                         { to: '/upload' },
                                         React.createElement(
                                             Button,
-                                            { style: { 'width': '100%' }, variant: 'outline-success' },
-                                            'Upload \xA0 ',
-                                            React.createElement('i', { className: 'fa fa-arrow-up', 'aria-hidden': 'true' })
+                                            { style: { 'width': '100%' }, variant: "outline-success" },
+                                            "Upload \xA0 ",
+                                            React.createElement("i", { className: "fa fa-arrow-up", "aria-hidden": "true" })
                                         )
                                     )
                                 )
@@ -5979,7 +5993,7 @@ var Order = function (_React$Component52) {
     }
 
     _createClass(Order, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this76 = this;
 
@@ -6012,64 +6026,64 @@ var Order = function (_React$Component52) {
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
 
             return React.createElement(
                 Table,
                 { striped: true, bordered: true, condensed: true, hover: true },
                 React.createElement(
-                    'thead',
+                    "thead",
                     null,
                     React.createElement(
-                        'tr',
+                        "tr",
                         null,
                         React.createElement(
-                            'td',
+                            "td",
                             null,
-                            'Username'
+                            "Username"
                         ),
                         React.createElement(
-                            'td',
+                            "td",
                             null,
-                            'Status'
+                            "Status"
                         ),
                         React.createElement(
-                            'td',
+                            "td",
                             null,
-                            'Quantity'
+                            "Quantity"
                         ),
                         React.createElement(
-                            'td',
+                            "td",
                             null,
-                            'Address'
+                            "Address"
                         )
                     )
                 ),
                 React.createElement(
-                    'tbody',
+                    "tbody",
                     null,
                     this.state.orderAPI.map(function (order) {
                         return React.createElement(
-                            'tr',
+                            "tr",
                             null,
                             React.createElement(
-                                'td',
+                                "td",
                                 null,
                                 order.username
                             ),
                             React.createElement(
-                                'td',
+                                "td",
                                 null,
                                 'Pending'
                             ),
                             React.createElement(
-                                'td',
+                                "td",
                                 null,
                                 order.quantity
                             ),
                             React.createElement(
-                                'td',
+                                "td",
                                 null,
                                 order.address
                             )
@@ -6095,13 +6109,14 @@ var Upload = function (_React$Component53) {
 
             orderAPI: [],
             showModal: false,
-            files: []
+            files: [],
+            file: ''
         };
         return _this77;
     }
 
     _createClass(Upload, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this78 = this;
 
@@ -6144,7 +6159,7 @@ var Upload = function (_React$Component53) {
             });
         }
     }, {
-        key: 'onClose',
+        key: "onClose",
         value: function onClose() {
             this.setState({
 
@@ -6152,7 +6167,7 @@ var Upload = function (_React$Component53) {
             });
         }
     }, {
-        key: 'onOpen',
+        key: "onOpen",
         value: function onOpen() {
 
             this.setState({
@@ -6161,7 +6176,7 @@ var Upload = function (_React$Component53) {
             });
         }
     }, {
-        key: 'onsavedetail',
+        key: "onsavedetail",
         value: function onsavedetail(event) {
 
             event.preventDefault();
@@ -6187,43 +6202,84 @@ var Upload = function (_React$Component53) {
             console.log(event.target.fileToUpload.value);
         }
     }, {
-        key: 'fileSelectedHandler',
+        key: "fileSelectedHandler",
         value: function fileSelectedHandler(e) {
 
-            // console.log(e.target.files)
             var files = e.target.files;
 
-            var _loop = function _loop(x, num) {
-                setTimeout(function () {
-                    if (files && files[x]) {
-                        console.log(files[x]);
-                        // this.nameImage.push(this.files[x].name);          
-                        var reader = new FileReader();
-                        reader.readAsDataURL(files[x]);
-                        reader.onload = function (e) {
-                            // The file's text will be printed here
-                            var target = event.target;
-                            var content = target.result;
-                            console.log(content);
-                        };
-
-                        //reader.readAsText(files[x]);
-                        // this.reader.readAsDataURL(this.files[x]);
-                        // this.reader.onload = (event) => {           
-                        //     let target = event.target;
-                        //     let content = target.result;          
-                        //     this.url.push(content); 
-                        //   }
-                    }
-                }, num);
-            };
-
-            for (var x = 0, num = 1000; x < files.length; x++, num += 3000) {
-                _loop(x, num);
+            if (!files.length) {
+                return alert("Please choose a file to upload first.");
             }
+
+            var file = files[0];
+
+            var fileName = file.name;
+
+            var photoKey = "" + fileName;
+
+            var upload = new AWS.S3.ManagedUpload({
+                params: {
+                    Bucket: albumBucketName,
+                    Key: photoKey,
+                    Body: file,
+                    ACL: "public-read"
+                }
+            });
+
+            var promise = upload.promise();
+
+            promise.then(function (data) {
+                alert("Successfully uploaded photo.");
+            }, function (err) {
+                // return alert("There was an error uploading your photo: ", err.message);
+                console.log("There was an error uploading your photo: ", err.message);
+            });
+
+            // for(let x=0,num=1000;x<files.length;x++,num+=3000){      
+            //   setTimeout(() => {         
+            //     if (files && files[x]) {
+            //         console.log(files[x])
+            //         // this.nameImage.push(this.files[x].name);          
+            //         var reader = new FileReader();
+            //         reader.readAsDataURL(files[x]);
+            //         reader.onload = function(e) {
+            //           // The file's text will be printed here
+            //           let target = event.target;
+            //           let content = target.result;          
+            //           console.log(content)
+
+            //           fetch(API_URL+'/masterpicture', {
+
+            //             method: 'post',
+            //             headers: API_HEADERS,
+            //             body: JSON.stringify(target)
+            //           }).then(response => response.json()).then(response => {
+            //             console.log(response);
+            //           });
+
+
+            //         };
+
+            //         //reader.readAsText(files[x]);
+            //         // this.reader.readAsDataURL(this.files[x]);
+            //         // this.reader.onload = (event) => {           
+            //         //     let target = event.target;
+            //         //     let content = target.result;          
+            //         //     this.url.push(content); 
+            //         //   }
+            //     }                
+            //   }, num);
+            // }    
         }
     }, {
-        key: 'render',
+        key: "handleFile",
+        value: function handleFile(file) {
+            this.setState({
+                file: file
+            });
+        }
+    }, {
+        key: "render",
         value: function render() {
 
             return React.createElement(
@@ -6233,9 +6289,9 @@ var Upload = function (_React$Component53) {
                     Row,
                     null,
                     React.createElement(
-                        'h1',
+                        "h1",
                         { style: { 'color': '#cd6607' } },
-                        'Send/replenish Inventory'
+                        "Send/replenish Inventory"
                     )
                 ),
                 React.createElement(
@@ -6243,9 +6299,9 @@ var Upload = function (_React$Component53) {
                     null,
                     React.createElement(
                         Button,
-                        { className: 'pull-right', onClick: this.onOpen.bind(this), variant: 'outline-success' },
-                        'Upload \xA0 ',
-                        React.createElement('i', { className: 'fa fa-arrow-up', 'aria-hidden': 'true' })
+                        { className: "pull-right", onClick: this.onOpen.bind(this), variant: "outline-success" },
+                        "Upload \xA0 ",
+                        React.createElement("i", { className: "fa fa-arrow-up", "aria-hidden": "true" })
                     ),
                     React.createElement(
                         Modal,
@@ -6256,7 +6312,7 @@ var Upload = function (_React$Component53) {
                             React.createElement(
                                 Modal.Title,
                                 null,
-                                'Modal heading'
+                                "Modal heading"
                             )
                         ),
                         React.createElement(
@@ -6274,16 +6330,16 @@ var Upload = function (_React$Component53) {
                                         React.createElement(
                                             Col,
                                             { componentClass: ControlLabel, md: 4, sm: 2 },
-                                            'Description'
+                                            "Description"
                                         ),
                                         React.createElement(
                                             Col,
                                             { md: 8, sm: 6 },
-                                            React.createElement(FormControl, { type: 'text', name: 'description', placeholder: 'Description', disabled: true })
+                                            React.createElement(FormControl, { type: "text", name: "description", placeholder: "Description", disabled: true })
                                         )
                                     )
                                 ),
-                                React.createElement('br', null),
+                                React.createElement("br", null),
                                 React.createElement(
                                     Row,
                                     null,
@@ -6293,16 +6349,16 @@ var Upload = function (_React$Component53) {
                                         React.createElement(
                                             Col,
                                             { componentClass: ControlLabel, md: 4, sm: 2 },
-                                            'Price'
+                                            "Price"
                                         ),
                                         React.createElement(
                                             Col,
                                             { md: 8, sm: 6 },
-                                            React.createElement(FormControl, { type: 'text', name: 'price', placeholder: 'Price', disabled: true })
+                                            React.createElement(FormControl, { type: "text", name: "price", placeholder: "Price", disabled: true })
                                         )
                                     )
                                 ),
-                                React.createElement('br', null),
+                                React.createElement("br", null),
                                 React.createElement(
                                     Row,
                                     null,
@@ -6312,26 +6368,26 @@ var Upload = function (_React$Component53) {
                                         React.createElement(
                                             Col,
                                             { componentClass: ControlLabel, md: 4, sm: 2 },
-                                            'Image'
+                                            "Image"
                                         ),
                                         React.createElement(
                                             Col,
                                             { md: 8, sm: 6 },
-                                            React.createElement('input', { type: 'file', multiple: true, onChange: this.fileSelectedHandler })
+                                            React.createElement("input", { type: "file", onChange: this.fileSelectedHandler })
                                         )
                                     )
                                 ),
-                                React.createElement('br', null),
+                                React.createElement("br", null),
                                 React.createElement(
                                     Row,
                                     null,
                                     React.createElement(
                                         Col,
-                                        { className: 'col-md-offset-10' },
+                                        { className: "col-md-offset-10" },
                                         React.createElement(
                                             Button,
-                                            { type: 'submit' },
-                                            'Save'
+                                            { type: "submit" },
+                                            "Save"
                                         )
                                     )
                                 )
@@ -6339,7 +6395,7 @@ var Upload = function (_React$Component53) {
                         )
                     )
                 ),
-                React.createElement('br', null),
+                React.createElement("br", null),
                 React.createElement(
                     Row,
                     null,
@@ -6347,57 +6403,57 @@ var Upload = function (_React$Component53) {
                         Table,
                         { striped: true, bordered: true, condensed: true, hover: true },
                         React.createElement(
-                            'thead',
+                            "thead",
                             null,
                             React.createElement(
-                                'tr',
+                                "tr",
                                 null,
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    'Username'
+                                    "Username"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    'Status'
+                                    "Status"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    'Quantity'
+                                    "Quantity"
                                 ),
                                 React.createElement(
-                                    'td',
+                                    "td",
                                     null,
-                                    'Address'
+                                    "Address"
                                 )
                             )
                         ),
                         React.createElement(
-                            'tbody',
+                            "tbody",
                             null,
                             this.state.orderAPI.map(function (order) {
                                 return React.createElement(
-                                    'tr',
+                                    "tr",
                                     null,
                                     React.createElement(
-                                        'td',
+                                        "td",
                                         null,
-                                        React.createElement('div', { dangerouslySetInnerHTML: { __html: order.description } })
+                                        React.createElement("div", { dangerouslySetInnerHTML: { __html: order.description } })
                                     ),
                                     React.createElement(
-                                        'td',
+                                        "td",
                                         null,
                                         'Pending'
                                     ),
                                     React.createElement(
-                                        'td',
+                                        "td",
                                         null,
                                         order.quantity
                                     ),
                                     React.createElement(
-                                        'td',
+                                        "td",
                                         null,
                                         order.address
                                     )
@@ -6418,23 +6474,23 @@ ReactDOM.render(React.createElement(
     { history: browserHistory },
     React.createElement(
         Route,
-        { path: '/', component: App },
-        React.createElement(IndexRedirect, { to: 'master' }),
-        React.createElement(Route, { path: 'login', component: Login }),
-        React.createElement(Route, { path: 'registration', component: Registration }),
-        React.createElement(Route, { path: 'order', component: Order }),
-        React.createElement(Route, { path: 'upload', component: Upload }),
-        React.createElement(Route, { path: 'profile/:userid', component: Profile }),
-        React.createElement(Route, { path: 'account', component: Account }),
-        React.createElement(Route, { path: 'agregar_tiposervicio', component: AgregarPeluquera }),
-        React.createElement(Route, { path: 'tripartials', component: TriPartials }),
-        React.createElement(Route, { path: 'bipartials', component: BiPartials }),
-        React.createElement(Route, { path: 'partials', component: Partials }),
-        React.createElement(Route, { path: 'about', component: About }),
-        React.createElement(Route, { path: 'repos/:repo_name', component: Repos }),
-        React.createElement(Route, { path: 'updatedetail/:detailid', component: DetailModalUpdate }),
-        React.createElement(Route, { path: 'actions/:actionid', component: Actions }),
-        React.createElement(Route, { path: 'detail', component: Detail }),
-        React.createElement(Route, { path: 'master', component: Master })
+        { path: "/", component: App },
+        React.createElement(IndexRedirect, { to: "master" }),
+        React.createElement(Route, { path: "login", component: Login }),
+        React.createElement(Route, { path: "registration", component: Registration }),
+        React.createElement(Route, { path: "order", component: Order }),
+        React.createElement(Route, { path: "upload", component: Upload }),
+        React.createElement(Route, { path: "profile/:userid", component: Profile }),
+        React.createElement(Route, { path: "account", component: Account }),
+        React.createElement(Route, { path: "agregar_tiposervicio", component: AgregarPeluquera }),
+        React.createElement(Route, { path: "tripartials", component: TriPartials }),
+        React.createElement(Route, { path: "bipartials", component: BiPartials }),
+        React.createElement(Route, { path: "partials", component: Partials }),
+        React.createElement(Route, { path: "about", component: About }),
+        React.createElement(Route, { path: "repos/:repo_name", component: Repos }),
+        React.createElement(Route, { path: "updatedetail/:detailid", component: DetailModalUpdate }),
+        React.createElement(Route, { path: "actions/:actionid", component: Actions }),
+        React.createElement(Route, { path: "detail", component: Detail }),
+        React.createElement(Route, { path: "master", component: Master })
     )
 ), document.getElementById('contents'));

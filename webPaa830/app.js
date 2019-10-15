@@ -228,25 +228,59 @@ app.post('/removeorder', orderController.removeOrder)
 
 app.post('/newcomment', masterController.setMasterComment)
 
-app.post('/masterpicture', async (req, res)=>{  
-  
-    var fs = require('fs');    
-    var string = req.body.url
-    var nameImage = req.body.nameImage    
-    var regex = /^data:.+\/(.+);base64,(.*)$/;
+app.post('/masterpicture', async (req, res)=>{
     
-    var matches = string.match(regex);
-    var ext = matches[1];
-    var data = matches[2];
-    var buffer = new Buffer(data, 'base64');
-    console.log(buffer)
-    // var dir = './src/assets/'+master.fullname+'/';
-    // if (!fs.existsSync(dir)){
-    //   fs.mkdirSync(dir);
-    // }
-    // fs.writeFileSync('./src/assets/'+master.fullname+'/'+nameImage, buffer); 
+    var files = req.body.files;
 
-    res.send("ready");
+    if (!files.length) {
+        return alert("Please choose a file to upload first.");
+    }
+
+    var file = files[0];
+    var fileName = file.name;
+
+    var photoKey = ""+fileName
+
+    var upload = new AWS.S3.ManagedUpload({
+        params: {
+        Bucket: albumBucketName,
+        Key: photoKey,
+        Body: file,
+        ACL: "public-read"
+        }
+    });
+
+    var promise = upload.promise();
+
+    promise.then(
+        function(data) {
+        alert("Successfully uploaded photo.");
+        viewAlbum(albumName);
+        },
+        function(err) {
+        return alert("There was an error uploading your photo: ", err.message);
+        }
+    );
+
+    
+  
+    // var fs = require('fs');    
+    // var string = req.body.url
+    // var nameImage = req.body.nameImage    
+    // var regex = /^data:.+\/(.+);base64,(.*)$/;
+    
+    // var matches = string.match(regex);
+    // var ext = matches[1];
+    // var data = matches[2];
+    // var buffer = new Buffer(data, 'base64');
+    // console.log(buffer)
+    // // var dir = './src/assets/'+master.fullname+'/';
+    // // if (!fs.existsSync(dir)){
+    // //   fs.mkdirSync(dir);
+    // // }
+    // // fs.writeFileSync('./src/assets/'+master.fullname+'/'+nameImage, buffer); 
+
+    // res.send("ready");
   
 })
 
@@ -275,7 +309,6 @@ app.get('/bucket', async(req,res)=>{
     })
 
 })
-
 
 mongoose.connect('mongodb://localhost:27017/spf',(err)=>{
     if(!err){

@@ -18,7 +18,6 @@ const Row = ReactBootstrap.Row;
 const Panel = ReactBootstrap.Panel;
 
 const Pagination = ReactBootstrap.Pagination;
-
 const Form = ReactBootstrap.Form;
 const Radio = ReactBootstrap.Radio;
 const FormGroup = ReactBootstrap.FormGroup;
@@ -28,6 +27,21 @@ const Col = ReactBootstrap.Col;
 const ListGroup = ReactBootstrap.ListGroup;
 const Table = ReactBootstrap.Table;
 
+var albumBucketName = "webpaa-deployments-mobilehub-2128298286";
+var bucketRegion = "us-east-1";
+var IdentityPoolId = "us-east-1:3dd5b3b8-326c-4be6-9f32-67943932637a";
+
+AWS.config.update({
+    region: bucketRegion,
+    credentials: new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: IdentityPoolId
+    })
+});
+
+var s3 = new AWS.S3({
+    apiVersion: "2006-03-01",
+    params: { Bucket: albumBucketName }
+});
 const Autosuggest = Autosuggest;
 
 const moment = moment;
@@ -4125,7 +4139,8 @@ class Upload extends React.Component{
 
             orderAPI: [],
             showModal: false,
-            files: []            
+            files: [],
+            file: ''            
         }
     }
 
@@ -4214,33 +4229,84 @@ class Upload extends React.Component{
 
     fileSelectedHandler(e){
 
-        // console.log(e.target.files)
+        
         var files = e.target.files
-        for(let x=0,num=1000;x<files.length;x++,num+=3000){      
-          setTimeout(() => {         
-            if (files && files[x]) {
-                console.log(files[x])
-                // this.nameImage.push(this.files[x].name);          
-                var reader = new FileReader();
-                reader.readAsDataURL(files[x]);
-                reader.onload = function(e) {
-                  // The file's text will be printed here
-                  let target = event.target;
-                  let content = target.result;          
-                  console.log(content)
-                };
-              
-                //reader.readAsText(files[x]);
-                // this.reader.readAsDataURL(this.files[x]);
-                // this.reader.onload = (event) => {           
-                //     let target = event.target;
-                //     let content = target.result;          
-                //     this.url.push(content); 
-                //   }
-            }                
-          }, num);
-        }    
+        
+        if (!files.length) {
+            return alert("Please choose a file to upload first.");
+        }
 
+        var file = files[0];
+
+        var fileName = file.name;
+
+        var photoKey = "" + fileName;
+
+        var upload = new AWS.S3.ManagedUpload({
+            params: {
+              Bucket: albumBucketName,
+              Key: photoKey,
+              Body: file,
+              ACL: "public-read"
+            }
+        });
+
+        var promise = upload.promise();
+        
+        promise.then(
+            function(data) {
+                alert("Successfully uploaded photo.");                
+            },
+            function(err) {
+                // return alert("There was an error uploading your photo: ", err.message);
+                console.log("There was an error uploading your photo: ", err.message);
+            }
+        );
+
+        // for(let x=0,num=1000;x<files.length;x++,num+=3000){      
+        //   setTimeout(() => {         
+        //     if (files && files[x]) {
+        //         console.log(files[x])
+        //         // this.nameImage.push(this.files[x].name);          
+        //         var reader = new FileReader();
+        //         reader.readAsDataURL(files[x]);
+        //         reader.onload = function(e) {
+        //           // The file's text will be printed here
+        //           let target = event.target;
+        //           let content = target.result;          
+        //           console.log(content)
+
+        //           fetch(API_URL+'/masterpicture', {
+                    
+        //             method: 'post',
+        //             headers: API_HEADERS,
+        //             body: JSON.stringify(target)
+        //           }).then(response => response.json()).then(response => {
+        //             console.log(response);
+        //           });
+
+
+
+
+        //         };
+              
+        //         //reader.readAsText(files[x]);
+        //         // this.reader.readAsDataURL(this.files[x]);
+        //         // this.reader.onload = (event) => {           
+        //         //     let target = event.target;
+        //         //     let content = target.result;          
+        //         //     this.url.push(content); 
+        //         //   }
+        //     }                
+        //   }, num);
+        // }    
+
+    }
+
+    handleFile(file){
+        this.setState({
+            file:file 
+        });
     }
     
     render(){
@@ -4292,7 +4358,7 @@ class Upload extends React.Component{
                                         </Col>                              
                                         <Col md={8} sm={6}>
                                             {/* <input type="file" name="fileToUpload" placeholder="Quantity" required /> */}
-                                            <input type="file" multiple onChange={this.fileSelectedHandler} />
+                                            <input type="file" onChange={this.fileSelectedHandler} />
                                         </Col>
                                     </FormGroup>
                                 </Row>
