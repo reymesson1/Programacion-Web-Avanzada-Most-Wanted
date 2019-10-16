@@ -66,6 +66,7 @@ var API_URL = 'http://localhost:8084';
 var API_HEADERS = {
 
     'Content-Type': 'application/json'
+
 };
 
 var TOKEN_KEY = "token";
@@ -6243,9 +6244,60 @@ var Upload = function (_React$Component53) {
         }
     }, {
         key: "onProcess",
-        value: function onProcess() {
+        value: function onProcess(event) {
 
-            console.log('test');
+            event.preventDefault();
+
+            var targetField = event.target.development.value;
+
+            var today = moment(new Date()).format('DD-MM-YYYY');
+
+            var item = {
+
+                "id": Date.now(),
+                "date": today,
+                "items": []
+            };
+
+            var compareData = [];
+
+            var params = {
+                Bucket: albumBucketName,
+                MaxKeys: 100
+            };
+
+            s3.listObjects(params, function (err, data) {
+                if (err) {
+                    console.log(err, err.stack);
+                } else {
+                    compareData = data;
+                }
+            });
+
+            setTimeout(function () {
+
+                compareData.Contents.map(function (compare) {
+                    return item.items.push({
+                        "SourceImage": compare.Key,
+                        "TargetImage": targetField,
+                        "BucketSourceImage": albumBucketName,
+                        "BucketTargetImage": "rekognition-video-console-demo-iad-352250014224-1vio7fvwvq5qve"
+                    });
+                });
+
+                fetch('https://hb4ty6ype0.execute-api.us-east-1.amazonaws.com/live/setcomparemostwanted', {
+
+                    method: 'post',
+                    headers: API_HEADERS,
+                    body: JSON.stringify(item)
+                }).then(function (response) {
+                    return response.json();
+                }).catch(function (error) {
+                    console.log('Error fetching and parsing data', error);
+                });
+
+                console.log(item);
+            }, 3000);
         }
     }, {
         key: "render",
@@ -6257,8 +6309,6 @@ var Upload = function (_React$Component53) {
 
                 item = this.state.compare.Contents;
             }
-
-            console.log(this.state.compare2);
 
             return React.createElement(
                 Grid,
@@ -6283,7 +6333,7 @@ var Upload = function (_React$Component53) {
                             null,
                             React.createElement(
                                 Form,
-                                { onSubmit: this.onsavedetail.bind(this) },
+                                { onSubmit: this.onProcess.bind(this) },
                                 React.createElement(
                                     FormGroup,
                                     null,
@@ -6300,11 +6350,23 @@ var Upload = function (_React$Component53) {
                                             { componentClass: "select", name: "development", placeholder: "Tipo de Servicio", required: true },
                                             React.createElement(
                                                 "option",
-                                                { value: 'test' },
+                                                { value: 'test.jpg' },
                                                 'test'
+                                            ),
+                                            React.createElement(
+                                                "option",
+                                                { value: 'test2.jpg' },
+                                                'test2'
                                             )
                                         )
-                                    )
+                                    ),
+                                    React.createElement(
+                                        Button,
+                                        { className: "col-md-offset-9", type: "submit", variant: "outline-success" },
+                                        "Process \xA0 ",
+                                        React.createElement("i", { className: "fa fa-star", "aria-hidden": "true" })
+                                    ),
+                                    "\xA0\xA0"
                                 )
                             )
                         )
@@ -6315,13 +6377,6 @@ var Upload = function (_React$Component53) {
                 React.createElement(
                     Row,
                     null,
-                    React.createElement(
-                        Button,
-                        { className: "col-md-offset-9", onClick: this.onProcess, variant: "outline-success" },
-                        "Process \xA0 ",
-                        React.createElement("i", { className: "fa fa-star", "aria-hidden": "true" })
-                    ),
-                    "\xA0\xA0",
                     React.createElement(
                         Button,
                         { className: "pull-right", onClick: this.onOpen.bind(this), variant: "outline-success" },
@@ -6437,7 +6492,7 @@ var Upload = function (_React$Component53) {
                                     "td",
                                     null,
                                     "Image #1 ( New Photo ) - ",
-                                    'webpaa-deployments-mobilehub-209995345'
+                                    'webpaa-deployments-mobilehub-2128298286'
                                 ),
                                 React.createElement(
                                     "td",

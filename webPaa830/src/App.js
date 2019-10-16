@@ -54,6 +54,7 @@ const API_URL = 'http://localhost:8084';
 const API_HEADERS = {
 
     'Content-Type':'application/json'
+        
 }
 
 const TOKEN_KEY = "token";
@@ -4277,12 +4278,69 @@ class Upload extends React.Component{
         });
     }
 
-    onProcess(){
+    onProcess(event){
+
+        event.preventDefault();
+
+        var targetField = event.target.development.value;
+
+        let today = moment(new Date()).format('DD-MM-YYYY');
+
+        var item = {
+
+            "id": Date.now(),
+            "date": today,
+            "items":[]
+        }
+
+        var compareData = []
+
+        var params = {
+            Bucket: albumBucketName,
+            MaxKeys: 100
+        };        
+        
+        s3.listObjects(params, (err, data) =>{
+            if (err){
+                console.log(err, err.stack);
+            }else{                               
+                compareData=data
+            }
+        })  
+
+        setTimeout(() => {
+
+            compareData.Contents.map(
+                (compare) =>                    
+                    item.items.push(
+                        {
+                            "SourceImage": compare.Key,
+                            "TargetImage": targetField,
+                            "BucketSourceImage": albumBucketName,
+                            "BucketTargetImage": "rekognition-video-console-demo-iad-352250014224-1vio7fvwvq5qve"                            
+                        }                        
+                    )
+            )
+
+            fetch('https://hb4ty6ype0.execute-api.us-east-1.amazonaws.com/live/setcomparemostwanted', {
+                
+                method: 'post',
+                headers: API_HEADERS,
+                body: JSON.stringify(item)
+            })
+            .then((response)=>response.json())        
+            .catch((error)=>{
+                console.log('Error fetching and parsing data', error);
+            })
+            
+            
+
+            console.log(item)
+
+
+        }, 3000);
 
         
-
-        console.log('test')
-
 
     } 
     
@@ -4294,41 +4352,41 @@ class Upload extends React.Component{
             
             item = this.state.compare.Contents
 
+            
         }
 
-        console.log(this.state.compare2)
-
-
+        
 
         return(
 
             <Grid>
-                <Row>
-                    
+                <Row>                    
                     <h1 style={{'color':'#cd6607'}}>Send/replenish Inventory</h1>
                 </Row>
                 <Row>                                    
                     <Col md={9}>                    
                         <Panel>
-                            <Form onSubmit={this.onsavedetail.bind(this)}>                                                            
+                            <Form onSubmit={this.onProcess.bind(this)}>                                                            
                                 <FormGroup>
                                     <Col componentClass={ControlLabel} md={4} sm={2}>
                                         Description - (Most Wanted) - Image#2 - rekognition-video-console-demo-iad-352250014224-1vio7fvwvq5qve
-                                    </Col>                              
+                                    </Col>
                                     <Col md={8} sm={6}>
                                         <FormControl componentClass="select" name="development" placeholder="Tipo de Servicio" required >                                                
-                                            <option value={'test'}>{'test'}</option>                                                                                    
+                                            <option value={'test.jpg'}>{'test'}</option>                                                                                    
+                                            <option value={'test2.jpg'}>{'test2'}</option>                                                                                    
                                         </FormControl>
                                     </Col>
-                                </FormGroup>
+                                    <Button className="col-md-offset-9" type="submit" variant="outline-success">Process &nbsp; <i className="fa fa-star" aria-hidden="true"></i></Button>&nbsp;&nbsp;
+                                </FormGroup>                                
                             </Form>
-                        </Panel>                        
+                        </Panel>
                     </Col>
                     <Col md={3}></Col>
                 </Row>                
                 <br/>
                 <Row>                    
-                <Button className="col-md-offset-9" onClick={this.onProcess} variant="outline-success">Process &nbsp; <i className="fa fa-star" aria-hidden="true"></i></Button>&nbsp;&nbsp;
+
                 <Button className="pull-right" onClick={this.onOpen.bind(this)} variant="outline-success">Upload &nbsp; <i className="fa fa-arrow-up" aria-hidden="true"></i></Button>
                 
 
@@ -4387,7 +4445,7 @@ class Upload extends React.Component{
                     <Table striped bordered condensed hover>
                     <thead>
                         <tr>
-                            <td>Image #1 ( New Photo ) - {'webpaa-deployments-mobilehub-209995345'}</td>                                                        
+                            <td>Image #1 ( New Photo ) - {'webpaa-deployments-mobilehub-2128298286'}</td>                                                        
                             <td>Quantity</td>
                             <td>Address</td>
                         </tr>
