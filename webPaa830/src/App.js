@@ -1512,7 +1512,7 @@ class MasterTable extends React.Component{
         }
     }
 
-    render(){
+    render(){ 
 
         var rows = []        
 
