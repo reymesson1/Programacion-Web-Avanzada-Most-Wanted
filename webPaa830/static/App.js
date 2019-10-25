@@ -38,6 +38,7 @@ var ControlLabel = ReactBootstrap.ControlLabel;
 var Col = ReactBootstrap.Col;
 var ListGroup = ReactBootstrap.ListGroup;
 var Table = ReactBootstrap.Table;
+var Jumbotron = ReactBootstrap.Jumbotron;
 
 var albumBucketName = "webpaa-deployments-mobilehub-2128298286";
 var bucketRegion = "us-east-1";
@@ -217,9 +218,6 @@ var App = function (_React$Component) {
             var dashboard = React.createElement(
                 "div",
                 null,
-                React.createElement(Toolbar, {
-                    searchCallback: this.onSearch.bind(this)
-                }),
                 React.createElement(
                     "div",
                     { className: "container" },
@@ -1872,18 +1870,7 @@ var Master = function (_React$Component12) {
                             onlike: this.onLike.bind(this),
                             oncomment: this.onComment.bind(this)
                         }
-                    }),
-                    React.createElement(
-                        "div",
-                        { className: "pull-right" },
-                        React.createElement(MasterPagination, {
-                            masterCallback: {
-                                handleSelect: this.handleSelect.bind(this)
-                            },
-
-                            activePage: this.state.activePage
-                        })
-                    )
+                    })
                 )
             );
         }
@@ -2042,131 +2029,209 @@ var MasterTable = function (_React$Component15) {
 
             masterAPI: [],
             onShowComment: "none",
-            searchData: ""
+            searchData: "",
+            processOne: "",
+            processTwo: "",
+            processThree: ""
         };
         return _this19;
     }
 
     _createClass(MasterTable, [{
-        key: "onComment",
-        value: function onComment(event) {
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var _this20 = this;
 
-            event.preventDefault();
+            fetch('https://2ewc1ud64h.execute-api.us-east-1.amazonaws.com/live/getcompare', { headers: API_HEADERS }).then(function (response) {
+                return response.json();
+            }).then(function (responseData) {
+                _this20.setState({
 
-            if (this.state.onShowComment == "none") {
-                this.setState({
-
-                    onShowComment: "block"
+                    masterAPI: responseData
                 });
-            } else {
-                this.setState({
+            }).catch(function (error) {
+                console.log('Error fetching and parsing data', error);
+            });
 
-                    onShowComment: "none"
+            setTimeout(function () {
+
+                if (_this20.state.masterAPI.body) {
+                    // console.log(this.state.masterAPI.body);
+                    _this20.state.masterAPI.body.FaceMatches.map(function (order) {
+                        return _this20.setState({
+                            processOne: React.createElement(
+                                "p",
+                                null,
+                                React.createElement("i", { className: "fa fa-check", "aria-hidden": "true" }),
+                                'Similarity: ' + order.Similarity.toFixed(0) + '%'
+                            )
+                        });
+                    });
+                }
+            }, 2000);
+
+            setTimeout(function () {
+
+                var value = [];
+
+                if (_this20.state.masterAPI.body) {
+                    _this20.state.masterAPI.body.FaceMatches.map(function (order) {
+                        return order.Face.Landmarks.map(function (order2, index) {
+                            value.push(React.createElement(
+                                "li",
+                                { key: index },
+                                order2.Type + ': ' + (order2.X * 100).toFixed(0) + ' %'
+                            ));
+                        });
+                    });
+                    _this20.setState({
+                        processTwo: value
+                    });
+                }
+            }, 4000);
+            setTimeout(function () {
+                _this20.setState({
+
+                    processThree: React.createElement(
+                        "p",
+                        null,
+                        React.createElement("i", { className: "fa fa-check", "aria-hidden": "true" }),
+                        "This is a simple hero unit, a simple jumbotron-style component"
+                    )
                 });
+            }, 6000);
+        }
+    }, {
+        key: "fileSelectedHandler",
+        value: function fileSelectedHandler(e) {
+
+            var files = e.target.files;
+
+            if (!files.length) {
+                return alert("Please choose a file to upload first.");
             }
+
+            var file = files[0];
+
+            var fileName = file.name;
+
+            var photoKey = "" + fileName;
+
+            var upload = new AWS.S3.ManagedUpload({
+                params: {
+                    Bucket: albumBucketName,
+                    Key: photoKey,
+                    Body: file,
+                    ACL: "public-read"
+                }
+            });
+
+            var promise = upload.promise();
+
+            promise.then(function (data) {
+                alert("Successfully uploaded photo.");
+            }, function (err) {
+                // return alert("There was an error uploading your photo: ", err.message);
+                console.log("There was an error uploading your photo: ", err.message);
+            });
+        }
+    }, {
+        key: "onRefreshed",
+        value: function onRefreshed(event) {
+
+            this.props.history.push("/detail");
+
+            window.location.reload();
         }
     }, {
         key: "render",
         value: function render() {
-            var _this20 = this;
 
-            var rows = [];
+            // if(this.state.masterAPI.body.FaceMatches){
+            console.log(this.state.masterAPI.body);
+            // }
 
-            var items = this.props.masterData;
-            // let items = this.props.masterData.filter(            
-            // (master) => master.name.toLowerCase().indexOf(this.props.searchText.toLowerCase()) !== -1
-            //)
+            // this.state.masterAPI.body.FaceMatches.map(
+            //     (order) => console.log(order)
+            // )
 
-            for (var i = 0; i < items.length; i++) {
+            var similitud = void 0;
 
-                rows.push(React.createElement(
-                    Col,
-                    { item: true, md: 4 },
-                    React.createElement("br", null),
-                    React.createElement(
-                        "div",
-                        { className: "card" },
-                        React.createElement(
-                            Row,
-                            null,
-                            React.createElement(
-                                Col,
-                                { md: 6 },
-                                React.createElement(
-                                    Link,
-                                    { to: '/actions/' + items[i].id },
-                                    React.createElement("img", { src: "http://localhost:8084/executed/" + items[i].image, alt: "Avatar", style: { "width": "100%", "height": "100%", "padding-left": "10px", "padding-right": "10px" } })
-                                )
-                            ),
-                            React.createElement(
-                                Col,
-                                { md: 6 },
-                                React.createElement(
-                                    Row,
-                                    null,
-                                    React.createElement(
-                                        "h5",
-                                        null,
-                                        React.createElement("i", { style: { 'color': 'gold' }, className: "fa fa-star", "aria-hidden": "true" }),
-                                        React.createElement("i", { style: { 'color': 'gold' }, className: "fa fa-star", "aria-hidden": "true" }),
-                                        React.createElement("i", { style: { 'color': 'gold' }, className: "fa fa-star", "aria-hidden": "true" }),
-                                        React.createElement("i", { className: "fa fa-star", "aria-hidden": "true" }),
-                                        React.createElement("i", { className: "fa fa-star", "aria-hidden": "true" })
-                                    )
-                                ),
-                                React.createElement(
-                                    Row,
-                                    null,
-                                    React.createElement(
-                                        "h5",
-                                        null,
-                                        items[i].name
-                                    )
-                                ),
-                                React.createElement(
-                                    Row,
-                                    null,
-                                    React.createElement(
-                                        "h5",
-                                        null,
-                                        "$   ",
-                                        items[i].project.toFixed(2)
-                                    )
-                                ),
-                                React.createElement(
-                                    Row,
-                                    { style: { 'background-color': '#f7f7f7' } },
-                                    React.createElement(
-                                        Col,
-                                        { md: 5, sm: 5, xs: 3 },
-                                        React.createElement(MasterTableLike, {
-                                            id: items[i].id,
-                                            isLiked: items[i].isLiked,
-                                            onLike: this.props.masterCallback.onlike.bind(this)
-                                        })
-                                    )
-                                )
-                            )
-                        )
-                    ),
-                    items[i].comments.map(function (comment) {
-                        return React.createElement(MasterTableCommentDisplay, {
-                            id: items[i].id,
-                            isLiked: items[i].isLiked,
-                            masterAPI: _this20.props.masterData,
-                            onComment: _this20.props.masterCallback.oncomment.bind(_this20),
-                            onShow: _this20.onComment.bind(_this20),
-                            onShowComment: _this20.state.onShowComment,
-                            text: comment.comment
-                        });
-                    })
-                ));
+            if (this.state.masterAPI.body) {
+                // console.log(this.state.masterAPI.body.FaceMatches)            
+                this.state.masterAPI.body.FaceMatches.map(
+                // (order) => console.log(order.Similarity)
+                function (order) {
+                    return similitud = order.Similarity;
+                });
             }
 
             return React.createElement(
-                Row,
-                null,
-                rows
+                Col,
+                { md: 12 },
+                React.createElement(
+                    Row,
+                    null,
+                    React.createElement(
+                        Jumbotron,
+                        null,
+                        React.createElement(
+                            "h1",
+                            null,
+                            "Monitor!"
+                        ),
+                        this.state.processOne,
+                        React.createElement(
+                            "ul",
+                            null,
+                            this.state.processTwo
+                        ),
+                        this.state.processThree,
+                        React.createElement(
+                            "p",
+                            null,
+                            React.createElement(
+                                Link,
+                                { className: "btn btn-default", to: '/', onClick: this.onRefreshed.bind(this) },
+                                "Process"
+                            )
+                        )
+                    )
+                ),
+                React.createElement(
+                    Row,
+                    null,
+                    React.createElement(
+                        Col,
+                        { md: 6 },
+                        React.createElement(
+                            Row,
+                            null,
+                            React.createElement("img", { src: "http://localhost:8084/" + "img_avatar.png", alt: "Avatar", style: { "width": "50%", "padding-left": "10px", "padding-right": "10px" } })
+                        ),
+                        React.createElement("br", null),
+                        React.createElement(
+                            Row,
+                            null,
+                            React.createElement("input", { type: "file", onChange: this.fileSelectedHandler })
+                        )
+                    ),
+                    React.createElement(
+                        Col,
+                        { md: 6 },
+                        React.createElement(
+                            Row,
+                            null,
+                            React.createElement("img", { src: "http://localhost:8084/" + "img_avatar.png", alt: "Avatar", style: { "width": "50%", "padding-left": "10px", "padding-right": "10px" } })
+                        ),
+                        React.createElement("br", null),
+                        React.createElement(
+                            Row,
+                            null,
+                            React.createElement("input", { type: "file", onChange: this.fileSelectedHandler })
+                        )
+                    )
+                )
             );
         }
     }]);
@@ -6296,7 +6361,8 @@ var Upload = function (_React$Component53) {
                     console.log('Error fetching and parsing data', error);
                 });
 
-                console.log(item);
+                // console.log(item)
+
             }, 3000);
         }
     }, {
@@ -6309,6 +6375,14 @@ var Upload = function (_React$Component53) {
 
                 item = this.state.compare.Contents;
             }
+
+            console.log(this.state.orderAPI);
+
+            var secondItem = this.state.orderAPI;
+
+            secondItem.map(function (order) {
+                return console.log(JSON.stringify(order.description));
+            });
 
             return React.createElement(
                 Grid,

@@ -26,6 +26,7 @@ const ControlLabel = ReactBootstrap.ControlLabel;
 const Col = ReactBootstrap.Col;
 const ListGroup = ReactBootstrap.ListGroup;
 const Table = ReactBootstrap.Table;
+const Jumbotron = ReactBootstrap.Jumbotron;
 
 var albumBucketName = "webpaa-deployments-mobilehub-2128298286";
 var bucketRegion = "us-east-1";
@@ -209,10 +210,7 @@ class App extends React.Component{
 
     let dashboard = (
 
-          <div>
-            <Toolbar
-                searchCallback={this.onSearch.bind(this)}
-             />
+          <div>            
             <div className="container">
                 {this.props.children}
                 {/* <Master                    
@@ -1377,16 +1375,7 @@ onlike:this.onLike.bind(this),
 oncomment:this.onComment.bind(this)
                                         }}
                         />
-                        <div className="pull-right">
-                            <MasterPagination
-                                                masterCallback={{
-                                                      handleSelect:
-this.handleSelect.bind(this)
-                                                }}
-
-activePage={this.state.activePage}
-                            />
-                        </div>
+                        
                     
                 </Row>
             </div>
@@ -1491,103 +1480,173 @@ class MasterTable extends React.Component{
 
             masterAPI: [],
             onShowComment: "none",
-            searchData : ""
+            searchData : "",
+            processOne: "",          
+            processTwo: "",         
+            processThree: ""          
         }
     }
 
-    onComment(event){
+    componentDidMount(){
 
-        event.preventDefault();
+        fetch('https://2ewc1ud64h.execute-api.us-east-1.amazonaws.com/live/getcompare',
+        {headers: API_HEADERS})
+        .then((response)=>response.json())
+        .then((responseData)=>{
+            this.setState({
 
-        if(this.state.onShowComment=="none"){
-            this.setState({
-                
-                onShowComment: "block"
+                masterAPI: responseData
             })
-        }else{
-            this.setState({
+        })
+        .catch((error)=>{
+            console.log('Error fetching and parsing data', error);
+        })
+
+        setTimeout(() => {
+            
+            if(this.state.masterAPI.body){                
+                // console.log(this.state.masterAPI.body);
+                this.state.masterAPI.body.FaceMatches.map(                    
+                    (order) =>
+                    this.setState({
+                        processOne: <p><i className="fa fa-check" aria-hidden="true"></i>{'Similarity: '+order.Similarity.toFixed(0)+'%'}</p>   
+                    })
+                )
+            }
                 
-                onShowComment: "none"
+        }, 2000);
+
+        setTimeout(() => {
+
+            var value = []
+
+            if(this.state.masterAPI.body){                                
+                this.state.masterAPI.body.FaceMatches.map(                    
+                    
+                    (order) => order.Face.Landmarks.map(                         
+                        (order2,index) => {
+                            value.push(<li key={index}>{order2.Type+': '+(order2.X*100).toFixed(0)+' %'}</li>)
+                        }
+                    )                    
+                )
+                this.setState({
+                    processTwo: value
+                })
+            }
+
+        }, 4000);
+        setTimeout(() => {
+            this.setState({
+
+                processThree : <p><i className="fa fa-check" aria-hidden="true"></i>This is a simple hero unit, a simple jumbotron-style component</p>
             })
-        }
+
+        }, 6000);
+    }
+
+    fileSelectedHandler(e){
+        
+                
+            var files = e.target.files
+            
+            if (!files.length) {
+                return alert("Please choose a file to upload first.");
+            }
+
+            var file = files[0];
+
+            var fileName = file.name;
+
+            var photoKey = "" + fileName;
+
+            var upload = new AWS.S3.ManagedUpload({
+                params: {
+                    Bucket: albumBucketName,
+                    Key: photoKey,
+                    Body: file,
+                    ACL: "public-read"
+                }
+            });
+
+            var promise = upload.promise();
+            
+            promise.then(
+                function(data) {
+                    alert("Successfully uploaded photo.");                
+                },
+                function(err) {
+                    // return alert("There was an error uploading your photo: ", err.message);
+                    console.log("There was an error uploading your photo: ", err.message);
+                }
+            );
+
+    }
+
+    onRefreshed(event){
+
+        this.props.history.push("/detail")
+
+        window.location.reload();
     }
 
     render(){
 
-        var rows = []        
+        // if(this.state.masterAPI.body.FaceMatches){
+        console.log(this.state.masterAPI.body)
+        // }
 
-        let items = this.props.masterData
-        // let items = this.props.masterData.filter(            
-            // (master) => master.name.toLowerCase().indexOf(this.props.searchText.toLowerCase()) !== -1
-        //)
+        // this.state.masterAPI.body.FaceMatches.map(
+        //     (order) => console.log(order)
+        // )
 
-        for(var i=0;i<items.length;i++){
-            
-            rows.push(
-                    <Col item md={4}> 
-                        <br/>
+        let similitud 
 
-                                <div className="card">                                    
-                                     <Row>   
-                                        <Col md={6}>                                    
-                                            <Link  to={'/actions/'+items[i].id}>
-                                                <img src={"http://localhost:8084/executed/"+items[i].image}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/>
-                                                {/* <img src={"http://localhost:8084/executed/"+items[i].image}  alt="Avatar" style={{"width":"100%","padding-left":"10px","padding-right":"10px"}}/> */}
-                                            </Link>
-                                        </Col>
-                                        <Col md={6}>   
-                                            <Row>
-                                                <h5 >
-                                                    <i style={{'color':'gold'}} className="fa fa-star" aria-hidden="true"></i>
-                                                    <i style={{'color':'gold'}} className="fa fa-star" aria-hidden="true"></i>
-                                                    <i style={{'color':'gold'}} className="fa fa-star" aria-hidden="true"></i>
-                                                    <i className="fa fa-star" aria-hidden="true"></i>
-                                                    <i className="fa fa-star" aria-hidden="true"></i>
-                                                </h5>
-                                            </Row>
-                                            <Row>
-                                                <h5>{items[i].name}</h5>
-                                            </Row>
-                                            <Row>
-                                                <h5>$   {items[i].project.toFixed(2)}</h5>
-                                            </Row>
-                                            <Row style={{'background-color':'#f7f7f7'}}>                                        
-                                                <Col md={5} sm={5} xs={3}>
-                                                    <MasterTableLike                                                        
-                                                        id={items[i].id}
-                                                        isLiked={items[i].isLiked}
-                                                        onLike={this.props.masterCallback.onlike.bind(this)}
-                                                    />
-                                                </Col>
-                                            </Row>
-                                        </Col>
-                                     </Row>
-
-                                </div>                                
-                                {items[i].comments.map(
-                                    (comment) => 
-                                    <MasterTableCommentDisplay
-                                    id={items[i].id}
-                                    isLiked={items[i].isLiked}
-                                    masterAPI={this.props.masterData}
-                                    onComment={this.props.masterCallback.oncomment.bind(this)}
-                                    onShow={this.onComment.bind(this)}
-                                    onShowComment={this.state.onShowComment}
-                                    text={comment.comment}
-                                    />
-                                )}
-                    </Col>
-                    
-                
+        if(this.state.masterAPI.body){
+            // console.log(this.state.masterAPI.body.FaceMatches)            
+            this.state.masterAPI.body.FaceMatches.map(
+                // (order) => console.log(order.Similarity)
+                (order) => similitud = order.Similarity
             )
         }
 
         return (
-
-            <Row>                
-                {rows}
-            </Row>
-        );
+            <Col md={12}>
+                <Row>
+                <Jumbotron>
+                <h1>Monitor!</h1>
+                {this.state.processOne}
+                <ul>
+                {this.state.processTwo}
+                </ul>
+                {this.state.processThree}
+                <p>                    
+                    <Link className="btn btn-default" to={'/'} onClick={this.onRefreshed.bind(this)}>Process</Link>
+                </p>
+                </Jumbotron>
+                </Row>
+                <Row>
+                    <Col md={6}>
+                        <Row>
+                            <img src={"http://localhost:8084/"+"img_avatar.png"}  alt="Avatar" style={{"width":"50%","padding-left":"10px","padding-right":"10px"}}/>
+                            {/* <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/1547544106_973174_1547545265_noticia_normal.jpg"}  alt="Avatar" style={{"width":"50%","padding-left":"10px","padding-right":"10px"}}/> */}
+                        </Row>
+                        <br/>
+                        <Row>
+                            <input type="file" onChange={this.fileSelectedHandler} />
+                        </Row>
+                    </Col>
+                    <Col md={6}>
+                        <Row>
+                            <img src={"http://localhost:8084/"+"img_avatar.png"}  alt="Avatar" style={{"width":"50%","padding-left":"10px","padding-right":"10px"}}/>
+                        </Row>
+                        <br/>
+                        <Row>
+                            <input type="file" onChange={this.fileSelectedHandler} />
+                        </Row>
+                    </Col>
+                </Row>                
+            </Col>
+        )    
     }
 
 }
@@ -3918,7 +3977,8 @@ class CardNarv extends React.Component{
             "user" : token()
         }
 
-        fetch('https://on3eon5uoh.execute-api.us-east-1.amazonaws.com/live/-orders',{headers: API_HEADERS})
+        fetch('https://on3eon5uoh.execute-api.us-east-1.amazonaws.com/live/-orders',
+        {headers: API_HEADERS})
         .then((response)=>response.json())
         .then((responseData)=>{
             this.setState({
@@ -4335,7 +4395,7 @@ class Upload extends React.Component{
             
             
 
-            console.log(item)
+            // console.log(item)
 
 
         }, 3000);
@@ -4354,6 +4414,14 @@ class Upload extends React.Component{
 
             
         }
+
+        console.log(this.state.orderAPI)
+
+        let secondItem = this.state.orderAPI
+
+        secondItem.map(
+            (order) => console.log(JSON.stringify(order.description))
+        )
 
         
 
