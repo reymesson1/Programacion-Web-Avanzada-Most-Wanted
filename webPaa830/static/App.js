@@ -2042,7 +2042,8 @@ var MasterTable = function (_React$Component15) {
 
             masterAPI: [],
             onShowComment: "none",
-            searchData: ""
+            searchData: "",
+            compare: []
         };
         return _this19;
     }
@@ -2066,13 +2067,44 @@ var MasterTable = function (_React$Component15) {
             }
         }
     }, {
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var _this20 = this;
+
+            var params = {
+                Bucket: albumBucketName,
+                MaxKeys: 100
+            };
+
+            s3.listObjects(params, function (err, data) {
+                if (err) {
+                    console.log(err, err.stack);
+                } else {
+                    _this20.setState({
+                        compare: data
+                    });
+                }
+            });
+        }
+    }, {
         key: "render",
         value: function render() {
-            var _this20 = this;
 
             var rows = [];
 
-            var items = this.props.masterData;
+            var item = [];
+
+            var items = [];
+
+            if (this.state.compare.Contents) {
+
+                item = this.state.compare.Contents;
+            }
+
+            items = item;
+            console.log(item);
+
+            // let items = this.props.masterData
             // let items = this.props.masterData.filter(            
             // (master) => master.name.toLowerCase().indexOf(this.props.searchText.toLowerCase()) !== -1
             //)
@@ -2094,8 +2126,8 @@ var MasterTable = function (_React$Component15) {
                                 { md: 6 },
                                 React.createElement(
                                     Link,
-                                    { to: '/actions/' + items[i].id },
-                                    React.createElement("img", { src: "http://localhost:8084/executed/" + items[i].image, alt: "Avatar", style: { "width": "100%", "height": "100%", "padding-left": "10px", "padding-right": "10px" } })
+                                    { to: '/actions/1' },
+                                    React.createElement("img", { src: "https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/" + items[i].Key, alt: "Avatar", style: { "width": "100%", "height": "100%", "padding-left": "10px", "padding-right": "10px" } })
                                 )
                             ),
                             React.createElement(
@@ -2120,7 +2152,7 @@ var MasterTable = function (_React$Component15) {
                                     React.createElement(
                                         "h5",
                                         null,
-                                        items[i].name
+                                        'test'
                                     )
                                 ),
                                 React.createElement(
@@ -2130,36 +2162,17 @@ var MasterTable = function (_React$Component15) {
                                         "h5",
                                         null,
                                         "$   ",
-                                        items[i].project.toFixed(2)
+                                        '1k.00'
                                     )
                                 ),
                                 React.createElement(
                                     Row,
                                     { style: { 'background-color': '#f7f7f7' } },
-                                    React.createElement(
-                                        Col,
-                                        { md: 5, sm: 5, xs: 3 },
-                                        React.createElement(MasterTableLike, {
-                                            id: items[i].id,
-                                            isLiked: items[i].isLiked,
-                                            onLike: this.props.masterCallback.onlike.bind(this)
-                                        })
-                                    )
+                                    React.createElement(Col, { md: 5, sm: 5, xs: 3 })
                                 )
                             )
                         )
-                    ),
-                    items[i].comments.map(function (comment) {
-                        return React.createElement(MasterTableCommentDisplay, {
-                            id: items[i].id,
-                            isLiked: items[i].isLiked,
-                            masterAPI: _this20.props.masterData,
-                            onComment: _this20.props.masterCallback.oncomment.bind(_this20),
-                            onShow: _this20.onComment.bind(_this20),
-                            onShowComment: _this20.state.onShowComment,
-                            text: comment.comment
-                        });
-                    })
+                    )
                 ));
             }
 

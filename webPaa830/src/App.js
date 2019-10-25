@@ -1491,7 +1491,8 @@ class MasterTable extends React.Component{
 
             masterAPI: [],
             onShowComment: "none",
-            searchData : ""
+            searchData : "",
+            compare: []
         }
     }
 
@@ -1512,11 +1513,42 @@ class MasterTable extends React.Component{
         }
     }
 
+    componentDidMount(){
+        
+        var params = {
+            Bucket: albumBucketName,
+            MaxKeys: 100
+        };        
+        
+        s3.listObjects(params, (err, data) =>{
+            if (err){
+                console.log(err, err.stack);
+            }else{                
+                this.setState({
+                    compare:data
+                })
+            }
+        }) 
+    }
+
     render(){
 
-        var rows = []        
+        var rows = []   
+        
+        var item = []
+        
+        let items = []
+        
+        if(this.state.compare.Contents){
+            
+            item = this.state.compare.Contents
+            
+        }
+        
+        items = item
+        console.log(item)
 
-        let items = this.props.masterData
+        // let items = this.props.masterData
         // let items = this.props.masterData.filter(            
             // (master) => master.name.toLowerCase().indexOf(this.props.searchText.toLowerCase()) !== -1
         //)
@@ -1530,8 +1562,8 @@ class MasterTable extends React.Component{
                                 <div className="card">                                    
                                      <Row>   
                                         <Col md={6}>                                    
-                                            <Link  to={'/actions/'+items[i].id}>
-                                                <img src={"http://localhost:8084/executed/"+items[i].image}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/>
+                                            <Link  to={'/actions/1'}>
+                                                <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/"+items[i].Key}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/>
                                                 {/* <img src={"http://localhost:8084/executed/"+items[i].image}  alt="Avatar" style={{"width":"100%","padding-left":"10px","padding-right":"10px"}}/> */}
                                             </Link>
                                         </Col>
@@ -1546,36 +1578,19 @@ class MasterTable extends React.Component{
                                                 </h5>
                                             </Row>
                                             <Row>
-                                                <h5>{items[i].name}</h5>
+                                                <h5>{'test'}</h5>
                                             </Row>
                                             <Row>
-                                                <h5>$   {items[i].project.toFixed(2)}</h5>
+                                                <h5>$   {'1k.00'}</h5>
                                             </Row>
                                             <Row style={{'background-color':'#f7f7f7'}}>                                        
-                                                <Col md={5} sm={5} xs={3}>
-                                                    <MasterTableLike                                                        
-                                                        id={items[i].id}
-                                                        isLiked={items[i].isLiked}
-                                                        onLike={this.props.masterCallback.onlike.bind(this)}
-                                                    />
+                                                <Col md={5} sm={5} xs={3}>                                                    
                                                 </Col>
                                             </Row>
                                         </Col>
                                      </Row>
 
-                                </div>                                
-                                {items[i].comments.map(
-                                    (comment) => 
-                                    <MasterTableCommentDisplay
-                                    id={items[i].id}
-                                    isLiked={items[i].isLiked}
-                                    masterAPI={this.props.masterData}
-                                    onComment={this.props.masterCallback.oncomment.bind(this)}
-                                    onShow={this.onComment.bind(this)}
-                                    onShowComment={this.state.onShowComment}
-                                    text={comment.comment}
-                                    />
-                                )}
+                                </div>                                                                
                     </Col>
                     
                 
