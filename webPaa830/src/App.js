@@ -28,10 +28,11 @@ const ListGroup = ReactBootstrap.ListGroup;
 const Table = ReactBootstrap.Table;
 
 var albumBucketName = "webpaa-deployments-mobilehub-2128298286";
+var albumBucketName3 = "webpaa-deployments-mobilehub-209995345";
 var bucketRegion = "us-east-1";
 var IdentityPoolId = "us-east-1:3dd5b3b8-326c-4be6-9f32-67943932637a";
 
-AWS.config.update({
+AWS.config.update({ 
     region: bucketRegion,
     credentials: new AWS.CognitoIdentityCredentials({
         IdentityPoolId: IdentityPoolId
@@ -41,6 +42,11 @@ AWS.config.update({
 var s3 = new AWS.S3({
     apiVersion: "2006-03-01",
     params: { Bucket: albumBucketName }
+});
+
+var anotherS3 = new AWS.S3({
+    apiVersion: "2006-03-01",
+    params: { Bucket: albumBucketName3 }
 });
 const Autosuggest = Autosuggest;
 
@@ -1548,22 +1554,16 @@ class MasterTable extends React.Component{
         items = item
         console.log(item)
 
-        // let items = this.props.masterData
-        // let items = this.props.masterData.filter(            
-            // (master) => master.name.toLowerCase().indexOf(this.props.searchText.toLowerCase()) !== -1
-        //)
-
-        for(var i=0;i<items.length;i++){
-            
+        for(var i=0;i<items.length;i++){            
             rows.push(
                     <Col item md={4}> 
                         <br/>
-
                                 <div className="card">                                    
                                      <Row>   
                                         <Col md={6}>                                    
                                             <Link  to={'/actions/1'}>
-                                                <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/"+items[i].Key}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/>
+                                                {/* <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/"+items[i].Key}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/> */}
+                                                <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/amazon-ceo-jeff-bezos_2.jpg"}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/>
                                                 {/* <img src={"http://localhost:8084/executed/"+items[i].image}  alt="Avatar" style={{"width":"100%","padding-left":"10px","padding-right":"10px"}}/> */}
                                             </Link>
                                         </Col>
@@ -1589,11 +1589,8 @@ class MasterTable extends React.Component{
                                             </Row>
                                         </Col>
                                      </Row>
-
                                 </div>                                                                
                     </Col>
-                    
-                
             )
         }
 
@@ -4161,7 +4158,8 @@ class Upload extends React.Component{
             files: [],
             file: '',
             compare: [],
-            compare2: []           
+            compare2: [],
+            compare3: []            
         }
     }
 
@@ -4211,6 +4209,11 @@ class Upload extends React.Component{
             Bucket: albumBucketName,
             MaxKeys: 100
         };        
+
+        var params3 = {
+            Bucket: albumBucketName3,
+            MaxKeys: 100
+        };        
         
         s3.listObjects(params, (err, data) =>{
             if (err){
@@ -4218,6 +4221,17 @@ class Upload extends React.Component{
             }else{                
                 this.setState({
                     compare:data
+                })
+            }
+        })        
+        anotherS3.listObjects(params3, (err, data) =>{
+            if (err){
+                console.log(err, err.stack);
+            }else{  
+                
+                this.setState({
+                    compare3:data
+                    
                 })
             }
         })        
@@ -4299,6 +4313,8 @@ class Upload extends React.Component{
 
         var targetField = event.target.development.value;
 
+        console.log(targetField)
+
         let today = moment(new Date()).format('DD-MM-YYYY');
 
         var item = {
@@ -4311,11 +4327,11 @@ class Upload extends React.Component{
         var compareData = []
 
         var params = {
-            Bucket: albumBucketName,
+            Bucket: albumBucketName3,
             MaxKeys: 100
         };        
         
-        s3.listObjects(params, (err, data) =>{
+        anotherS3.listObjects(params, (err, data) =>{
             if (err){
                 console.log(err, err.stack);
             }else{                               
@@ -4332,7 +4348,8 @@ class Upload extends React.Component{
                             "SourceImage": compare.Key,
                             "TargetImage": targetField,
                             "BucketSourceImage": albumBucketName,
-                            "BucketTargetImage": "rekognition-video-console-demo-iad-352250014224-1vio7fvwvq5qve"                            
+                            "BucketTargetImage": albumBucketName3                            
+                            // "BucketTargetImage": "rekognition-video-console-demo-iad-352250014224-1vio7fvwvq5qve"                            
                         }                        
                     )
             )
@@ -4362,15 +4379,19 @@ class Upload extends React.Component{
     render(){
 
         var item = []
+        var item3 = []
         
         if(this.state.compare.Contents){
             
-            item = this.state.compare.Contents
-
-            
+            item3 = this.state.compare.Contents
         }
 
-        
+        if(this.state.compare3.Contents){
+            
+            item = this.state.compare3.Contents
+        }
+
+        console.log(item3)
 
         return(
 
@@ -4383,13 +4404,17 @@ class Upload extends React.Component{
                         <Panel>
                             <Form onSubmit={this.onProcess.bind(this)}>                                                            
                                 <FormGroup>
-                                    <Col componentClass={ControlLabel} md={4} sm={2}>
+                                    {/* <Col componentClass={ControlLabel} md={4} sm={2}>
                                         Description - (Most Wanted) - Image#2 - rekognition-video-console-demo-iad-352250014224-1vio7fvwvq5qve
+                                    </Col> */}
+                                    <Col componentClass={ControlLabel} md={4} sm={2}>
+                                        Description - (Most Wanted) - Image#2 - webpaa-deployments-mobilehub-2128298286                                        
                                     </Col>
                                     <Col md={8} sm={6}>
                                         <FormControl componentClass="select" name="development" placeholder="Tipo de Servicio" required >                                                
-                                            <option value={'test.jpg'}>{'test'}</option>                                                                                    
-                                            <option value={'test2.jpg'}>{'test2'}</option>                                                                                    
+                                        {item3.map(
+                                            (aws) => <option value={aws.Key}>{aws.Key}</option>                                                                                    
+                                        )}
                                         </FormControl>
                                     </Col>
                                     <Button className="col-md-offset-9" type="submit" variant="outline-success">Process &nbsp; <i className="fa fa-star" aria-hidden="true"></i></Button>&nbsp;&nbsp;
@@ -4460,7 +4485,8 @@ class Upload extends React.Component{
                     <Table striped bordered condensed hover>
                     <thead>
                         <tr>
-                            <td>Image #1 ( New Photo ) - {'webpaa-deployments-mobilehub-2128298286'}</td>                                                        
+                            <td>Image #1 ( New Photo ) - {'webpaa-deployments-mobilehub-209995345'}</td>                                                        
+                            {/* <td>Image #1 ( New Photo ) - {'webpaa-deployments-mobilehub-2128298286'}</td>                                                         */}
                             <td>Quantity</td>
                             <td>Address</td>
                         </tr>

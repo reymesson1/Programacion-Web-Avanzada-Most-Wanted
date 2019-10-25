@@ -40,6 +40,7 @@ var ListGroup = ReactBootstrap.ListGroup;
 var Table = ReactBootstrap.Table;
 
 var albumBucketName = "webpaa-deployments-mobilehub-2128298286";
+var albumBucketName3 = "webpaa-deployments-mobilehub-209995345";
 var bucketRegion = "us-east-1";
 var IdentityPoolId = "us-east-1:3dd5b3b8-326c-4be6-9f32-67943932637a";
 
@@ -53,6 +54,11 @@ AWS.config.update({
 var s3 = new AWS.S3({
     apiVersion: "2006-03-01",
     params: { Bucket: albumBucketName }
+});
+
+var anotherS3 = new AWS.S3({
+    apiVersion: "2006-03-01",
+    params: { Bucket: albumBucketName3 }
 });
 var Autosuggest = Autosuggest;
 
@@ -2104,13 +2110,7 @@ var MasterTable = function (_React$Component15) {
             items = item;
             console.log(item);
 
-            // let items = this.props.masterData
-            // let items = this.props.masterData.filter(            
-            // (master) => master.name.toLowerCase().indexOf(this.props.searchText.toLowerCase()) !== -1
-            //)
-
             for (var i = 0; i < items.length; i++) {
-
                 rows.push(React.createElement(
                     Col,
                     { item: true, md: 4 },
@@ -2127,7 +2127,7 @@ var MasterTable = function (_React$Component15) {
                                 React.createElement(
                                     Link,
                                     { to: '/actions/1' },
-                                    React.createElement("img", { src: "https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/" + items[i].Key, alt: "Avatar", style: { "width": "100%", "height": "100%", "padding-left": "10px", "padding-right": "10px" } })
+                                    React.createElement("img", { src: "https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/amazon-ceo-jeff-bezos_2.jpg", alt: "Avatar", style: { "width": "100%", "height": "100%", "padding-left": "10px", "padding-right": "10px" } })
                                 )
                             ),
                             React.createElement(
@@ -6126,7 +6126,8 @@ var Upload = function (_React$Component53) {
             files: [],
             file: '',
             compare: [],
-            compare2: []
+            compare2: [],
+            compare3: []
         };
         return _this77;
     }
@@ -6179,12 +6180,28 @@ var Upload = function (_React$Component53) {
                 MaxKeys: 100
             };
 
+            var params3 = {
+                Bucket: albumBucketName3,
+                MaxKeys: 100
+            };
+
             s3.listObjects(params, function (err, data) {
                 if (err) {
                     console.log(err, err.stack);
                 } else {
                     _this78.setState({
                         compare: data
+                    });
+                }
+            });
+            anotherS3.listObjects(params3, function (err, data) {
+                if (err) {
+                    console.log(err, err.stack);
+                } else {
+
+                    _this78.setState({
+                        compare3: data
+
                     });
                 }
             });
@@ -6263,6 +6280,8 @@ var Upload = function (_React$Component53) {
 
             var targetField = event.target.development.value;
 
+            console.log(targetField);
+
             var today = moment(new Date()).format('DD-MM-YYYY');
 
             var item = {
@@ -6275,11 +6294,11 @@ var Upload = function (_React$Component53) {
             var compareData = [];
 
             var params = {
-                Bucket: albumBucketName,
+                Bucket: albumBucketName3,
                 MaxKeys: 100
             };
 
-            s3.listObjects(params, function (err, data) {
+            anotherS3.listObjects(params, function (err, data) {
                 if (err) {
                     console.log(err, err.stack);
                 } else {
@@ -6294,7 +6313,8 @@ var Upload = function (_React$Component53) {
                         "SourceImage": compare.Key,
                         "TargetImage": targetField,
                         "BucketSourceImage": albumBucketName,
-                        "BucketTargetImage": "rekognition-video-console-demo-iad-352250014224-1vio7fvwvq5qve"
+                        "BucketTargetImage": albumBucketName3
+                        // "BucketTargetImage": "rekognition-video-console-demo-iad-352250014224-1vio7fvwvq5qve"                            
                     });
                 });
 
@@ -6317,11 +6337,19 @@ var Upload = function (_React$Component53) {
         value: function render() {
 
             var item = [];
+            var item3 = [];
 
             if (this.state.compare.Contents) {
 
-                item = this.state.compare.Contents;
+                item3 = this.state.compare.Contents;
             }
+
+            if (this.state.compare3.Contents) {
+
+                item = this.state.compare3.Contents;
+            }
+
+            console.log(item3);
 
             return React.createElement(
                 Grid,
@@ -6353,7 +6381,7 @@ var Upload = function (_React$Component53) {
                                     React.createElement(
                                         Col,
                                         { componentClass: ControlLabel, md: 4, sm: 2 },
-                                        "Description - (Most Wanted) - Image#2 - rekognition-video-console-demo-iad-352250014224-1vio7fvwvq5qve"
+                                        "Description - (Most Wanted) - Image#2 - webpaa-deployments-mobilehub-2128298286"
                                     ),
                                     React.createElement(
                                         Col,
@@ -6361,16 +6389,13 @@ var Upload = function (_React$Component53) {
                                         React.createElement(
                                             FormControl,
                                             { componentClass: "select", name: "development", placeholder: "Tipo de Servicio", required: true },
-                                            React.createElement(
-                                                "option",
-                                                { value: 'test.jpg' },
-                                                'test'
-                                            ),
-                                            React.createElement(
-                                                "option",
-                                                { value: 'test2.jpg' },
-                                                'test2'
-                                            )
+                                            item3.map(function (aws) {
+                                                return React.createElement(
+                                                    "option",
+                                                    { value: aws.Key },
+                                                    aws.Key
+                                                );
+                                            })
                                         )
                                     ),
                                     React.createElement(
@@ -6505,7 +6530,7 @@ var Upload = function (_React$Component53) {
                                     "td",
                                     null,
                                     "Image #1 ( New Photo ) - ",
-                                    'webpaa-deployments-mobilehub-2128298286'
+                                    'webpaa-deployments-mobilehub-209995345'
                                 ),
                                 React.createElement(
                                     "td",
