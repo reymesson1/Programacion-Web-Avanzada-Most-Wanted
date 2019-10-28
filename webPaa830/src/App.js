@@ -4341,29 +4341,35 @@ class Upload extends React.Component{
 
         setTimeout(() => {
 
-            compareData.Contents.map(
+            compareData.Contents.map( 
                 (compare) =>                    
                     item.items.push(
                         {
                             "SourceImage": compare.Key,
                             "TargetImage": targetField,
-                            "BucketSourceImage": albumBucketName,
-                            "BucketTargetImage": albumBucketName3                            
+                            "BucketSourceImage": albumBucketName3,
+                            "BucketTargetImage": albumBucketName                            
                             // "BucketTargetImage": "rekognition-video-console-demo-iad-352250014224-1vio7fvwvq5qve"                            
                         }                        
                     )
             )
 
-            fetch('https://hb4ty6ype0.execute-api.us-east-1.amazonaws.com/live/setcomparemostwanted', {
+            
+
+            fetch('https://hb4ty6ype0.execute-api.us-east-1.amazonaws.com/live/setcomparemw', {
                 
                 method: 'post',
                 headers: API_HEADERS,
                 body: JSON.stringify(item)
+            }).then(response => response.json()).then(response => {
+
+                console.log(response)
+
             })
-            .then((response)=>response.json())        
             .catch((error)=>{
                 console.log('Error fetching and parsing data', error);
-            })
+            });
+                
             
             
 

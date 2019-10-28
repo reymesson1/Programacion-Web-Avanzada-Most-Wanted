@@ -6312,19 +6312,22 @@ var Upload = function (_React$Component53) {
                     return item.items.push({
                         "SourceImage": compare.Key,
                         "TargetImage": targetField,
-                        "BucketSourceImage": albumBucketName,
-                        "BucketTargetImage": albumBucketName3
+                        "BucketSourceImage": albumBucketName3,
+                        "BucketTargetImage": albumBucketName
                         // "BucketTargetImage": "rekognition-video-console-demo-iad-352250014224-1vio7fvwvq5qve"                            
                     });
                 });
 
-                fetch('https://hb4ty6ype0.execute-api.us-east-1.amazonaws.com/live/setcomparemostwanted', {
+                fetch('https://hb4ty6ype0.execute-api.us-east-1.amazonaws.com/live/setcomparemw', {
 
                     method: 'post',
                     headers: API_HEADERS,
                     body: JSON.stringify(item)
                 }).then(function (response) {
                     return response.json();
+                }).then(function (response) {
+
+                    console.log(response);
                 }).catch(function (error) {
                     console.log('Error fetching and parsing data', error);
                 });
