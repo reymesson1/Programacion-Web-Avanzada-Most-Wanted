@@ -2127,7 +2127,7 @@ var MasterTable = function (_React$Component15) {
                                 React.createElement(
                                     Link,
                                     { to: '/actions/1' },
-                                    React.createElement("img", { src: "https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/amazon-ceo-jeff-bezos_2.jpg", alt: "Avatar", style: { "width": "100%", "height": "100%", "padding-left": "10px", "padding-right": "10px" } })
+                                    React.createElement("img", { src: "http://localhost:8084/img_avatar.png", alt: "Avatar", style: { "width": "100%", "padding-left": "10px", "padding-right": "10px" } })
                                 )
                             ),
                             React.createElement(
@@ -6127,7 +6127,8 @@ var Upload = function (_React$Component53) {
             file: '',
             compare: [],
             compare2: [],
-            compare3: []
+            compare3: [],
+            compare4: []
         };
         return _this77;
     }
@@ -6275,6 +6276,7 @@ var Upload = function (_React$Component53) {
     }, {
         key: "onProcess",
         value: function onProcess(event) {
+            var _this79 = this;
 
             event.preventDefault();
 
@@ -6327,7 +6329,10 @@ var Upload = function (_React$Component53) {
                     return response.json();
                 }).then(function (response) {
 
-                    console.log(response);
+                    // console.log(response)
+                    _this79.setState({
+                        compare4: response
+                    });
                 }).catch(function (error) {
                     console.log('Error fetching and parsing data', error);
                 });
@@ -6341,6 +6346,7 @@ var Upload = function (_React$Component53) {
 
             var item = [];
             var item3 = [];
+            var item4 = [];
 
             if (this.state.compare.Contents) {
 
@@ -6352,7 +6358,18 @@ var Upload = function (_React$Component53) {
                 item = this.state.compare3.Contents;
             }
 
-            console.log(item3);
+            if (this.state.compare4) {
+
+                item4 = this.state.compare4;
+            }
+
+            item4.map(function (match) {
+                return match.FaceMatches.map(function (faces) {
+                    return console.log(faces);
+                });
+            });
+
+            console.log(item4);
 
             return React.createElement(
                 Grid,
@@ -6550,26 +6567,18 @@ var Upload = function (_React$Component53) {
                         React.createElement(
                             "tbody",
                             null,
-                            item.map(function (order) {
-                                return React.createElement(
-                                    "tr",
-                                    null,
-                                    React.createElement(
-                                        "td",
+                            item4.map(function (match) {
+                                return match.FaceMatches.map(function (faces) {
+                                    return React.createElement(
+                                        "tr",
                                         null,
-                                        order.Key
-                                    ),
-                                    React.createElement(
-                                        "td",
-                                        null,
-                                        '1'
-                                    ),
-                                    React.createElement(
-                                        "td",
-                                        null,
-                                        'DN'
-                                    )
-                                );
+                                        React.createElement(
+                                            "td",
+                                            null,
+                                            faces.Similarity
+                                        )
+                                    );
+                                });
                             })
                         )
                     )

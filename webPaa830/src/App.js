@@ -1563,8 +1563,8 @@ class MasterTable extends React.Component{
                                         <Col md={6}>                                    
                                             <Link  to={'/actions/1'}>
                                                 {/* <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/"+items[i].Key}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/> */}
-                                                <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/amazon-ceo-jeff-bezos_2.jpg"}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/>
-                                                {/* <img src={"http://localhost:8084/executed/"+items[i].image}  alt="Avatar" style={{"width":"100%","padding-left":"10px","padding-right":"10px"}}/> */}
+                                                {/* <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/amazon-ceo-jeff-bezos_2.jpg"}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/> */}
+                                                <img src={"http://localhost:8084/img_avatar.png"}  alt="Avatar" style={{"width":"100%","padding-left":"10px","padding-right":"10px"}}/>
                                             </Link>
                                         </Col>
                                         <Col md={6}>   
@@ -4159,7 +4159,8 @@ class Upload extends React.Component{
             file: '',
             compare: [],
             compare2: [],
-            compare3: []            
+            compare3: [],           
+            compare4: []           
         }
     }
 
@@ -4363,18 +4364,19 @@ class Upload extends React.Component{
                 body: JSON.stringify(item)
             }).then(response => response.json()).then(response => {
 
-                console.log(response)
+                // console.log(response)
+                this.setState({
+                    compare4: response
+                })
 
             })
             .catch((error)=>{
                 console.log('Error fetching and parsing data', error);
             });
-                
-            
-            
 
             console.log(item)
-
+            
+            
 
         }, 3000);
 
@@ -4386,6 +4388,7 @@ class Upload extends React.Component{
 
         var item = []
         var item3 = []
+        var item4 = []
         
         if(this.state.compare.Contents){
             
@@ -4397,7 +4400,19 @@ class Upload extends React.Component{
             item = this.state.compare3.Contents
         }
 
-        console.log(item3)
+        if(this.state.compare4){
+            
+            item4 = this.state.compare4
+        }
+
+        item4.map(
+            (match)=> match.FaceMatches.map(
+                (faces)=> console.log(faces)
+            )
+        )
+
+        console.log(item4)
+
 
         return(
 
@@ -4498,16 +4513,13 @@ class Upload extends React.Component{
                         </tr>
                     </thead>
                     <tbody>                                            
-                     {
-                         item.map(
-                             (order) =>
-                                        <tr>
-                                            <td>{order.Key}</td>
-                                            <td>{'1'}</td>
-                                            <td>{'DN'}</td>
-                                        </tr>
-                         )
-                     }
+                        {
+                            item4.map(
+                                (match)=> match.FaceMatches.map(
+                                    (faces)=> <tr><td>{faces.Similarity}</td></tr>
+                                )
+                            )
+                        }
                     </tbody>                                            
                     </Table>
                 </Row>
