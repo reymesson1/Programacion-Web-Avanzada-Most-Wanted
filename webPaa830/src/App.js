@@ -907,16 +907,8 @@ class Toolbar extends React.Component{
                         </div>
                     </div>
                     <Nav>                      
-                      <li style={{"top":"40px"}}>
-                      <Form inline style={{"height":"10%"}}>
-                            <FormControl onChange={this.onChanged.bind(this)} name="search" style={{'width':'700px', 'margin-top':'10px'}} type="text" placeholder="Search" className="mr-sm-2" />
-                            <Button style={{'margin-top':'10px'}} variant="outline-success"><i className="fa fa-search" aria-hidden="true"></i></Button>
-                      </Form>
-                      </li>
-                      <i style={{'position':'absolute','left':'74%','top':'42%','font-size':'20px'}} className="fa fa-shopping-cart" aria-hidden="true"></i>
-                      <NavDropdown style={{'float':'right','position':'absolute','left':'75%', 'top':'29%', 'font-size':'20px'}} eventKey={3} title="Cart" id="basic-nav-dropdown">                      
-                            <CardNarv />                            
-                      </NavDropdown>   
+                      <li style={{"top":"40px"}}><Link to={'/master'}>Home</Link></li>                      
+                      <li style={{"top":"40px"}}><Link to={'/upload'}>Finder</Link></li>                                            
                     </Nav>
                 </Navbar>
         );
@@ -1558,23 +1550,23 @@ class MasterTable extends React.Component{
             rows.push(
                     <Col item md={4}> 
                         <br/>
-                            <div className="card">                                    
+                            <Panel style={{'border-color':'#ffffff'}}>
                                     <Row>
-                                        <Col md={8} style={{'border-color':'#ffffff !important','border-style':'solid'}} >                                    
+                                        <Col md={12}>                                    
+                                        {/* <Col md={11} style={{'border-color':'#ffffff !important','border-style':'solid'}} >                                     */}
                                             <Row>
                                                 <Link  to={'/actions/1'}>
                                                     {/* <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/"+items[i].Key}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/> */}
                                                     {/* <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/amazon-ceo-jeff-bezos_2.jpg"}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/> */}
-                                                    <img src={"http://localhost:8084/img_avatar.png"}  alt="Avatar" style={{"width":"100%","padding-left":"10px","padding-right":"10px"}}/>
+                                                    <img src={"http://localhost:8084/img_avatar.png"}  alt="Avatar" style={{"width":"100%","padding":"40px"}}/>
                                                 </Link>
                                             </Row>
                                             <Row style={{'text-align':'center'}}>
                                                 <h5>{items[i].Key}</h5>
                                             </Row>
-                                        </Col>  
-
+                                        </Col>                                        
                                     </Row>
-                            </div>                                                                
+                            </Panel>
                     </Col>
             )
         }

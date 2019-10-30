@@ -1375,21 +1375,19 @@ var Toolbar = function (_React$Component9) {
                         "li",
                         { style: { "top": "40px" } },
                         React.createElement(
-                            Form,
-                            { inline: true, style: { "height": "10%" } },
-                            React.createElement(FormControl, { onChange: this.onChanged.bind(this), name: "search", style: { 'width': '700px', 'margin-top': '10px' }, type: "text", placeholder: "Search", className: "mr-sm-2" }),
-                            React.createElement(
-                                Button,
-                                { style: { 'margin-top': '10px' }, variant: "outline-success" },
-                                React.createElement("i", { className: "fa fa-search", "aria-hidden": "true" })
-                            )
+                            Link,
+                            { to: '/master' },
+                            "Home"
                         )
                     ),
-                    React.createElement("i", { style: { 'position': 'absolute', 'left': '74%', 'top': '42%', 'font-size': '20px' }, className: "fa fa-shopping-cart", "aria-hidden": "true" }),
                     React.createElement(
-                        NavDropdown,
-                        { style: { 'float': 'right', 'position': 'absolute', 'left': '75%', 'top': '29%', 'font-size': '20px' }, eventKey: 3, title: "Cart", id: "basic-nav-dropdown" },
-                        React.createElement(CardNarv, null)
+                        "li",
+                        { style: { "top": "40px" } },
+                        React.createElement(
+                            Link,
+                            { to: '/upload' },
+                            "Finder"
+                        )
                     )
                 )
             );
@@ -2116,21 +2114,21 @@ var MasterTable = function (_React$Component15) {
                     { item: true, md: 4 },
                     React.createElement("br", null),
                     React.createElement(
-                        "div",
-                        { className: "card" },
+                        Panel,
+                        { style: { 'border-color': '#ffffff' } },
                         React.createElement(
                             Row,
                             null,
                             React.createElement(
                                 Col,
-                                { md: 8, style: { 'border-color': '#ffffff !important', 'border-style': 'solid' } },
+                                { md: 12 },
                                 React.createElement(
                                     Row,
                                     null,
                                     React.createElement(
                                         Link,
                                         { to: '/actions/1' },
-                                        React.createElement("img", { src: "http://localhost:8084/img_avatar.png", alt: "Avatar", style: { "width": "100%", "padding-left": "10px", "padding-right": "10px" } })
+                                        React.createElement("img", { src: "http://localhost:8084/img_avatar.png", alt: "Avatar", style: { "width": "100%", "padding": "40px" } })
                                     )
                                 ),
                                 React.createElement(
