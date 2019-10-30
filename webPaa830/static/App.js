@@ -2123,52 +2123,24 @@ var MasterTable = function (_React$Component15) {
                             null,
                             React.createElement(
                                 Col,
-                                { md: 6 },
-                                React.createElement(
-                                    Link,
-                                    { to: '/actions/1' },
-                                    React.createElement("img", { src: "http://localhost:8084/img_avatar.png", alt: "Avatar", style: { "width": "100%", "padding-left": "10px", "padding-right": "10px" } })
-                                )
-                            ),
-                            React.createElement(
-                                Col,
-                                { md: 6 },
+                                { md: 8, style: { 'border-color': '#ffffff !important', 'border-style': 'solid' } },
                                 React.createElement(
                                     Row,
                                     null,
                                     React.createElement(
-                                        "h5",
-                                        null,
-                                        React.createElement("i", { style: { 'color': 'gold' }, className: "fa fa-star", "aria-hidden": "true" }),
-                                        React.createElement("i", { style: { 'color': 'gold' }, className: "fa fa-star", "aria-hidden": "true" }),
-                                        React.createElement("i", { style: { 'color': 'gold' }, className: "fa fa-star", "aria-hidden": "true" }),
-                                        React.createElement("i", { className: "fa fa-star", "aria-hidden": "true" }),
-                                        React.createElement("i", { className: "fa fa-star", "aria-hidden": "true" })
+                                        Link,
+                                        { to: '/actions/1' },
+                                        React.createElement("img", { src: "http://localhost:8084/img_avatar.png", alt: "Avatar", style: { "width": "100%", "padding-left": "10px", "padding-right": "10px" } })
                                     )
                                 ),
                                 React.createElement(
                                     Row,
-                                    null,
+                                    { style: { 'text-align': 'center' } },
                                     React.createElement(
                                         "h5",
                                         null,
-                                        'test'
+                                        items[i].Key
                                     )
-                                ),
-                                React.createElement(
-                                    Row,
-                                    null,
-                                    React.createElement(
-                                        "h5",
-                                        null,
-                                        "$   ",
-                                        '1k.00'
-                                    )
-                                ),
-                                React.createElement(
-                                    Row,
-                                    { style: { 'background-color': '#f7f7f7' } },
-                                    React.createElement(Col, { md: 5, sm: 5, xs: 3 })
                                 )
                             )
                         )

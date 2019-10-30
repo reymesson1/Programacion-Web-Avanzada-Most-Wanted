@@ -1558,38 +1558,23 @@ class MasterTable extends React.Component{
             rows.push(
                     <Col item md={4}> 
                         <br/>
-                                <div className="card">                                    
-                                     <Row>   
-                                        <Col md={6}>                                    
-                                            <Link  to={'/actions/1'}>
-                                                {/* <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/"+items[i].Key}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/> */}
-                                                {/* <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/amazon-ceo-jeff-bezos_2.jpg"}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/> */}
-                                                <img src={"http://localhost:8084/img_avatar.png"}  alt="Avatar" style={{"width":"100%","padding-left":"10px","padding-right":"10px"}}/>
-                                            </Link>
-                                        </Col>
-                                        <Col md={6}>   
+                            <div className="card">                                    
+                                    <Row>
+                                        <Col md={8} style={{'border-color':'#ffffff !important','border-style':'solid'}} >                                    
                                             <Row>
-                                                <h5 >
-                                                    <i style={{'color':'gold'}} className="fa fa-star" aria-hidden="true"></i>
-                                                    <i style={{'color':'gold'}} className="fa fa-star" aria-hidden="true"></i>
-                                                    <i style={{'color':'gold'}} className="fa fa-star" aria-hidden="true"></i>
-                                                    <i className="fa fa-star" aria-hidden="true"></i>
-                                                    <i className="fa fa-star" aria-hidden="true"></i>
-                                                </h5>
+                                                <Link  to={'/actions/1'}>
+                                                    {/* <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/"+items[i].Key}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/> */}
+                                                    {/* <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/amazon-ceo-jeff-bezos_2.jpg"}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/> */}
+                                                    <img src={"http://localhost:8084/img_avatar.png"}  alt="Avatar" style={{"width":"100%","padding-left":"10px","padding-right":"10px"}}/>
+                                                </Link>
                                             </Row>
-                                            <Row>
-                                                <h5>{'test'}</h5>
+                                            <Row style={{'text-align':'center'}}>
+                                                <h5>{items[i].Key}</h5>
                                             </Row>
-                                            <Row>
-                                                <h5>$   {'1k.00'}</h5>
-                                            </Row>
-                                            <Row style={{'background-color':'#f7f7f7'}}>                                        
-                                                <Col md={5} sm={5} xs={3}>                                                    
-                                                </Col>
-                                            </Row>
-                                        </Col>
-                                     </Row>
-                                </div>                                                                
+                                        </Col>  
+
+                                    </Row>
+                            </div>                                                                
                     </Col>
             )
         }
