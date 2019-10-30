@@ -4137,7 +4137,8 @@ class Upload extends React.Component{
             compare: [],
             compare2: [],
             compare3: [],           
-            compare4: []           
+            compare4: [],
+            targetFieldData: ""           
         }
     }
 
@@ -4292,6 +4293,10 @@ class Upload extends React.Component{
         var targetField = event.target.development.value;
 
         console.log(targetField)
+
+        this.setState({
+            targetFieldData: targetField
+        })
 
         let today = moment(new Date()).format('DD-MM-YYYY');
 
@@ -4493,7 +4498,15 @@ class Upload extends React.Component{
                         {
                             item4.map(
                                 (match)=> match.FaceMatches.map(
-                                    (faces)=> <tr><td>{faces.Similarity}</td></tr>
+                                    // (faces)=> <tr><td><img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/"+faces.Similarity}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/></td></tr>
+                                    (faces)=> <tr>
+                                                <td>
+                                                    <img src={"https://webpaa-deployments-mobilehub-209995345.s3.amazonaws.com/"+faces.Similarity}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px", "transform": "rotate(270deg)"}}/>
+                                                </td>
+                                                <td>
+                                                    <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/"+this.state.targetFieldData}/>
+                                                </td>
+                                              </tr>
                                 )
                             )
                         }

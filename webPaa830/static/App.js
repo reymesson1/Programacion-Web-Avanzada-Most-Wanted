@@ -6098,7 +6098,8 @@ var Upload = function (_React$Component53) {
             compare: [],
             compare2: [],
             compare3: [],
-            compare4: []
+            compare4: [],
+            targetFieldData: ""
         };
         return _this77;
     }
@@ -6254,6 +6255,10 @@ var Upload = function (_React$Component53) {
 
             console.log(targetField);
 
+            this.setState({
+                targetFieldData: targetField
+            });
+
             var today = moment(new Date()).format('DD-MM-YYYY');
 
             var item = {
@@ -6313,6 +6318,7 @@ var Upload = function (_React$Component53) {
     }, {
         key: "render",
         value: function render() {
+            var _this80 = this;
 
             var item = [];
             var item3 = [];
@@ -6538,14 +6544,21 @@ var Upload = function (_React$Component53) {
                             "tbody",
                             null,
                             item4.map(function (match) {
-                                return match.FaceMatches.map(function (faces) {
+                                return match.FaceMatches.map(
+                                // (faces)=> <tr><td><img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/"+faces.Similarity}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/></td></tr>
+                                function (faces) {
                                     return React.createElement(
                                         "tr",
                                         null,
                                         React.createElement(
                                             "td",
                                             null,
-                                            faces.Similarity
+                                            React.createElement("img", { src: "https://webpaa-deployments-mobilehub-209995345.s3.amazonaws.com/" + faces.Similarity, alt: "Avatar", style: { "width": "100%", "height": "100%", "padding-left": "10px", "padding-right": "10px", "transform": "rotate(270deg)" } })
+                                        ),
+                                        React.createElement(
+                                            "td",
+                                            null,
+                                            React.createElement("img", { src: "https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/" + _this80.state.targetFieldData })
                                         )
                                     );
                                 });
