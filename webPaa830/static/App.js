@@ -6356,7 +6356,7 @@ var Upload = function (_React$Component53) {
                     React.createElement(
                         "h1",
                         { style: { 'color': '#cd6607' } },
-                        "Send/replenish Inventory"
+                        "AMAZON AWS"
                     )
                 ),
                 React.createElement(

@@ -4400,7 +4400,7 @@ class Upload extends React.Component{
 
             <Grid>
                 <Row>                    
-                    <h1 style={{'color':'#cd6607'}}>Send/replenish Inventory</h1>
+                    <h1 style={{'color':'#cd6607'}}>AMAZON AWS</h1>
                 </Row>
                 <Row>                                    
                     <Col md={9}>                    
