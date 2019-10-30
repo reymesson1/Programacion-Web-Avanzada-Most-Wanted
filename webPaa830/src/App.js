@@ -4501,7 +4501,7 @@ class Upload extends React.Component{
                                     // (faces)=> <tr><td><img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/"+faces.Similarity}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/></td></tr>
                                     (faces)=> <tr>
                                                 <td>
-                                                    <img src={"https://webpaa-deployments-mobilehub-209995345.s3.amazonaws.com/"+faces.Similarity}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px", "transform": "rotate(270deg)"}}/>
+                                                    <img src={"https://webpaa-deployments-mobilehub-209995345.s3.amazonaws.com/"+faces.Similarity}  alt="Avatar" style={{"width":"50%","height":"50%","padding-left":"10px","padding-right":"10px", "transform": "rotate(270deg)"}}/>
                                                 </td>
                                                 <td>
                                                     <h1>{faces.Similarity}</h1>

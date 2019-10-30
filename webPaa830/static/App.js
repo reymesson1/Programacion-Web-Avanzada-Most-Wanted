@@ -6553,7 +6553,7 @@ var Upload = function (_React$Component53) {
                                         React.createElement(
                                             "td",
                                             null,
-                                            React.createElement("img", { src: "https://webpaa-deployments-mobilehub-209995345.s3.amazonaws.com/" + faces.Similarity, alt: "Avatar", style: { "width": "100%", "height": "100%", "padding-left": "10px", "padding-right": "10px", "transform": "rotate(270deg)" } })
+                                            React.createElement("img", { src: "https://webpaa-deployments-mobilehub-209995345.s3.amazonaws.com/" + faces.Similarity, alt: "Avatar", style: { "width": "50%", "height": "50%", "padding-left": "10px", "padding-right": "10px", "transform": "rotate(270deg)" } })
                                         ),
                                         React.createElement(
                                             "td",
