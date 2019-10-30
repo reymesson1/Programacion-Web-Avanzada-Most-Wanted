@@ -4488,10 +4488,10 @@ class Upload extends React.Component{
                     <Table striped bordered condensed hover>
                     <thead>
                         <tr>
-                            <td>Image #1 ( New Photo ) - {'webpaa-deployments-mobilehub-209995345'}</td>                                                        
+                            <td>Image #1 ( Source ) - {'webpaa-deployments-mobilehub-209995345'}</td>                                                        
                             {/* <td>Image #1 ( New Photo ) - {'webpaa-deployments-mobilehub-2128298286'}</td>                                                         */}
-                            <td>Quantity</td>
-                            <td>Address</td>
+                            <td>Similarity</td>
+                            <td>Target</td>
                         </tr>
                     </thead>
                     <tbody>                                            
@@ -4502,6 +4502,9 @@ class Upload extends React.Component{
                                     (faces)=> <tr>
                                                 <td>
                                                     <img src={"https://webpaa-deployments-mobilehub-209995345.s3.amazonaws.com/"+faces.Similarity}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px", "transform": "rotate(270deg)"}}/>
+                                                </td>
+                                                <td>
+                                                    <h1>{faces.Similarity}</h1>
                                                 </td>
                                                 <td>
                                                     <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/"+this.state.targetFieldData}/>

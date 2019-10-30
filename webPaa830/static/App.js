@@ -6525,18 +6525,18 @@ var Upload = function (_React$Component53) {
                                 React.createElement(
                                     "td",
                                     null,
-                                    "Image #1 ( New Photo ) - ",
+                                    "Image #1 ( Source ) - ",
                                     'webpaa-deployments-mobilehub-209995345'
                                 ),
                                 React.createElement(
                                     "td",
                                     null,
-                                    "Quantity"
+                                    "Similarity"
                                 ),
                                 React.createElement(
                                     "td",
                                     null,
-                                    "Address"
+                                    "Target"
                                 )
                             )
                         ),
@@ -6554,6 +6554,15 @@ var Upload = function (_React$Component53) {
                                             "td",
                                             null,
                                             React.createElement("img", { src: "https://webpaa-deployments-mobilehub-209995345.s3.amazonaws.com/" + faces.Similarity, alt: "Avatar", style: { "width": "100%", "height": "100%", "padding-left": "10px", "padding-right": "10px", "transform": "rotate(270deg)" } })
+                                        ),
+                                        React.createElement(
+                                            "td",
+                                            null,
+                                            React.createElement(
+                                                "h1",
+                                                null,
+                                                faces.Similarity
+                                            )
                                         ),
                                         React.createElement(
                                             "td",
