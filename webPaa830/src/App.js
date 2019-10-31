@@ -1544,7 +1544,7 @@ class MasterTable extends React.Component{
         }
         
         items = item
-        console.log(item)
+        //console.log(item)
 
         for(var i=0;i<items.length;i++){            
             rows.push(
@@ -4292,7 +4292,7 @@ class Upload extends React.Component{
 
         var targetField = event.target.development.value;
 
-        console.log(targetField)
+        // console.log(targetField)
 
         this.setState({
             targetFieldData: targetField
@@ -4356,7 +4356,7 @@ class Upload extends React.Component{
                 console.log('Error fetching and parsing data', error);
             });
 
-            console.log(item)
+            //console.log(item)
             
             
 
@@ -4385,20 +4385,31 @@ class Upload extends React.Component{
 
         if(this.state.compare4){
             
-            // item4 = this.state.compare4
-            item4 = this.state.compare4.filter(
-    
-                (master) => parseInt(master.Similarity) >= 70
+            item4 = this.state.compare4
+
+            // filteredItem4 = this.state.compare4.filter(
+            //     (master)=> master.FaceMatches.map(
+            //         (match) => parseInt(match.Similarity) >= 70
+            //     )
+            // )
+            filteredItem4 = this.state.compare4.map(
+                (master)=> master.FaceMatches.filter(
+                    (match) => parseInt(match.Similarity) >= 70
+                )
             )
+            
         }
 
-        item4.map(
-            (match)=> match.FaceMatches.map(
-                (faces)=> console.log(faces)
-            )
-        )
+        // item4.map(
+        //     (match)=> match.FaceMatches.map(
+        //         (faces)=> console.log(faces)
+        //     )
+        // )
 
-        console.log(item4)
+        if(filteredItem4.length>0){
+
+            console.log(filteredItem4)
+        }
 
 
         return(
