@@ -6323,6 +6323,7 @@ var Upload = function (_React$Component53) {
             var item = [];
             var item3 = [];
             var item4 = [];
+            var filteredItem4 = [];
 
             if (this.state.compare.Contents) {
 
@@ -6336,7 +6337,10 @@ var Upload = function (_React$Component53) {
 
             if (this.state.compare4) {
 
-                item4 = this.state.compare4;
+                // item4 = this.state.compare4
+                item4 = this.state.compare4.filter(function (master) {
+                    return parseInt(master.Similarity) >= 70;
+                });
             }
 
             item4.map(function (match) {
@@ -6377,7 +6381,7 @@ var Upload = function (_React$Component53) {
                                     React.createElement(
                                         Col,
                                         { componentClass: ControlLabel, md: 4, sm: 2 },
-                                        "Description - (Most Wanted) - Image#2 - webpaa-deployments-mobilehub-2128298286"
+                                        "Choose a picture:"
                                     ),
                                     React.createElement(
                                         Col,
@@ -6394,6 +6398,9 @@ var Upload = function (_React$Component53) {
                                             })
                                         )
                                     ),
+                                    React.createElement("br", null),
+                                    React.createElement("br", null),
+                                    React.createElement("br", null),
                                     React.createElement(
                                         Button,
                                         { className: "col-md-offset-9", type: "submit", variant: "outline-success" },
@@ -6525,8 +6532,7 @@ var Upload = function (_React$Component53) {
                                 React.createElement(
                                     "td",
                                     null,
-                                    "Image #1 ( Source ) - ",
-                                    'webpaa-deployments-mobilehub-209995345'
+                                    "Source"
                                 ),
                                 React.createElement(
                                     "td",

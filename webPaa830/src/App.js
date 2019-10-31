@@ -4371,6 +4371,7 @@ class Upload extends React.Component{
         var item = []
         var item3 = []
         var item4 = []
+        var filteredItem4 = []
         
         if(this.state.compare.Contents){
             
@@ -4384,7 +4385,11 @@ class Upload extends React.Component{
 
         if(this.state.compare4){
             
-            item4 = this.state.compare4
+            // item4 = this.state.compare4
+            item4 = this.state.compare4.filter(
+    
+                (master) => parseInt(master.Similarity) >= 70
+            )
         }
 
         item4.map(
@@ -4411,7 +4416,7 @@ class Upload extends React.Component{
                                         Description - (Most Wanted) - Image#2 - rekognition-video-console-demo-iad-352250014224-1vio7fvwvq5qve
                                     </Col> */}
                                     <Col componentClass={ControlLabel} md={4} sm={2}>
-                                        Description - (Most Wanted) - Image#2 - webpaa-deployments-mobilehub-2128298286                                        
+                                        Choose a picture: 
                                     </Col>
                                     <Col md={8} sm={6}>
                                         <FormControl componentClass="select" name="development" placeholder="Tipo de Servicio" required >                                                
@@ -4420,6 +4425,9 @@ class Upload extends React.Component{
                                         )}
                                         </FormControl>
                                     </Col>
+                                    <br/>
+                                    <br/>
+                                    <br/>
                                     <Button className="col-md-offset-9" type="submit" variant="outline-success">Process &nbsp; <i className="fa fa-star" aria-hidden="true"></i></Button>&nbsp;&nbsp;
                                 </FormGroup>                                
                             </Form>
@@ -4488,7 +4496,7 @@ class Upload extends React.Component{
                     <Table striped bordered condensed hover>
                     <thead>
                         <tr>
-                            <td>Image #1 ( Source ) - {'webpaa-deployments-mobilehub-209995345'}</td>                                                        
+                            <td>Source</td>                                                        
                             {/* <td>Image #1 ( New Photo ) - {'webpaa-deployments-mobilehub-2128298286'}</td>                                                         */}
                             <td>Similarity</td>
                             <td>Target</td>
