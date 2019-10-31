@@ -1556,9 +1556,9 @@ class MasterTable extends React.Component{
                                         {/* <Col md={11} style={{'border-color':'#ffffff !important','border-style':'solid'}} >                                     */}
                                             <Row>
                                                 <Link  to={'/actions/1'}>
-                                                    {/* <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/"+items[i].Key}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/> */}
+                                                    <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/"+items[i].Key}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/>
                                                     {/* <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/amazon-ceo-jeff-bezos_2.jpg"}  alt="Avatar" style={{"width":"100%","height":"100%","padding-left":"10px","padding-right":"10px"}}/> */}
-                                                    <img src={"http://localhost:8084/img_avatar.png"}  alt="Avatar" style={{"width":"100%","padding":"40px"}}/>
+                                                    {/* <img src={"http://localhost:8084/img_avatar.png"}  alt="Avatar" style={{"width":"100%","padding":"40px"}}/> */}
                                                 </Link>
                                             </Row>
                                             <Row style={{'text-align':'center'}}>
@@ -4507,7 +4507,7 @@ class Upload extends React.Component{
                                                     <h1>{faces.Similarity}</h1>
                                                 </td>
                                                 <td>
-                                                    <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/"+this.state.targetFieldData}/>
+                                                    <img src={"https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/"+this.state.targetFieldData} style={{"width":"50%","height":"50%","padding-left":"10px","padding-right":"10px"}}/>
                                                 </td>
                                               </tr>
                                 )

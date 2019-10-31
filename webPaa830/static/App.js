@@ -2128,7 +2128,7 @@ var MasterTable = function (_React$Component15) {
                                     React.createElement(
                                         Link,
                                         { to: '/actions/1' },
-                                        React.createElement("img", { src: "http://localhost:8084/img_avatar.png", alt: "Avatar", style: { "width": "100%", "padding": "40px" } })
+                                        React.createElement("img", { src: "https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/" + items[i].Key, alt: "Avatar", style: { "width": "100%", "height": "100%", "padding-left": "10px", "padding-right": "10px" } })
                                     )
                                 ),
                                 React.createElement(
@@ -6567,7 +6567,7 @@ var Upload = function (_React$Component53) {
                                         React.createElement(
                                             "td",
                                             null,
-                                            React.createElement("img", { src: "https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/" + _this80.state.targetFieldData })
+                                            React.createElement("img", { src: "https://webpaa-deployments-mobilehub-2128298286.s3.amazonaws.com/" + _this80.state.targetFieldData, style: { "width": "50%", "height": "50%", "padding-left": "10px", "padding-right": "10px" } })
                                         )
                                     );
                                 });
